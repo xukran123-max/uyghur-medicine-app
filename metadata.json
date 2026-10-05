@@ -1,0 +1,6 @@
+{
+  "name": "ئۇيغۇر تىبابىتى (Uyghur Medicine)",
+  "description": "ئۇيغۇر تىبابىتى 50 تۈردىن ئارتۇق دورىلىق ئۆسۈملۈكلەر، مىزاج تەڭشەش، كالىندار ۋە 4 خىل تىل تەڭشىكى بار كەسپىي ئەپ",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
