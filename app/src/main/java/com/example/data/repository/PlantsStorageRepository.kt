@@ -1,0 +1,168 @@
+package com.example.data.repository
+
+import android.content.Context
+import com.example.data.model.MedicinalPlant
+import com.example.data.model.MizajType
+import com.example.data.model.PlantCategory
+import com.example.data.model.PlantRepository
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
+
+class PlantsStorageRepository(private val context: Context) {
+
+    private val storageFile: File
+        get() = File(context.filesDir, "custom_plants.json")
+
+    @Synchronized
+    fun getPlants(): List<MedicinalPlant> {
+        val file = storageFile
+        if (!file.exists()) {
+            val defaultList = PlantRepository.plantsList
+            saveToFile(defaultList)
+            return defaultList
+        }
+
+        return try {
+            val jsonStr = file.readText(Charsets.UTF_8)
+            val jsonArray = JSONArray(jsonStr)
+            val list = mutableListOf<MedicinalPlant>()
+            for (i in 0 until jsonArray.length()) {
+                val obj = jsonArray.getJSONObject(i)
+                list.add(jsonToPlant(obj))
+            }
+            if (list.isEmpty()) {
+                PlantRepository.plantsList
+            } else {
+                list
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            PlantRepository.plantsList
+        }
+    }
+
+    @Synchronized
+    fun savePlant(plant: MedicinalPlant): List<MedicinalPlant> {
+        val current = getPlants().toMutableList()
+        val index = current.indexOfFirst { it.id == plant.id }
+        if (index >= 0) {
+            current[index] = plant
+        } else {
+            val newId = if (plant.id > 0 && current.none { it.id == plant.id }) {
+                plant.id
+            } else {
+                (current.maxOfOrNull { it.id } ?: 0) + 1
+            }
+            current.add(0, plant.copy(id = newId))
+        }
+        saveToFile(current)
+        return current
+    }
+
+    @Synchronized
+    fun deletePlant(plantId: Int): List<MedicinalPlant> {
+        val current = getPlants().filter { it.id != plantId }
+        saveToFile(current)
+        return current
+    }
+
+    @Synchronized
+    fun resetToDefaults(): List<MedicinalPlant> {
+        val defaultList = PlantRepository.plantsList
+        saveToFile(defaultList)
+        return defaultList
+    }
+
+    private fun saveToFile(plants: List<MedicinalPlant>) {
+        try {
+            val jsonArray = JSONArray()
+            for (plant in plants) {
+                jsonArray.put(plantToJson(plant))
+            }
+            storageFile.writeText(jsonArray.toString(2), Charsets.UTF_8)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun plantToJson(plant: MedicinalPlant): JSONObject {
+        return JSONObject().apply {
+            put("id", plant.id)
+            put("nameUy", plant.nameUy)
+            put("nameEn", plant.nameEn)
+            put("nameTr", plant.nameTr)
+            put("nameZh", plant.nameZh)
+            put("latinName", plant.latinName)
+            put("category", plant.category.name)
+            put("mizajType", plant.mizajType.name)
+            put("mizajDegreeUy", plant.mizajDegreeUy)
+            put("mizajDegreeEn", plant.mizajDegreeEn)
+            put("mizajDegreeTr", plant.mizajDegreeTr)
+            put("mizajDegreeZh", plant.mizajDegreeZh)
+            put("benefitsUy", plant.benefitsUy)
+            put("benefitsEn", plant.benefitsEn)
+            put("benefitsTr", plant.benefitsTr)
+            put("benefitsZh", plant.benefitsZh)
+            put("usageUy", plant.usageUy)
+            put("usageEn", plant.usageEn)
+            put("usageTr", plant.usageTr)
+            put("usageZh", plant.usageZh)
+            put("cautionUy", plant.cautionUy)
+            put("cautionEn", plant.cautionEn)
+            put("cautionTr", plant.cautionTr)
+            put("cautionZh", plant.cautionZh)
+            put("organTargetUy", plant.organTargetUy)
+            put("organTargetEn", plant.organTargetEn)
+            put("organTargetTr", plant.organTargetTr)
+            put("organTargetZh", plant.organTargetZh)
+            put("iconEmoji", plant.iconEmoji)
+            put("imageResId", plant.imageResId ?: -1)
+            put("isFeatured", plant.isFeatured)
+        }
+    }
+
+    private fun jsonToPlant(obj: JSONObject): MedicinalPlant {
+        val catName = obj.optString("category", PlantCategory.HERB.name)
+        val category = try { PlantCategory.valueOf(catName) } catch (_: Exception) { PlantCategory.HERB }
+
+        val mizName = obj.optString("mizajType", MizajType.HOT_DRY.name)
+        val mizaj = try { MizajType.valueOf(mizName) } catch (_: Exception) { MizajType.HOT_DRY }
+
+        val imageRes = obj.optInt("imageResId", -1)
+
+        return MedicinalPlant(
+            id = obj.optInt("id", 0),
+            nameUy = obj.optString("nameUy", ""),
+            nameEn = obj.optString("nameEn", ""),
+            nameTr = obj.optString("nameTr", ""),
+            nameZh = obj.optString("nameZh", ""),
+            latinName = obj.optString("latinName", ""),
+            category = category,
+            mizajType = mizaj,
+            mizajDegreeUy = obj.optString("mizajDegreeUy", ""),
+            mizajDegreeEn = obj.optString("mizajDegreeEn", ""),
+            mizajDegreeTr = obj.optString("mizajDegreeTr", ""),
+            mizajDegreeZh = obj.optString("mizajDegreeZh", ""),
+            benefitsUy = obj.optString("benefitsUy", ""),
+            benefitsEn = obj.optString("benefitsEn", ""),
+            benefitsTr = obj.optString("benefitsTr", ""),
+            benefitsZh = obj.optString("benefitsZh", ""),
+            usageUy = obj.optString("usageUy", ""),
+            usageEn = obj.optString("usageEn", ""),
+            usageTr = obj.optString("usageTr", ""),
+            usageZh = obj.optString("usageZh", ""),
+            cautionUy = obj.optString("cautionUy", ""),
+            cautionEn = obj.optString("cautionEn", ""),
+            cautionTr = obj.optString("cautionTr", ""),
+            cautionZh = obj.optString("cautionZh", ""),
+            organTargetUy = obj.optString("organTargetUy", ""),
+            organTargetEn = obj.optString("organTargetEn", ""),
+            organTargetTr = obj.optString("organTargetTr", ""),
+            organTargetZh = obj.optString("organTargetZh", ""),
+            iconEmoji = obj.optString("iconEmoji", "🌿"),
+            imageResId = if (imageRes > 0) imageRes else null,
+            isFeatured = obj.optBoolean("isFeatured", false)
+        )
+    }
+}

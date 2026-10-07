@@ -27,12 +27,45 @@ enum class ScreenTab {
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val userPrefsRepo = UserPreferencesRepository(application)
+    private val plantsStorageRepo = com.example.data.repository.PlantsStorageRepository(application)
 
     val currentLanguage: StateFlow<Language> = userPrefsRepo.currentLanguage
     val isDarkMode: StateFlow<Boolean> = userPrefsRepo.isDarkMode
     val fontSizeMultiplier: StateFlow<Float> = userPrefsRepo.fontSizeMultiplier
     val favoriteIds: StateFlow<Set<Int>> = userPrefsRepo.favoriteIds
     val userMizaj: StateFlow<MizajType?> = userPrefsRepo.userMizaj
+
+    val isAdminLoggedIn: StateFlow<Boolean> = userPrefsRepo.isAdminLoggedIn
+
+    fun loginAdmin(password: String): Boolean = userPrefsRepo.loginAdmin(password)
+    fun logoutAdmin() = userPrefsRepo.logoutAdmin()
+    fun changeAdminPassword(oldPass: String, newPass: String): Boolean =
+        userPrefsRepo.changeAdminPassword(oldPass, newPass)
+
+    private val _allPlants = MutableStateFlow<List<MedicinalPlant>>(plantsStorageRepo.getPlants())
+    val allPlants: StateFlow<List<MedicinalPlant>> = _allPlants.asStateFlow()
+
+    fun savePlant(plant: MedicinalPlant) {
+        val updated = plantsStorageRepo.savePlant(plant)
+        _allPlants.value = updated
+        if (_selectedPlant.value?.id == plant.id) {
+            _selectedPlant.value = updated.find { it.id == plant.id } ?: plant
+        }
+    }
+
+    fun deletePlant(plantId: Int) {
+        val updated = plantsStorageRepo.deletePlant(plantId)
+        _allPlants.value = updated
+        if (_selectedPlant.value?.id == plantId) {
+            _selectedPlant.value = null
+        }
+    }
+
+    fun resetPlantsToDefault() {
+        val reset = plantsStorageRepo.resetToDefaults()
+        _allPlants.value = reset
+        _selectedPlant.value = null
+    }
 
     private val _appUpdateInfo = MutableStateFlow<AppUpdateInfo?>(null)
     val appUpdateInfo: StateFlow<AppUpdateInfo?> = _appUpdateInfo.asStateFlow()
@@ -77,16 +110,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val selectedProperty: StateFlow<TraditionalProperty?> = _selectedProperty.asStateFlow()
 
     val filteredPlants: StateFlow<List<MedicinalPlant>> = combine(
+        _allPlants,
         _searchQuery,
         _selectedCategory,
         _selectedMizaj,
         _selectedProperty
-    ) { query, cat, mizaj, prop ->
-        PlantRepository.searchPlants(query, cat, mizaj, prop)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, PlantRepository.plantsList)
+    ) { all, query, cat, mizaj, prop ->
+        PlantRepository.searchPlants(all, query, cat, mizaj, prop)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    val favoritePlants: StateFlow<List<MedicinalPlant>> = favoriteIds.combine(
-        MutableStateFlow(PlantRepository.plantsList)
+    val favoritePlants: StateFlow<List<MedicinalPlant>> = combine(
+        favoriteIds,
+        _allPlants
     ) { favSet, allList ->
         allList.filter { favSet.contains(it.id) }
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())

@@ -20,15 +20,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.DarkMode
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.FormatSize
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LightMode
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
@@ -38,11 +47,17 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.example.ui.components.AdminChangePasswordDialog
+import com.example.ui.components.AdminLoginDialog
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -56,8 +71,18 @@ fun SettingsScreen(
     isDarkMode: Boolean,
     onDarkModeToggle: (Boolean) -> Unit,
     fontSizeScale: Float,
-    onFontScaleChange: (Float) -> Unit
+    onFontScaleChange: (Float) -> Unit,
+    isAdminLoggedIn: Boolean = false,
+    onLoginAdmin: (String) -> Boolean = { false },
+    onLogoutAdmin: () -> Unit = {},
+    onChangeAdminPassword: (String, String) -> Boolean = { _, _ -> false },
+    onAddNewPlant: () -> Unit = {},
+    onResetToDefault: () -> Unit = {}
 ) {
+    var showLoginDialog by remember { mutableStateOf(false) }
+    var showChangePassDialog by remember { mutableStateOf(false) }
+    var showResetConfirmDialog by remember { mutableStateOf(false) }
+
     val headerTitle = when (currentLanguage) {
         Language.UYGHUR -> "ئىقتىدار ۋە تىل تەڭشىكى"
         Language.ENGLISH -> "App & Language Settings"
@@ -542,6 +567,170 @@ fun SettingsScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 6. Admin Content Management Section
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = if (isAdminLoggedIn)
+                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                else
+                    MaterialTheme.colorScheme.surfaceVariant
+            )
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = "Admin",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+
+                    Text(
+                        text = "باشقۇرغۇچى بۆلۈمى (مەزمۇن تەھرىرلەش)",
+                        style = MaterialTheme.typography.titleSmall.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                if (!isAdminLoggedIn) {
+                    Text(
+                        text = "ئەپتىكى دورىلارنى تەھرىرلەش، يېڭى دورا ياكى رېتسىپ قوشۇش ئۈچۈن مەخپىي نومۇر ئارقىلىق باشقۇرغۇچى ھالىتىگە كىرىڭ (دەسلەپكى پارول: 123456).",
+                        style = MaterialTheme.typography.bodySmall.copy(
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            lineHeight = 20.sp
+                        )
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Button(
+                        onClick = { showLoginDialog = true },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(imageVector = Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("🔒 باشقۇرغۇچى كىرىش")
+                    }
+                } else {
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFFE8F5E9),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "✅ سىز باشقۇرغۇچى ھالىتىدە. خالىغان دورا تەپسىلاتىغا كىرىپ ✏️ كۇنۇپكىسىنى بېسىپ مەزمۇننى تەھرىرلىسىڭىز، ياكى تۆۋەندىكى كۇنۇپكىدىن يېڭى دورا قوشسىڭىز بولىدۇ.",
+                            color = Color(0xFF1B5E20),
+                            fontSize = 12.sp,
+                            modifier = Modifier.padding(10.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Button(
+                        onClick = onAddNewPlant,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(imageVector = Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("➕ يېڭى دورا قوشۇش")
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedButton(
+                            onClick = { showChangePassDialog = true },
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Icon(imageVector = Icons.Default.Key, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("پارول ئۆزگەرتىش", fontSize = 12.sp)
+                        }
+
+                        OutlinedButton(
+                            onClick = onLogoutAdmin,
+                            modifier = Modifier.weight(1f),
+                            shape = RoundedCornerShape(12.dp),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                        ) {
+                            Icon(imageVector = Icons.Default.ExitToApp, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text("چىكىنىش", fontSize = 12.sp)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    OutlinedButton(
+                        onClick = { showResetConfirmDialog = true },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(imageVector = Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("🔄 بارلىق مەزمۇننى ئەسلىگە كەلتۈرۈش", fontSize = 12.sp)
+                    }
+                }
+            }
+        }
+
         Spacer(modifier = Modifier.height(24.dp))
+    }
+
+    if (showLoginDialog) {
+        AdminLoginDialog(
+            currentLanguage = currentLanguage,
+            onDismiss = { showLoginDialog = false },
+            onLoginSuccess = { showLoginDialog = false },
+            onVerifyPassword = onLoginAdmin
+        )
+    }
+
+    if (showChangePassDialog) {
+        AdminChangePasswordDialog(
+            onDismiss = { showChangePassDialog = false },
+            onChangePassword = onChangeAdminPassword
+        )
+    }
+
+    if (showResetConfirmDialog) {
+        AlertDialog(
+            onDismissRequest = { showResetConfirmDialog = false },
+            title = { Text("بارلىق مەزمۇننى ئەسلىگە كەلتۈرەمسىز؟", fontWeight = FontWeight.Bold) },
+            text = { Text("بارلىق تەھرىرلەنگەن ياكى قوشۇلغان دورىلار ئەسلىدىكى پېتى ئەسلىگە كېلىدۇ.") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        onResetToDefault()
+                        showResetConfirmDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text("ئەسلىگە كەلتۈرۈش")
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showResetConfirmDialog = false }) {
+                    Text("بىكار قىلىش")
+                }
+            }
+        )
     }
 }

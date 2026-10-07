@@ -20,8 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.example.data.model.Language
+import com.example.data.model.MedicinalPlant
+import com.example.ui.components.AdminConfirmDeleteDialog
 import com.example.ui.components.AppUpdateDialog
 import com.example.ui.components.BottomNavBar
+import com.example.ui.components.EditPlantDialog
 import com.example.ui.components.MenuDrawerSheet
 import com.example.ui.components.TopBar
 import com.example.ui.screens.AssistantScreen
@@ -60,7 +63,13 @@ class MainActivity : ComponentActivity() {
             val fontSizeScale by viewModel.fontSizeMultiplier.collectAsState()
             val appUpdateInfo by viewModel.appUpdateInfo.collectAsState()
             val showUpdateDialog by viewModel.showUpdateDialog.collectAsState()
+            val isAdminLoggedIn by viewModel.isAdminLoggedIn.collectAsState()
+
             var showMenuSheet by remember { mutableStateOf(false) }
+            var editingPlant by remember { mutableStateOf<MedicinalPlant?>(null) }
+            var showEditPlantDialog by remember { mutableStateOf(false) }
+            var deletingPlant by remember { mutableStateOf<MedicinalPlant?>(null) }
+            var showDeleteConfirmDialog by remember { mutableStateOf(false) }
 
             // RTL for Uyghur Language, LTR for English/Turkish/Chinese
             val layoutDirection = if (currentLanguage == Language.UYGHUR) LayoutDirection.Rtl else LayoutDirection.Ltr
@@ -83,12 +92,44 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
+                    if (showEditPlantDialog) {
+                        EditPlantDialog(
+                            initialPlant = editingPlant,
+                            currentLanguage = currentLanguage,
+                            onDismiss = { showEditPlantDialog = false },
+                            onSave = { plant ->
+                                viewModel.savePlant(plant)
+                                showEditPlantDialog = false
+                            }
+                        )
+                    }
+
+                    if (showDeleteConfirmDialog && deletingPlant != null) {
+                        AdminConfirmDeleteDialog(
+                            plantName = deletingPlant!!.getName(currentLanguage),
+                            onDismiss = { showDeleteConfirmDialog = false },
+                            onConfirmDelete = {
+                                viewModel.deletePlant(deletingPlant!!.id)
+                                showDeleteConfirmDialog = false
+                            }
+                        )
+                    }
+
                     if (selectedPlant != null) {
                         // Fullscreen Detail View
                         PlantDetailScreen(
                             plant = selectedPlant!!,
                             currentLanguage = currentLanguage,
                             isFavorite = favoriteIds.contains(selectedPlant!!.id),
+                            isAdmin = isAdminLoggedIn,
+                            onEditClick = {
+                                editingPlant = selectedPlant
+                                showEditPlantDialog = true
+                            },
+                            onDeleteClick = {
+                                deletingPlant = selectedPlant
+                                showDeleteConfirmDialog = true
+                            },
                             onFavoriteToggle = { viewModel.toggleFavorite(selectedPlant!!.id) },
                             onBackClick = { viewModel.selectPlant(null) }
                         )
@@ -188,7 +229,16 @@ class MainActivity : ComponentActivity() {
                                         isDarkMode = isDarkMode,
                                         onDarkModeToggle = { viewModel.setDarkMode(it) },
                                         fontSizeScale = fontSizeScale,
-                                        onFontScaleChange = { viewModel.setFontScale(it) }
+                                        onFontScaleChange = { viewModel.setFontScale(it) },
+                                        isAdminLoggedIn = isAdminLoggedIn,
+                                        onLoginAdmin = { pass -> viewModel.loginAdmin(pass) },
+                                        onLogoutAdmin = { viewModel.logoutAdmin() },
+                                        onChangeAdminPassword = { oldPass, newPass -> viewModel.changeAdminPassword(oldPass, newPass) },
+                                        onAddNewPlant = {
+                                            editingPlant = null
+                                            showEditPlantDialog = true
+                                        },
+                                        onResetToDefault = { viewModel.resetPlantsToDefault() }
                                     )
                                 }
                             }

@@ -1631,7 +1631,17 @@ object PlantRepository {
         mizajFilter: MizajType? = null,
         propertyFilter: TraditionalProperty? = null
     ): List<MedicinalPlant> {
-        return plantsList.filter { plant ->
+        return searchPlants(plantsList, query, categoryFilter, mizajFilter, propertyFilter)
+    }
+
+    fun searchPlants(
+        sourceList: List<MedicinalPlant>,
+        query: String,
+        categoryFilter: PlantCategory? = null,
+        mizajFilter: MizajType? = null,
+        propertyFilter: TraditionalProperty? = null
+    ): List<MedicinalPlant> {
+        return sourceList.filter { plant ->
             val matchesQuery = plant.matchesQuery(query)
             val matchesCategory = categoryFilter == null || plant.category == categoryFilter
             val matchesMizaj = mizajFilter == null || plant.mizajType == mizajFilter

@@ -68,4 +68,31 @@ class UserPreferencesRepository(context: Context) {
         prefs.edit().remove("KEY_USER_MIZAJ").apply()
         _userMizaj.value = null
     }
+
+    private val _isAdminLoggedIn = MutableStateFlow(false)
+    val isAdminLoggedIn: StateFlow<Boolean> = _isAdminLoggedIn.asStateFlow()
+
+    fun getAdminPassword(): String {
+        return prefs.getString("KEY_ADMIN_PASSWORD", "123456") ?: "123456"
+    }
+
+    fun loginAdmin(password: String): Boolean {
+        if (password == getAdminPassword()) {
+            _isAdminLoggedIn.value = true
+            return true
+        }
+        return false
+    }
+
+    fun logoutAdmin() {
+        _isAdminLoggedIn.value = false
+    }
+
+    fun changeAdminPassword(oldPass: String, newPass: String): Boolean {
+        if (oldPass == getAdminPassword() && newPass.isNotBlank()) {
+            prefs.edit().putString("KEY_ADMIN_PASSWORD", newPass).apply()
+            return true
+        }
+        return false
+    }
 }
