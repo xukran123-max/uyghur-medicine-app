@@ -697,7 +697,7 @@ fun SettingsScreen(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "ئۇيغۇر تېبابىتى مىراسى · v1.3",
+                text = "ئۇيغۇر تېبابىتى مىراسى · v1.2.1",
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     fontSize = 11.sp
