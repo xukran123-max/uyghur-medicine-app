@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
@@ -491,6 +493,8 @@ fun MenuDrawerSheet(
             val navItems = listOf(
                 ScreenNavItem(ScreenTab.HOME, "باش بەت", "Home", "Anasayfa", "首页", Icons.Default.Home),
                 ScreenNavItem(ScreenTab.CATALOG, "ئۆسۈملۈك كۆرسەتكۈچى", "Herb Catalog", "Bitki Kataloğu", "草本典籍", Icons.Default.LocalPharmacy),
+                ScreenNavItem(ScreenTab.ASSISTANT, "سۈنئىي ئەقىل ھەكىم", "AI Hakim (Assistant)", "AI Hekim (Asistan)", "维医AI助手", Icons.Default.AutoAwesome),
+                ScreenNavItem(ScreenTab.CALENDAR, "كالىندار", "Calendar", "Takvim", "日历", Icons.Default.CalendarMonth),
                 ScreenNavItem(ScreenTab.MIZAJ_QUIZ, "9 تۈر بويىچە ئانالىز", "9-Category Analysis", "9 Maddelik Analiz", "9项体质辨识", Icons.Default.Psychology),
                 ScreenNavItem(ScreenTab.SETTINGS, "تەڭشەك ۋە تىل", "Settings & Language", "Ayarlar ve Dil", "设置与语言", Icons.Default.Settings)
             )

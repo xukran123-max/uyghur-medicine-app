@@ -23,6 +23,7 @@ import com.example.data.model.Language
 import com.example.ui.components.BottomNavBar
 import com.example.ui.components.MenuDrawerSheet
 import com.example.ui.components.TopBar
+import com.example.ui.screens.AssistantScreen
 import com.example.ui.screens.CalendarScreen
 import com.example.ui.screens.CatalogScreen
 import com.example.ui.screens.FavoritesScreen
@@ -116,7 +117,8 @@ class MainActivity : ComponentActivity() {
                                         onFavoriteToggle = { viewModel.toggleFavorite(it) },
                                         onPlantClick = { viewModel.selectPlant(it) },
                                         onSeeAllClick = { viewModel.selectTab(ScreenTab.CATALOG) },
-                                        onStartQuizClick = { viewModel.selectTab(ScreenTab.MIZAJ_QUIZ) }
+                                        onStartQuizClick = { viewModel.selectTab(ScreenTab.MIZAJ_QUIZ) },
+                                        onAssistantClick = { viewModel.selectTab(ScreenTab.ASSISTANT) }
                                     )
 
                                     ScreenTab.CATALOG -> CatalogScreen(
@@ -133,6 +135,10 @@ class MainActivity : ComponentActivity() {
                                         favoriteIds = favoriteIds,
                                         onFavoriteToggle = { viewModel.toggleFavorite(it) },
                                         onPlantClick = { viewModel.selectPlant(it) }
+                                    )
+
+                                    ScreenTab.ASSISTANT -> AssistantScreen(
+                                        currentLanguage = currentLanguage
                                     )
 
                                     ScreenTab.CALENDAR -> CalendarScreen(

@@ -2,6 +2,7 @@ package com.example.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalPharmacy
@@ -52,12 +53,12 @@ fun BottomNavBar(
                 icon = Icons.Default.LocalPharmacy
             ),
             TabItem(
-                tab = ScreenTab.CALENDAR,
-                titleUy = "كالىندار",
-                titleEn = "Calendar",
-                titleTr = "Takvim",
-                titleZh = "日历",
-                icon = Icons.Default.CalendarMonth
+                tab = ScreenTab.ASSISTANT,
+                titleUy = "سۈنئىي ئەقىل",
+                titleEn = "AI Hakim",
+                titleTr = "AI Hekim",
+                titleZh = "AI问诊",
+                icon = Icons.Default.AutoAwesome
             ),
             TabItem(
                 tab = ScreenTab.MIZAJ_QUIZ,

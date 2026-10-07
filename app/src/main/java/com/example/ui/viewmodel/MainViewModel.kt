@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 enum class ScreenTab {
-    HOME, CATALOG, CALENDAR, MIZAJ_QUIZ, FAVORITES, SETTINGS
+    HOME, CATALOG, ASSISTANT, CALENDAR, MIZAJ_QUIZ, FAVORITES, SETTINGS
 }
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
