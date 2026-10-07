@@ -198,10 +198,10 @@ fun HomeScreen(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = when (currentLanguage) {
-                                    Language.UYGHUR -> "سۈنئىي ئەقىل ھەكىم بىلەن پاراڭلىشىڭ"
-                                    Language.TURKISH -> "AI Hekim ile Danışın"
-                                    Language.ENGLISH -> "Consult Uyghur AI Herbalist"
-                                    Language.CHINESE -> "咨询维吾尔医学AI助手"
+                                    Language.UYGHUR -> "ھەكىم بىلەن پاراڭلىشىڭ"
+                                    Language.TURKISH -> "Hekim ile Görüşün"
+                                    Language.ENGLISH -> "Consult the Hakim"
+                                    Language.CHINESE -> "与维医医师交流"
                                 },
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 14.sp,

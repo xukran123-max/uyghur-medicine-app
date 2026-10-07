@@ -1,6 +1,7 @@
 package com.example.ui.viewmodel
 
 import android.app.Application
+import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.assistant.AssistantRepository
@@ -12,10 +13,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AssistantViewModel(application: Application) : AndroidViewModel(application) {
 
+    companion object {
+        const val MAX_DAILY_QUESTIONS = 10
+        private const val PREFS_NAME = "assistant_limits_prefs"
+        private const val KEY_LAST_DATE = "last_question_date"
+        private const val KEY_COUNT = "daily_question_count"
+    }
+
     private val repository = AssistantRepository()
+    private val prefs = application.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val messages: StateFlow<List<ChatMessage>> = _messages.asStateFlow()
@@ -26,7 +38,53 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage: StateFlow<String?> = _errorMessage.asStateFlow()
 
+    private val _showLimitReachedDialog = MutableStateFlow(false)
+    val showLimitReachedDialog: StateFlow<Boolean> = _showLimitReachedDialog.asStateFlow()
+
+    private val _todayQuestionCount = MutableStateFlow(0)
+    val todayQuestionCount: StateFlow<Int> = _todayQuestionCount.asStateFlow()
+
     private var streamJob: Job? = null
+
+    init {
+        refreshDailyCount()
+    }
+
+    private fun getTodayDateString(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        return sdf.format(Date())
+    }
+
+    private fun refreshDailyCount(): Int {
+        val today = getTodayDateString()
+        val lastDate = prefs.getString(KEY_LAST_DATE, "")
+        val count = if (lastDate == today) {
+            prefs.getInt(KEY_COUNT, 0)
+        } else {
+            0
+        }
+        _todayQuestionCount.value = count
+        return count
+    }
+
+    private fun incrementDailyCount() {
+        val today = getTodayDateString()
+        val current = refreshDailyCount()
+        val next = current + 1
+        prefs.edit()
+            .putString(KEY_LAST_DATE, today)
+            .putInt(KEY_COUNT, next)
+            .apply()
+        _todayQuestionCount.value = next
+    }
+
+    fun dismissLimitDialog() {
+        _showLimitReachedDialog.value = false
+    }
+
+    fun openLimitDialog() {
+        _showLimitReachedDialog.value = true
+    }
 
     fun getSuggestions(language: Language): List<String> = when (language) {
         Language.UYGHUR -> listOf(
@@ -58,6 +116,16 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
     fun sendMessage(input: String, language: Language) {
         val trimmed = input.trim()
         if (trimmed.isEmpty() || _isStreaming.value) return
+
+        // Check daily question limit (max 10 questions per day)
+        val currentCount = refreshDailyCount()
+        if (currentCount >= MAX_DAILY_QUESTIONS) {
+            _showLimitReachedDialog.value = true
+            return
+        }
+
+        // Increment count
+        incrementDailyCount()
 
         _errorMessage.value = null
 
@@ -123,7 +191,7 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
                                 val currentAssistant = currentList[lastIndex]
                                 if (currentAssistant.content.isEmpty()) {
                                     val errText = when (language) {
-                                        Language.UYGHUR -> "ھازىر سۈنئىي ئەقىلگە ئۇلانغىلى بولمىدى. قايتا سىناڭ."
+                                        Language.UYGHUR -> "ھازىر ياردەمچىگە ئۇلانغىلى بولمىدى. قايتا سىناڭ."
                                         Language.TURKISH -> "Şu anda asistana bağlanılamadı. Lütfen tekrar deneyiniz."
                                         Language.ENGLISH -> "Could not connect to the assistant. Please try again."
                                         Language.CHINESE -> "连接失败，请稍后重试。"

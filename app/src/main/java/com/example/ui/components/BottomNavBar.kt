@@ -54,10 +54,10 @@ fun BottomNavBar(
             ),
             TabItem(
                 tab = ScreenTab.ASSISTANT,
-                titleUy = "سۈنئىي ئەقىل",
-                titleEn = "AI Hakim",
-                titleTr = "AI Hekim",
-                titleZh = "AI问诊",
+                titleUy = "ھەكىم",
+                titleEn = "Hakim",
+                titleTr = "Hekim",
+                titleZh = "医师",
                 icon = Icons.Default.AutoAwesome
             ),
             TabItem(

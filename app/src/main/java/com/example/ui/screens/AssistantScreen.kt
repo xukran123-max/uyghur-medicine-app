@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material.icons.filled.LocalPharmacy
 import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -42,6 +43,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -72,6 +74,8 @@ fun AssistantScreen(
     val context = LocalContext.current
     val messages by viewModel.messages.collectAsState()
     val isStreaming by viewModel.isStreaming.collectAsState()
+    val showLimitDialog by viewModel.showLimitReachedDialog.collectAsState()
+    val todayCount by viewModel.todayQuestionCount.collectAsState()
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
 
@@ -82,11 +86,126 @@ fun AssistantScreen(
         }
     }
 
+    // Daily Limit Contact Dialog (WhatsApp / Instagram)
+    if (showLimitDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.dismissLimitDialog() },
+            title = {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.ErrorOutline,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(24.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = when (currentLanguage) {
+                            Language.UYGHUR -> "بۈگۈنلۈك سوئال چېكى توشتى"
+                            Language.TURKISH -> "Günlük Soru Sınırına Ulaşıldı"
+                            Language.ENGLISH -> "Daily Question Limit Reached"
+                            Language.CHINESE -> "今日咨询次数已达上限"
+                        },
+                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
+            },
+            text = {
+                Column {
+                    Text(
+                        text = when (currentLanguage) {
+                            Language.UYGHUR -> "سىز بۈگۈن ئەڭ يۇقىرى چەك بولغان 10 قېتىملىق سوئال سوراش پۇرسىتىنى ئىشلىتىپ بولدىڭىز.\n\nھەكىم بىلەن داۋاملىق بىۋاسىتە پاراڭلىشىش ۋە تەپسىلىي مەسلىھەت سوراش ئۈچۈن، WhatsApp ياكى Instagram ئارقىلىق بىز بىلەن ئالاقىلاشسىڭىز بولىدۇ:"
+                            Language.TURKISH -> "Bugün için belirlenen 10 soru hakkınızı doldurdunuz.\n\nHekimle doğrudan görüşmek veya danışmak için WhatsApp veya Instagram üzerinden bize ulaşabilirsiniz:"
+                            Language.ENGLISH -> "You have reached your daily limit of 10 questions.\n\nTo continue consulting directly with the Hakim, you can message us via WhatsApp or Instagram:"
+                            Language.CHINESE -> "您今日的10次咨询次数已达上限。\n\n如需继续深入沟通或联系医师，欢迎通过WhatsApp或Instagram直接与我们联系："
+                        },
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // WhatsApp Button
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable {
+                                try {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/+905551609999"))
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            },
+                        color = Color(0xFF25D366)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "💬 WhatsApp (+90 555 160 9999)",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    // Instagram Button
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(RoundedCornerShape(12.dp))
+                            .clickable {
+                                try {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/uygur_tibbi"))
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            },
+                        color = Color(0xFFE1306C)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = "📷 Instagram (@uygur_tibbi)",
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 14.sp
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { viewModel.dismissLimitDialog() }) {
+                    Text(
+                        text = when (currentLanguage) {
+                            Language.UYGHUR -> "ياپ"
+                            Language.TURKISH -> "Kapat"
+                            Language.ENGLISH -> "Close"
+                            Language.CHINESE -> "关闭"
+                        }
+                    )
+                }
+            }
+        )
+    }
+
     val headerTitle = when (currentLanguage) {
-        Language.UYGHUR -> "سۈنئىي ئەقىل ھەكىم"
-        Language.TURKISH -> "AI Hekim (Asistan)"
-        Language.ENGLISH -> "AI Hakim (Herbalist)"
-        Language.CHINESE -> "维医AI健康助手"
+        Language.UYGHUR -> "ھەكىم بىلەن پاراڭلىشىڭ"
+        Language.TURKISH -> "Hekim ile Görüşün"
+        Language.ENGLISH -> "Consult the Hakim"
+        Language.CHINESE -> "与维医医师交流"
     }
 
     val headerSubtitle = when (currentLanguage) {
@@ -159,17 +278,29 @@ fun AssistantScreen(
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Spacer(modifier = Modifier.width(6.dp))
+                            // Daily counter badge
                             Box(
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(4.dp))
-                                    .background(Color(0xFF27AE60).copy(alpha = 0.15f))
+                                    .background(
+                                        if (todayCount >= 10)
+                                            MaterialTheme.colorScheme.errorContainer
+                                        else
+                                            Color(0xFF27AE60).copy(alpha = 0.15f)
+                                    )
+                                    .clickable {
+                                        if (todayCount >= 10) viewModel.openLimitDialog()
+                                    }
                                     .padding(horizontal = 6.dp, vertical = 2.dp)
                             ) {
                                 Text(
-                                    text = if (isStreaming) "..." else "ONLINE",
+                                    text = "$todayCount/10",
                                     fontSize = 9.sp,
                                     fontWeight = FontWeight.Bold,
-                                    color = Color(0xFF27AE60)
+                                    color = if (todayCount >= 10)
+                                        MaterialTheme.colorScheme.error
+                                    else
+                                        Color(0xFF27AE60)
                                 )
                             }
                         }
@@ -241,10 +372,10 @@ fun AssistantScreen(
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     text = when (currentLanguage) {
-                                        Language.UYGHUR -> "مەن ئۇيغۇر تېبابىتى ھەكىمى ئابدۇشۈكۈر قىياپىتىدىكى سۈنئىي ئەقىل ياردەمچىڭىز. سالامەتلىك، مىزاج، دورىلىق ئۆسۈملۈكلەر توغرىسىدا سوئاللىرىڭىز بولسا يېزىڭ."
-                                        Language.TURKISH -> "Geleneksel Uygur Tıbbı ilkelerine göre sağlık, mizaç ve şifalı otlar hakkında sorularınızı yanıtlayabilirim."
-                                        Language.ENGLISH -> "I can answer questions regarding health, body temperament (mizaj), and herbal remedies based on traditional Uyghur medicine."
-                                        Language.CHINESE -> "您可以就身体状况、体质类型、草药功效等提出问题，我将根据维医知识为您解答。"
+                                        Language.UYGHUR -> "مەن ئۇيغۇر تېبابىتى ھەكىمى ئابدۇشۈكۈر قىياپىتىدىكى ياردەمچىڭىز. سالامەتلىك، مىزاج، دورىلىق ئۆسۈملۈكلەر توغرىسىدا سوئاللىرىڭىز بولسا مەرھەمەت (كۈنىگە 10 سوئال)."
+                                        Language.TURKISH -> "Geleneksel Uygur Tıbbı ilkelerine göre sağlık, mizaç ve şifalı otlar hakkında sorularınızı yanıtlayabilirim (Günde 10 soru)."
+                                        Language.ENGLISH -> "I can answer questions regarding health, body temperament (mizaj), and herbal remedies based on traditional Uyghur medicine (10 questions daily)."
+                                        Language.CHINESE -> "您可以就身体状况、体质类型、草药功效等提出问题，我将根据维医知识为您解答（每日限10次）。"
                                     },
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurface
