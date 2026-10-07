@@ -10,6 +10,8 @@ import com.example.data.model.PlantCategory
 import com.example.data.model.PlantRepository
 import com.example.data.model.TraditionalProperty
 import com.example.data.repository.UserPreferencesRepository
+import com.example.data.update.AppUpdateChecker
+import com.example.data.update.AppUpdateInfo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +33,30 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     val fontSizeMultiplier: StateFlow<Float> = userPrefsRepo.fontSizeMultiplier
     val favoriteIds: StateFlow<Set<Int>> = userPrefsRepo.favoriteIds
     val userMizaj: StateFlow<MizajType?> = userPrefsRepo.userMizaj
+
+    private val _appUpdateInfo = MutableStateFlow<AppUpdateInfo?>(null)
+    val appUpdateInfo: StateFlow<AppUpdateInfo?> = _appUpdateInfo.asStateFlow()
+
+    private val _showUpdateDialog = MutableStateFlow(false)
+    val showUpdateDialog: StateFlow<Boolean> = _showUpdateDialog.asStateFlow()
+
+    init {
+        checkForUpdates()
+    }
+
+    fun checkForUpdates() {
+        viewModelScope.launch {
+            val info = AppUpdateChecker.checkUpdate(currentLanguage.value)
+            if (info != null && info.shouldUpdate) {
+                _appUpdateInfo.value = info
+                _showUpdateDialog.value = true
+            }
+        }
+    }
+
+    fun dismissUpdateDialog() {
+        _showUpdateDialog.value = false
+    }
 
     private val _currentTab = MutableStateFlow(ScreenTab.HOME)
     val currentTab: StateFlow<ScreenTab> = _currentTab.asStateFlow()

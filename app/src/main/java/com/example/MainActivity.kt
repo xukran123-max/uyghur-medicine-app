@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.example.data.model.Language
+import com.example.ui.components.AppUpdateDialog
 import com.example.ui.components.BottomNavBar
 import com.example.ui.components.MenuDrawerSheet
 import com.example.ui.components.TopBar
@@ -57,6 +58,8 @@ class MainActivity : ComponentActivity() {
             val favoriteIds by viewModel.favoriteIds.collectAsState()
             val userMizaj by viewModel.userMizaj.collectAsState()
             val fontSizeScale by viewModel.fontSizeMultiplier.collectAsState()
+            val appUpdateInfo by viewModel.appUpdateInfo.collectAsState()
+            val showUpdateDialog by viewModel.showUpdateDialog.collectAsState()
             var showMenuSheet by remember { mutableStateOf(false) }
 
             // RTL for Uyghur Language, LTR for English/Turkish/Chinese
@@ -69,6 +72,14 @@ class MainActivity : ComponentActivity() {
                             currentLanguage = currentLanguage,
                             onDismiss = { showMenuSheet = false },
                             onNavigateTab = { tab -> viewModel.selectTab(tab) }
+                        )
+                    }
+
+                    if (showUpdateDialog && appUpdateInfo != null) {
+                        AppUpdateDialog(
+                            updateInfo = appUpdateInfo!!,
+                            currentLanguage = currentLanguage,
+                            onDismiss = { viewModel.dismissUpdateDialog() }
                         )
                     }
 
