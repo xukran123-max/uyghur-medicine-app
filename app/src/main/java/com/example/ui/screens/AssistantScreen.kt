@@ -223,7 +223,7 @@ fun AssistantScreen(
     }
 
     val disclaimerText = when (currentLanguage) {
-        Language.UYGHUR -> "⚠️ جاۋابلار پەقەت پايدىلىنىش ئۈچۈن بولۇپ، كەسپىي دوختۇرنىڭ كۆرىكى ئورنىنى باسمايدۇ."
+        Language.UYGHUR -> "⚠️ جاۋابلار پەقەت پايدىلىنىش ئۈچۈن بولۇپ، ئىشلىتىشتىن بۇرۇن چوقۇم مەسلېھەت سوراڭ."
         Language.TURKISH -> "⚠️ Yanıtlar yalnızca bilgilendirme amaçlıdır; doktor tavsiyesi yerine geçmez."
         Language.ENGLISH -> "⚠️ For informational purposes only. Consult a physician for medical advice."
         Language.CHINESE -> "⚠️ 本回答仅供参考，不作为临床诊疗依据，重症请及时就医。"
@@ -372,7 +372,7 @@ fun AssistantScreen(
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     text = when (currentLanguage) {
-                                        Language.UYGHUR -> "مەن ئۇيغۇر تېبابىتى ھەكىمى ئابدۇشۈكۈر قىياپىتىدىكى ياردەمچىڭىز. سالامەتلىك، مىزاج، دورىلىق ئۆسۈملۈكلەر توغرىسىدا سوئاللىرىڭىز بولسا مەرھەمەت (كۈنىگە 10 سوئال)."
+                                        Language.UYGHUR -> "مەن ئۇيغۇر تېبابىتى ھەكىمى تىۋىپ  ياردەمچىڭىز  ئابدۇشۈكۈر . سالامەتلىك، مىزاج، دورىلىق ئۆسۈملۈكلەر توغرىسىدا سوئاللىرىڭىز بولسا مەرھەمەت (كۈنىگە 10 سوئال)."
                                         Language.TURKISH -> "Geleneksel Uygur Tıbbı ilkelerine göre sağlık, mizaç ve şifalı otlar hakkında sorularınızı yanıtlayabilirim (Günde 10 soru)."
                                         Language.ENGLISH -> "I can answer questions regarding health, body temperament (mizaj), and herbal remedies based on traditional Uyghur medicine (10 questions daily)."
                                         Language.CHINESE -> "您可以就身体状况、体质类型、草药功效等提出问题，我将根据维医知识为您解答（每日限10次）。"
