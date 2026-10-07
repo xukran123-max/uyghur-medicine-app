@@ -66,17 +66,17 @@ fun SettingsScreen(
     }
 
     val headerSub = when (currentLanguage) {
-        Language.UYGHUR -> "4 خىل تىل تەڭشىكى، كېچە كۈندۈز ئەندىزىسى ۋە خەت چوڭلۇقى"
-        Language.ENGLISH -> "4 languages, Light/Dark mode & Font scaling"
-        Language.TURKISH -> "4 dil seçeneği, Gece/Gündüz modu ve Yazı boyutu"
-        Language.CHINESE -> "4种语言支持、日夜模式及字体调控"
+        Language.UYGHUR -> "3 خىل تىل تەڭشىكى، كېچە كۈندۈز ئەندىزىسى ۋە خەت چوڭلۇقى"
+        Language.ENGLISH -> "3 languages, Light/Dark mode & Font scaling"
+        Language.TURKISH -> "3 dil seçeneği, Gece/Gündüz modu ve Yazı boyutu"
+        Language.CHINESE -> "3种语言支持、日夜模式及字体调控"
     }
 
     val langSectionTitle = when (currentLanguage) {
-        Language.UYGHUR -> "تىل تەڭشىكى (4 خىل تىل)"
-        Language.ENGLISH -> "Language (4 Languages)"
-        Language.TURKISH -> "Dil Seçimi (4 Dil)"
-        Language.CHINESE -> "语言选择 (4种语言)"
+        Language.UYGHUR -> "تىل تەڭشىكى (3 خىل تىل)"
+        Language.ENGLISH -> "Language (3 Languages)"
+        Language.TURKISH -> "Dil Seçimi (3 Dil)"
+        Language.CHINESE -> "语言选择 (3种语言)"
     }
 
     val themeSectionTitle = when (currentLanguage) {
@@ -188,7 +188,8 @@ fun SettingsScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                Language.entries.forEach { lang ->
+                val selectableLanguages = listOf(Language.UYGHUR, Language.TURKISH, Language.ENGLISH)
+                selectableLanguages.forEach { lang ->
                     val isSelected = currentLanguage == lang
                     Row(
                         modifier = Modifier
