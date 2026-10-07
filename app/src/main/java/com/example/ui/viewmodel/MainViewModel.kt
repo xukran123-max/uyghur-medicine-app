@@ -51,6 +51,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (_selectedPlant.value?.id == plant.id) {
             _selectedPlant.value = updated.find { it.id == plant.id } ?: plant
         }
+        if (isAdminLoggedIn.value) {
+            viewModelScope.launch {
+                plantsStorageRepo.pushToServer(updated, userPrefsRepo.getAdminPassword())
+            }
+        }
     }
 
     fun deletePlant(plantId: Int) {
@@ -59,12 +64,22 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (_selectedPlant.value?.id == plantId) {
             _selectedPlant.value = null
         }
+        if (isAdminLoggedIn.value) {
+            viewModelScope.launch {
+                plantsStorageRepo.pushToServer(updated, userPrefsRepo.getAdminPassword())
+            }
+        }
     }
 
     fun resetPlantsToDefault() {
         val reset = plantsStorageRepo.resetToDefaults()
         _allPlants.value = reset
         _selectedPlant.value = null
+        if (isAdminLoggedIn.value) {
+            viewModelScope.launch {
+                plantsStorageRepo.pushToServer(reset, userPrefsRepo.getAdminPassword())
+            }
+        }
     }
 
     private val _appUpdateInfo = MutableStateFlow<AppUpdateInfo?>(null)
@@ -75,6 +90,16 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         checkForUpdates()
+        syncPlantsFromServer()
+    }
+
+    fun syncPlantsFromServer() {
+        viewModelScope.launch {
+            val serverPlants = plantsStorageRepo.syncWithServer()
+            if (serverPlants != null && serverPlants.isNotEmpty()) {
+                _allPlants.value = serverPlants
+            }
+        }
     }
 
     fun checkForUpdates() {

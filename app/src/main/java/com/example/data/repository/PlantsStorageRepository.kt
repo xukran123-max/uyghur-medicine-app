@@ -5,14 +5,31 @@ import com.example.data.model.MedicinalPlant
 import com.example.data.model.MizajType
 import com.example.data.model.PlantCategory
 import com.example.data.model.PlantRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 class PlantsStorageRepository(private val context: Context) {
 
     private val storageFile: File
         get() = File(context.filesDir, "custom_plants.json")
+
+    private val httpClient = OkHttpClient.Builder()
+        .followRedirects(true)
+        .followSslRedirects(true)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(15, TimeUnit.SECONDS)
+        .writeTimeout(15, TimeUnit.SECONDS)
+        .build()
+
+    private val syncApiUrl = "https://uyghurmedicine.com/api/app/plants/"
 
     @Synchronized
     fun getPlants(): List<MedicinalPlant> {
@@ -72,6 +89,72 @@ class PlantsStorageRepository(private val context: Context) {
         val defaultList = PlantRepository.plantsList
         saveToFile(defaultList)
         return defaultList
+    }
+
+    /**
+     * Pulls latest plants updates from the server.
+     * Returns true if local list was updated with server data.
+     */
+    suspend fun syncWithServer(): List<MedicinalPlant>? = withContext(Dispatchers.IO) {
+        try {
+            val request = Request.Builder()
+                .url(syncApiUrl)
+                .header("Accept", "application/json")
+                .get()
+                .build()
+
+            val response = httpClient.newCall(request).execute()
+            if (!response.isSuccessful) return@withContext null
+
+            val responseBody = response.body?.string() ?: return@withContext null
+            val json = JSONObject(responseBody)
+            if (json.optBoolean("ok", false) && json.optBoolean("hasCustomPlants", false)) {
+                val plantsArray = json.optJSONArray("plants") ?: return@withContext null
+                val serverPlants = mutableListOf<MedicinalPlant>()
+                for (i in 0 until plantsArray.length()) {
+                    val obj = plantsArray.getJSONObject(i)
+                    serverPlants.add(jsonToPlant(obj))
+                }
+                if (serverPlants.isNotEmpty()) {
+                    saveToFile(serverPlants)
+                    return@withContext serverPlants
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return@withContext null
+    }
+
+    /**
+     * Pushes current local plant list to the server so all other users will receive it.
+     */
+    suspend fun pushToServer(plants: List<MedicinalPlant>, adminPassword: String): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val payload = JSONObject().apply {
+                put("password", adminPassword)
+                val arr = JSONArray()
+                for (p in plants) {
+                    arr.put(plantToJson(p))
+                }
+                put("plants", arr)
+            }
+
+            val mediaType = "application/json; charset=utf-8".toMediaType()
+            val requestBody = payload.toString().toRequestBody(mediaType)
+
+            val request = Request.Builder()
+                .url(syncApiUrl)
+                .header("X-Admin-Password", adminPassword)
+                .post(requestBody)
+                .build()
+
+            val response = httpClient.newCall(request).execute()
+            return@withContext response.isSuccessful
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return@withContext false
+        }
     }
 
     private fun saveToFile(plants: List<MedicinalPlant>) {

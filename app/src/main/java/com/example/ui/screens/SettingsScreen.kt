@@ -82,6 +82,8 @@ fun SettingsScreen(
     var showLoginDialog by remember { mutableStateOf(false) }
     var showChangePassDialog by remember { mutableStateOf(false) }
     var showResetConfirmDialog by remember { mutableStateOf(false) }
+    var secretTapCount by remember { mutableStateOf(0) }
+    var lastTapTime by remember { mutableStateOf(0L) }
 
     val headerTitle = when (currentLanguage) {
         Language.UYGHUR -> "ئىقتىدار ۋە تىل تەڭشىكى"
@@ -569,67 +571,44 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 6. Admin Content Management Section
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = if (isAdminLoggedIn)
-                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
-                else
-                    MaterialTheme.colorScheme.surfaceVariant
-            )
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = "Admin",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-
-                    Text(
-                        text = "باشقۇرغۇچى بۆلۈمى (مەزمۇن تەھرىرلەش)",
-                        style = MaterialTheme.typography.titleSmall.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                if (!isAdminLoggedIn) {
-                    Text(
-                        text = "ئەپتىكى دورىلارنى تەھرىرلەش، يېڭى دورا ياكى رېتسىپ قوشۇش ئۈچۈن مەخپىي نومۇر ئارقىلىق باشقۇرغۇچى ھالىتىگە كىرىڭ (دەسلەپكى پارول: 123456).",
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            lineHeight = 20.sp
-                        )
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Button(
-                        onClick = { showLoginDialog = true },
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
+        // 6. Admin Content Management Section (Shown ONLY when admin is logged in)
+        if (isAdminLoggedIn) {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)
+                )
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Icon(imageVector = Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("🔒 باشقۇرغۇچى كىرىش")
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = "Admin",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+
+                        Text(
+                            text = "باشقۇرغۇچى بۆلۈمى (مەزمۇن باشقۇرۇش)",
+                            style = MaterialTheme.typography.titleSmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
                     }
-                } else {
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
                     Surface(
                         shape = RoundedCornerShape(8.dp),
                         color = Color(0xFFE8F5E9),
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Text(
-                            text = "✅ سىز باشقۇرغۇچى ھالىتىدە. خالىغان دورا تەپسىلاتىغا كىرىپ ✏️ كۇنۇپكىسىنى بېسىپ مەزمۇننى تەھرىرلىسىڭىز، ياكى تۆۋەندىكى كۇنۇپكىدىن يېڭى دورا قوشسىڭىز بولىدۇ.",
+                            text = "✅ سىز باشقۇرغۇچى ھالىتىدە. بارلىق دورا تەپسىلاتىدا ✏️ كۇنۇپكىسى چىقىدۇ. يېڭى دورا قوشسىڭىز ياكى ئۆزگەرتسىڭىز تور ئارقىلىق باشقا ئابونتلارغىمۇ ماس قەدەمدە تارقىتىلىدۇ.",
                             color = Color(0xFF1B5E20),
                             fontSize = 12.sp,
                             modifier = Modifier.padding(10.dp)
@@ -685,10 +664,45 @@ fun SettingsScreen(
                     ) {
                         Icon(imageVector = Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("🔄 بارلىق مەزمۇننى ئەسلىگە كەلتۈرۈش", fontSize = 12.sp)
+                        Text("🔄 ئەسلىگە كەلتۈرۈش", fontSize = 12.sp)
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        // Innocent Footer with Secret 5-Tap trigger for Admin Login
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 12.dp)
+                .clickable(
+                    interactionSource = remember { androidx.compose.foundation.interaction.MutableInteractionSource() },
+                    indication = null
+                ) {
+                    val currentTime = System.currentTimeMillis()
+                    if (currentTime - lastTapTime < 600) {
+                        secretTapCount++
+                    } else {
+                        secretTapCount = 1
+                    }
+                    lastTapTime = currentTime
+
+                    if (secretTapCount >= 5) {
+                        secretTapCount = 0
+                        showLoginDialog = true
+                    }
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "ئۇيغۇر تېبابىتى مىراسى · v1.3",
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    fontSize = 11.sp
+                )
+            )
         }
 
         Spacer(modifier = Modifier.height(24.dp))
