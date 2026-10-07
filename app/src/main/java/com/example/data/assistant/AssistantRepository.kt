@@ -24,9 +24,11 @@ sealed class ChatStreamEvent {
 }
 
 class AssistantRepository(
-    private val baseUrl: String = "https://www.uyghurmedicine.com"
+    private val baseUrl: String = "https://uyghurmedicine.com"
 ) {
     private val client = OkHttpClient.Builder()
+        .followRedirects(true)
+        .followSslRedirects(true)
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
         .writeTimeout(30, TimeUnit.SECONDS)
@@ -52,7 +54,7 @@ class AssistantRepository(
 
         val jsonBody = JSONObject().put("token", "app").toString()
         val request = Request.Builder()
-            .url("$baseUrl/api/chat/session")
+            .url("$baseUrl/api/chat/session/")
             .addHeader("Content-Type", "application/json")
             .addHeader("x-app-client", "uyghurtibabiti")
             .post(jsonBody.toRequestBody("application/json".toMediaType()))
@@ -101,7 +103,7 @@ class AssistantRepository(
         reqObj.put("history", historyArray)
 
         val request = Request.Builder()
-            .url("$baseUrl/api/chat")
+            .url("$baseUrl/api/chat/")
             .addHeader("Content-Type", "application/json")
             .addHeader("x-app-client", "uyghurtibabiti")
             .post(reqObj.toString().toRequestBody("application/json".toMediaType()))

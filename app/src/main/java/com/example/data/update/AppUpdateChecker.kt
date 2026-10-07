@@ -23,11 +23,13 @@ data class AppUpdateInfo(
 object AppUpdateChecker {
 
     private val client = OkHttpClient.Builder()
+        .followRedirects(true)
+        .followSslRedirects(true)
         .connectTimeout(15, TimeUnit.SECONDS)
         .readTimeout(15, TimeUnit.SECONDS)
         .build()
 
-    private const val BASE_URL = "https://www.uyghurmedicine.com/api/app/version"
+    private const val BASE_URL = "https://uyghurmedicine.com/api/app/version/"
 
     suspend fun checkUpdate(language: Language): AppUpdateInfo? = withContext(Dispatchers.IO) {
         try {
