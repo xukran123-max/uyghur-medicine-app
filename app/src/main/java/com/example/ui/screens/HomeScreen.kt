@@ -163,65 +163,6 @@ fun HomeScreen(
                 )
             }
 
-            // AI Hakim Quick Entry Card
-            item(span = { GridItemSpan(2) }) {
-                Surface(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .clickable { onAssistantClick() },
-                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f),
-                    shape = RoundedCornerShape(16.dp)
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(14.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.AutoAwesome,
-                                contentDescription = "AI",
-                                tint = MaterialTheme.colorScheme.onPrimary,
-                                modifier = Modifier.size(24.dp)
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(12.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = when (currentLanguage) {
-                                    Language.UYGHUR -> "ھەكىم بىلەن پاراڭلىشىڭ"
-                                    Language.TURKISH -> "Hekim ile Görüşün"
-                                    Language.ENGLISH -> "Consult the Hakim"
-                                    Language.CHINESE -> "与维医医师交流"
-                                },
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(
-                                text = when (currentLanguage) {
-                                    Language.UYGHUR -> "كېسەللىك، مىزاج ۋە تەبىئىي داۋالاش توغرىسىدا سوئال سوراڭ →"
-                                    Language.TURKISH -> "Mizaç, belirtiler ve bitkisel çözümler hakkında sorun →"
-                                    Language.ENGLISH -> "Ask about symptoms, temperaments & remedies →"
-                                    Language.CHINESE -> "关于体质辨析与草本调理的即时解答 →"
-                                },
-                                fontSize = 11.sp,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
-                }
-            }
 
             // Category Circles
             item(span = { GridItemSpan(2) }) {
