@@ -60,7 +60,6 @@ fun FavoritesScreen(
                         Language.UYGHUR -> "ساقلانغان دورىلىق ئۆسۈملۈكلەر"
                         Language.ENGLISH -> "Saved Remedies"
                         Language.TURKISH -> "Kaydedilen Bitkiler"
-                        Language.CHINESE -> "我的收藏草本"
                     },
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
@@ -91,7 +90,6 @@ fun FavoritesScreen(
                             Language.UYGHUR -> "ساقلانغان دورىلىق ئۆسۈملۈك يوق"
                             Language.ENGLISH -> "No saved remedies yet"
                             Language.TURKISH -> "Henüz kaydedilmiş bitki yok"
-                            Language.CHINESE -> "暂无收藏的草本资料"
                         },
                         style = MaterialTheme.typography.bodyLarge.copy(
                             color = MaterialTheme.colorScheme.onSurfaceVariant

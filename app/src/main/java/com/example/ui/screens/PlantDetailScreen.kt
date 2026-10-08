@@ -170,6 +170,7 @@ fun PlantDetailScreen(
                 if (showZoomDialog) {
                     ZoomableImageViewerDialog(
                         imageResId = detailImageRes,
+                        imageUrl = plant.imageUrl,
                         title = plant.getName(currentLanguage),
                         currentLanguage = currentLanguage,
                         onDismiss = { showZoomDialog = false }
@@ -185,21 +186,31 @@ fun PlantDetailScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(180.dp)
+                            .height(210.dp)
                             .clip(RoundedCornerShape(18.dp))
-                            .background(MaterialTheme.colorScheme.primaryContainer)
+                            .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f))
                             .clickable { showZoomDialog = true },
                         contentAlignment = Alignment.Center
                     ) {
+                        val contentScale = if (plant.imageFit == "cover") ContentScale.Crop else ContentScale.Fit
                         ZoomableContainer(
                             modifier = Modifier.fillMaxSize()
                         ) { _, _ ->
-                            Image(
-                                painter = painterResource(id = detailImageRes),
-                                contentDescription = plant.getName(currentLanguage),
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
+                            if (!plant.imageUrl.isNullOrBlank()) {
+                                coil.compose.AsyncImage(
+                                    model = plant.imageUrl,
+                                    contentDescription = plant.getName(currentLanguage),
+                                    contentScale = contentScale,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            } else {
+                                Image(
+                                    painter = painterResource(id = detailImageRes),
+                                    contentDescription = plant.getName(currentLanguage),
+                                    contentScale = ContentScale.Fit,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
                         }
 
                         // Pinch Zoom badge in top-right
@@ -226,7 +237,6 @@ fun PlantDetailScreen(
                                         Language.UYGHUR -> "ئىككى بارماقتا كېڭەيتىڭ"
                                         Language.ENGLISH -> "Pinch to zoom"
                                         Language.TURKISH -> "Çift parmakla büyüt"
-                                        Language.CHINESE -> "双指放大"
                                     },
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = Color.White,
@@ -305,7 +315,6 @@ fun PlantDetailScreen(
                                 Language.UYGHUR -> "تەسىر قىلىدىغان ئەزا: "
                                 Language.ENGLISH -> "Target Organs: "
                                 Language.TURKISH -> "Etki Eden Organlar: "
-                                Language.CHINESE -> "主治脏腑: "
                             }}${plant.getOrganTarget(currentLanguage)}",
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Medium,
@@ -328,7 +337,6 @@ fun PlantDetailScreen(
                                     Language.UYGHUR -> "🌐 دورا نامى (4 خىل تىلدا):"
                                     Language.TURKISH -> "🌐 Bitki Adı (4 Dilde):"
                                     Language.ENGLISH -> "🌐 Plant Name (4 Languages):"
-                                    Language.CHINESE -> "🌐 药材名称（4种语言对照）："
                                 },
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold,
@@ -353,7 +361,6 @@ fun PlantDetailScreen(
                     Language.UYGHUR -> "خۇسۇسىيىتى ۋە پايدىسى"
                     Language.ENGLISH -> "Health Benefits & Efficacy"
                     Language.TURKISH -> "Faydaları ve Şifası"
-                    Language.CHINESE -> "药理功效与主治"
                 },
                 icon = Icons.Default.Info,
                 iconTint = MaterialTheme.colorScheme.primary,
@@ -368,7 +375,6 @@ fun PlantDetailScreen(
                     Language.UYGHUR -> "ئىشلىتىش ئۇسۇلى ۋە رېتسېپى"
                     Language.ENGLISH -> "Usage & Preparations"
                     Language.TURKISH -> "Kullanım Şekli ve Tarif"
-                    Language.CHINESE -> "用法用量与传统方剂"
                 },
                 icon = Icons.Default.LocalPharmacy,
                 iconTint = MaterialTheme.colorScheme.secondary,
@@ -383,7 +389,6 @@ fun PlantDetailScreen(
                     Language.UYGHUR -> "ئېھتىيات قىلىدىغان ئىشلار"
                     Language.ENGLISH -> "Cautions & Contraindications"
                     Language.TURKISH -> "Dikkat Edilecek Hususlar"
-                    Language.CHINESE -> "用药禁忌与注意事项"
                 },
                 icon = Icons.Default.Warning,
                 iconTint = MaterialTheme.colorScheme.tertiary,
@@ -419,7 +424,6 @@ fun PlantDetailScreen(
                                 Language.UYGHUR -> "تىز ئۇلانمىلار"
                                 Language.ENGLISH -> "Quick Links"
                                 Language.TURKISH -> "Hızlı Bağlantılar"
-                                Language.CHINESE -> "快捷链接"
                             },
                             style = MaterialTheme.typography.titleMedium.copy(
                                 fontWeight = FontWeight.Bold,
@@ -467,7 +471,6 @@ fun PlantDetailScreen(
                                             Language.UYGHUR -> "مەھسۇلاتلار"
                                             Language.ENGLISH -> "Products"
                                             Language.TURKISH -> "Ürünler"
-                                            Language.CHINESE -> "商城产品"
                                         },
                                         style = MaterialTheme.typography.labelMedium.copy(
                                             fontWeight = FontWeight.Bold,
@@ -520,7 +523,6 @@ fun PlantDetailScreen(
                                             Language.UYGHUR -> "دەرھال ئالاقىلىشىڭ"
                                             Language.ENGLISH -> "Contact Us"
                                             Language.TURKISH -> "Hemen İletişime Geçin"
-                                            Language.CHINESE -> "立即联系"
                                         },
                                         style = MaterialTheme.typography.labelMedium.copy(
                                             fontWeight = FontWeight.Bold,
@@ -559,7 +561,6 @@ fun PlantDetailScreen(
                             Language.UYGHUR -> "باشقا تىللاردىكى نامى"
                             Language.ENGLISH -> "Names in Other Languages"
                             Language.TURKISH -> "Diğer Dillerdeki Adı"
-                            Language.CHINESE -> "其他语言名称"
                         },
                         style = MaterialTheme.typography.titleSmall.copy(
                             fontWeight = FontWeight.Bold,

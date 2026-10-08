@@ -42,7 +42,6 @@ class AssistantRepository(
             Language.UYGHUR -> "ug"
             Language.TURKISH -> "tr"
             Language.ENGLISH -> "us"
-            Language.CHINESE -> "us"
         }
     }
 

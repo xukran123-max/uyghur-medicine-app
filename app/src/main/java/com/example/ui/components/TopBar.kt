@@ -99,7 +99,6 @@ fun TopBar(
                             Language.UYGHUR -> "ئۇيغۇر تىبابىتى"
                             Language.ENGLISH -> "Uyghur Medicine"
                             Language.TURKISH -> "Uygur Tıbbı"
-                            Language.CHINESE -> "维吾尔医药"
                         },
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,

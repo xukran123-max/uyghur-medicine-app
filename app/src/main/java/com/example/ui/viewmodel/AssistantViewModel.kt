@@ -105,12 +105,6 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
             "Herbs for restful sleep",
             "Traditional herbs to boost immunity"
         )
-        Language.CHINESE -> listOf(
-            "头痛有哪些传统草本疗法？",
-            "胃寒如何调理身体？",
-            "改善失眠的草药有哪些？",
-            "增强免疫力的天然药材"
-        )
     }
 
     fun sendMessage(input: String, language: Language) {
@@ -194,7 +188,6 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
                                         Language.UYGHUR -> "ھازىر ياردەمچىگە ئۇلانغىلى بولمىدى. قايتا سىناڭ."
                                         Language.TURKISH -> "Şu anda asistana bağlanılamadı. Lütfen tekrar deneyiniz."
                                         Language.ENGLISH -> "Could not connect to the assistant. Please try again."
-                                        Language.CHINESE -> "连接失败，请稍后重试。"
                                     }
                                     currentList[lastIndex] = currentAssistant.copy(
                                         content = errText,

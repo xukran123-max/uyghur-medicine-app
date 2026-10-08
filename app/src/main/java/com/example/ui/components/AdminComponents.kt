@@ -304,6 +304,8 @@ fun EditPlantDialog(
     var cautionUy by remember { mutableStateOf(initialPlant?.cautionUy ?: "") }
     var organTargetUy by remember { mutableStateOf(initialPlant?.organTargetUy ?: "") }
     var iconEmoji by remember { mutableStateOf(initialPlant?.iconEmoji ?: "🌿") }
+    var imageUrl by remember { mutableStateOf(initialPlant?.imageUrl ?: "") }
+    var imageFit by remember { mutableStateOf(initialPlant?.imageFit ?: "contain") }
     var isFeatured by remember { mutableStateOf(initialPlant?.isFeatured ?: false) }
 
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -487,6 +489,16 @@ fun EditPlantDialog(
                     Text(text = "كۆرۈنۈشى: $iconEmoji", fontSize = 24.sp)
                 }
 
+                Spacer(modifier = Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = imageUrl,
+                    onValueChange = { imageUrl = it },
+                    label = { Text("📷 رەسىم ئۇلانمىسى (Image URL)") },
+                    placeholder = { Text("https://... ياكى /images/plants/...") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
                 if (errorMessage != null) {
                     Spacer(modifier = Modifier.height(10.dp))
                     Text(text = errorMessage!!, color = MaterialTheme.colorScheme.error, fontWeight = FontWeight.Bold)
@@ -547,6 +559,8 @@ fun EditPlantDialog(
                                 organTargetZh = initialPlant?.organTargetZh ?: "",
                                 iconEmoji = iconEmoji.ifEmpty { "🌿" },
                                 imageResId = initialPlant?.imageResId,
+                                imageUrl = imageUrl.trim().ifEmpty { null },
+                                imageFit = imageFit,
                                 isFeatured = isFeatured
                             )
                             onSave(savedPlant)

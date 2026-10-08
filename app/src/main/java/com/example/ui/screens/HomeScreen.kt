@@ -74,21 +74,18 @@ fun HomeScreen(
         Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەردىن ئىزدەڭ..."
         Language.ENGLISH -> "Search Uyghur medicinal herbs..."
         Language.TURKISH -> "Şifalı bitkiler arasında arayın..."
-        Language.CHINESE -> "在维药草本典籍中搜索..."
     }
 
     val sectionTitle = when (currentLanguage) {
         Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەر"
         Language.ENGLISH -> "Medicinal Herbs & Plants"
         Language.TURKISH -> "Şifalı Bitkiler"
-        Language.CHINESE -> "药用草本植物"
     }
 
     val seeAllText = when (currentLanguage) {
         Language.UYGHUR -> "ھەممىسى"
         Language.ENGLISH -> "All"
         Language.TURKISH -> "Tümü"
-        Language.CHINESE -> "全部"
     }
 
     Column(

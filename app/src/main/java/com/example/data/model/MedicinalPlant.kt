@@ -31,48 +31,44 @@ data class MedicinalPlant(
     val organTargetZh: String,
     val iconEmoji: String,
     val imageResId: Int? = null,
+    val imageUrl: String? = null,
+    val imageFit: String? = "contain",
     val isFeatured: Boolean = false
 ) {
     fun getName(language: Language): String = when (language) {
         Language.UYGHUR -> nameUy
-        Language.ENGLISH -> nameEn
         Language.TURKISH -> nameTr
-        Language.CHINESE -> nameZh
+        Language.ENGLISH -> nameEn
     }
 
     fun getMizajDegree(language: Language): String = when (language) {
         Language.UYGHUR -> mizajDegreeUy
-        Language.ENGLISH -> mizajDegreeEn
         Language.TURKISH -> mizajDegreeTr
-        Language.CHINESE -> mizajDegreeZh
+        Language.ENGLISH -> mizajDegreeEn
     }
 
     fun getBenefits(language: Language): String = when (language) {
         Language.UYGHUR -> benefitsUy
-        Language.ENGLISH -> benefitsEn
         Language.TURKISH -> benefitsTr
-        Language.CHINESE -> benefitsZh
+        Language.ENGLISH -> benefitsEn
     }
 
     fun getUsage(language: Language): String = when (language) {
         Language.UYGHUR -> usageUy
-        Language.ENGLISH -> usageEn
         Language.TURKISH -> usageTr
-        Language.CHINESE -> usageZh
+        Language.ENGLISH -> usageEn
     }
 
     fun getCaution(language: Language): String = when (language) {
         Language.UYGHUR -> cautionUy
-        Language.ENGLISH -> cautionEn
         Language.TURKISH -> cautionTr
-        Language.CHINESE -> cautionZh
+        Language.ENGLISH -> cautionEn
     }
 
     fun getOrganTarget(language: Language): String = when (language) {
         Language.UYGHUR -> organTargetUy
-        Language.ENGLISH -> organTargetEn
         Language.TURKISH -> organTargetTr
-        Language.CHINESE -> organTargetZh
+        Language.ENGLISH -> organTargetEn
     }
 
     fun matchesQuery(query: String): Boolean {

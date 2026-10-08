@@ -61,14 +61,12 @@ object AppUpdateChecker {
                     Language.UYGHUR -> "يېڭى نەشرى چىقتى (v$latestVersion)"
                     Language.TURKISH -> "Yeni Sürüm Mevcut (v$latestVersion)"
                     Language.ENGLISH -> "New Version Available (v$latestVersion)"
-                    Language.CHINESE -> "发现新版本 (v$latestVersion)"
                 }
 
                 val defaultMsg = when (language) {
                     Language.UYGHUR -> "ئەپنىڭ ئەڭ يېڭى نەشرى تارقىتىلدى. «ھەكىم بىلەن پاراڭلىشىش (سۈنئىي ئەقىل)» ۋە كۆپ تىللىق يېڭى ئىقتىدارلار قوشۇلدى. ھازىرلا يېڭىلاۋېلىڭ."
                     Language.TURKISH -> "Uygulamanın yeni sürümü yayınlandı. Yapay zeka asistanı ve yeni özellikler eklendi. Şimdi güncelleyin."
                     Language.ENGLISH -> "A new version of the app is available with AI Hakim and multilingual improvements. Update now."
-                    Language.CHINESE -> "应用已发布新版本，新增AI医师咨询与多语言优化，建议立即更新。"
                 }
 
                 val title = json.optString("title", defaultTitle).ifEmpty { defaultTitle }

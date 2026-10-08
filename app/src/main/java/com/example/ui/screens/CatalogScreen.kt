@@ -87,7 +87,6 @@ fun CatalogScreen(
                             Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەر جەدۋىلى"
                             Language.ENGLISH -> "Medicinal Plants Catalog"
                             Language.TURKISH -> "Şifalı Bitkiler Kataloğu"
-                            Language.CHINESE -> "维药草本植物典籍"
                         },
                         style = MaterialTheme.typography.titleMedium.copy(
                             fontWeight = FontWeight.Bold,
@@ -111,7 +110,6 @@ fun CatalogScreen(
                                 Language.UYGHUR -> "ئىسمى، خۇسۇسىيىتى ياكى لاتىنچە ئىسمىنى ئىزدەڭ..."
                                 Language.ENGLISH -> "Search by name, benefits or Latin name..."
                                 Language.TURKISH -> "Bitki adı, faydası veya Latince adı ile ara..."
-                                Language.CHINESE -> "搜索名称、拉丁名或药理功效..."
                             },
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -160,7 +158,6 @@ fun CatalogScreen(
                             Language.UYGHUR -> "تۈرلەر:"
                             Language.ENGLISH -> "Category:"
                             Language.TURKISH -> "Kategori:"
-                            Language.CHINESE -> "分类:"
                         },
                         style = MaterialTheme.typography.labelMedium.copy(
                             fontWeight = FontWeight.Bold,
@@ -173,7 +170,6 @@ fun CatalogScreen(
                             Language.UYGHUR -> "ھەممىسى"
                             Language.ENGLISH -> "All"
                             Language.TURKISH -> "Tümü"
-                            Language.CHINESE -> "全部"
                         },
                         isSelected = selectedCategory == null,
                         onClick = { onCategorySelect(null) }
@@ -206,7 +202,6 @@ fun CatalogScreen(
                         Language.UYGHUR -> "تەلىپىڭىزگە ماس كېلىدىغان ئۆسۈملۈك تېپىلمىدى"
                         Language.ENGLISH -> "No medicinal plants match your search"
                         Language.TURKISH -> "Aramanıza uygun bitki bulunamadı"
-                        Language.CHINESE -> "未找到符合条件的相关草本资料"
                     },
                     style = MaterialTheme.typography.bodyLarge.copy(
                         color = MaterialTheme.colorScheme.onSurfaceVariant

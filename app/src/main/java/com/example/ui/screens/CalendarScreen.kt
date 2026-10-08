@@ -63,42 +63,36 @@ fun CalendarScreen(
         Language.UYGHUR -> "ئۇيغۇر تىبابىتى كالىندارى"
         Language.ENGLISH -> "Uyghur Tibbi Calendar"
         Language.TURKISH -> "Uygur Tıbbı Takvimi"
-        Language.CHINESE -> "维药传统养生日历"
     }
 
     val seasonTag = when (currentLanguage) {
         Language.UYGHUR -> "ياز پەسلى"
         Language.ENGLISH -> "Summer"
         Language.TURKISH -> "Yaz Mevsimi"
-        Language.CHINESE -> "夏季"
     }
 
     val hijriDate = when (currentLanguage) {
         Language.UYGHUR -> "ھىجرىيە 1448-يىلى 2-ئاي"
         Language.ENGLISH -> "Hijri Month 2, 1448 AH"
         Language.TURKISH -> "Hicri 2. Ay, 1448"
-        Language.CHINESE -> "伊历 1448年 2月"
     }
 
     val adviceTitle = when (currentLanguage) {
         Language.UYGHUR -> "ياز پەسلىدىكى مىزاج تەڭشەش ۋە ئاسراش"
         Language.ENGLISH -> "Summer Season Mizaj Guidelines"
         Language.TURKISH -> "Yaz Mevsimi Mizaç Bakım Rehberi"
-        Language.CHINESE -> "夏季体质调理与顺应宜忌"
     }
 
     val adviceBody = when (currentLanguage) {
         Language.UYGHUR -> "ياز پەسلىنىڭ مىزاجى ئىسسىق ۋە قۇرۇق بولىدۇ. بۇ پەسىلدە سوغۇق ھۆل مىزاجلىق ئانار شەربىتى، نىلۇپەر چىيى بىلەن ئىسپىغۇل ئىچىپ جىگەر ھارارىتىنى قايتۇرۇش تەۋسىيە قىلىنىدۇ. ئاچچىق، ياغلىق تاماقلاردىن ئۆزىڭىزنى يىراق تۇتۇڭ."
         Language.ENGLISH -> "Summer's temperament is Hot & Dry. Consume cooling Moist remedies like Pomegranate juice, Water Lily tea and Psyllium to cool liver heat. Avoid greasy spiced foods."
         Language.TURKISH -> "Yaz mevsiminin mizacı Sıcak ve Kuru'dur. Nar suyu, nilüfer çayı ve karnıyarık otu gibi Soğuk & Nemli gıdalarla karaciğer ateşini düşürün. Acı ve yağlı gıdalardan kaçının."
-        Language.CHINESE -> "夏季气候体质偏燥热。宜饮石榴汁、睡莲茶及车前子壳水以生津清肝火，宜少食辛辣煎炸。"
     }
 
     val checklistTitle = when (currentLanguage) {
         Language.UYGHUR -> "كۈندىلىك سالامەتلىك ئاسراش جەدۋىلى"
         Language.ENGLISH -> "Daily Health Checklist"
         Language.TURKISH -> "Günlük Sağlık Takip Listesi"
-        Language.CHINESE -> "每日健康养生清单"
     }
 
     Column(
@@ -236,13 +230,13 @@ fun CalendarScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         val tasksList = listOf(
-            DailyTaskItem(1, "1. ئەتىگەندە ئاچ قورساقتا ھەسەل ئارىلاشتۇرۇلغان ئىللىق سۇ ئىچىش", "1. Drink warm honey water on empty stomach in the morning", "1. Sabah aç karnına ılık ballı su içmek", "1. 晨起空腹喝1杯温蜂蜜水"),
-            DailyTaskItem(2, "2. چۈشتە 15 مىنۇت مېڭىنى ئارام ئالدۇرۇش (مېڭە ئاسراش)", "2. 15 min mental & brain rest at midday", "2. Öğlen 15 dakika zihin ve beyin dinlendirmesi", "2. 午间静心休息15分钟"),
-            DailyTaskItem(3, "3. چايغا لاچىندانە، رۇمبەدىيان ياكى زەنجىپىل سېلىپ ئىچىش", "3. Add cardamom, anise or ginger to daily herbal tea", "3. Çaya kakule, anason veya zencefil eklemek", "3. 茶饮中加入小豆蔻、茴香或生姜"),
-            DailyTaskItem(4, "4. كۈندۈزدە بادام، ياڭاق بىلەن ئەنجۇر ياكى خۇرما يېيىش", "4. Eat almonds, walnuts, dried figs or dates as mid-day snack", "4. Gün içinde badem, ceviz, incir veya hurma tüketmek", "4. 白天嚼食巴旦木、核桃、无花果或椰枣"),
-            DailyTaskItem(5, "5. كەچتە پۇتنى ئىللىق سۇدا شىپالىق تۇز بىلەن چىلاش", "5. Soak feet in warm herbal salt water before sleeping", "5. Akşam yatmadan önce ayakları ılık tuzlu suda bekletmek", "5. 晚间睡前温盐水泡脚疏通经络"),
-            DailyTaskItem(6, "6. كېچە سائەت 11 دىن بۇرۇن ئۇخلاپ مىزاج تەڭپۇڭلۇقىنى ساقلاش", "6. Sleep before 11 PM to preserve internal Mizaj balance", "6. Mizaç dengesini korumak için saat 23:00'ten önce uyumak", "6. 23点前入睡以养藏五脏精气"),
-            DailyTaskItem(7, "7. كۈندە 20 مىنۇت يېنىق ھەرىكەت ۋە چوڭ نەپەس ئېلىش مەشىقى قىلىش", "7. 20 min light physical activity & deep breathing exercise", "7. Günde 20 dakika hafif egzersiz ve derin nefes çalışması", "7. 每日进行20分钟轻度拉伸与腹式深呼吸")
+            DailyTaskItem(1, "1. ئەتىگەندە ئاچ قورساقتا ھەسەل ئارىلاشتۇرۇلغان ئىللىق سۇ ئىچىش", "1. Drink warm honey water on empty stomach in the morning", "1. Sabah aç karnına ılık ballı su içmek"),
+            DailyTaskItem(2, "2. چۈشتە 15 مىنۇت مېڭىنى ئارام ئالدۇرۇش (مېڭە ئاسراش)", "2. 15 min mental & brain rest at midday", "2. Öğlen 15 dakika zihin ve beyin dinlendirmesi"),
+            DailyTaskItem(3, "3. چايغا لاچىندانە، رۇمبەدىيان ياكى زەنجىپىل سېلىپ ئىچىش", "3. Add cardamom, anise or ginger to daily herbal tea", "3. Çaya kakule, anason veya zencefil eklemek"),
+            DailyTaskItem(4, "4. كۈندۈزدە بادام، ياڭاق بىلەن ئەنجۇر ياكى خۇرما يېيىش", "4. Eat almonds, walnuts, dried figs or dates as mid-day snack", "4. Gün içinde badem, ceviz, incir veya hurma tüketmek"),
+            DailyTaskItem(5, "5. كەچتە پۇتنى ئىللىق سۇدا شىپالىق تۇز بىلەن چىلاش", "5. Soak feet in warm herbal salt water before sleeping", "5. Akşam yatmadan önce ayakları ılık tuzlu suda bekletmek"),
+            DailyTaskItem(6, "6. كېچە سائەت 11 دىن بۇرۇن ئۇخلاپ مىزاج تەڭپۇڭلۇقىنى ساقلاش", "6. Sleep before 11 PM to preserve internal Mizaj balance", "6. Mizaç dengesini korumak için saat 23:00'ten önce uyumak"),
+            DailyTaskItem(7, "7. كۈندە 20 مىنۇت يېنىق ھەرىكەت ۋە چوڭ نەپەس ئېلىش مەشىقى قىلىش", "7. 20 min light physical activity & deep breathing exercise", "7. Günde 20 dakika hafif egzersiz ve derin nefes çalışması")
         )
 
         tasksList.forEach { task ->
@@ -292,13 +286,11 @@ private data class DailyTaskItem(
     val id: Int,
     val uy: String,
     val en: String,
-    val tr: String,
-    val zh: String
+    val tr: String
 ) {
     fun getLabel(language: Language): String = when (language) {
         Language.UYGHUR -> uy
         Language.ENGLISH -> en
         Language.TURKISH -> tr
-        Language.CHINESE -> zh
     }
 }

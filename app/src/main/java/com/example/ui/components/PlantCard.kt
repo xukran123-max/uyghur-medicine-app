@@ -86,12 +86,21 @@ fun PlantCard(
                         .background(MaterialTheme.colorScheme.primaryContainer),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        painter = painterResource(id = imageRes),
-                        contentDescription = plant.getName(currentLanguage),
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                    if (!plant.imageUrl.isNullOrBlank()) {
+                        coil.compose.AsyncImage(
+                            model = plant.imageUrl,
+                            contentDescription = plant.getName(currentLanguage),
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    } else {
+                        Image(
+                            painter = painterResource(id = imageRes),
+                            contentDescription = plant.getName(currentLanguage),
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
 
                 // Favorite Heart Button

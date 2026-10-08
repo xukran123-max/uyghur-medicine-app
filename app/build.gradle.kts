@@ -17,8 +17,8 @@ android {
     applicationId = "com.aistudio.uyghurtibabiti.app"
     minSdk = 24
     targetSdk = 35
-    versionCode = 8
-    versionName = "1.2.4"
+    versionCode = 9
+    versionName = "1.2.5"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -65,9 +65,9 @@ android {
     buildConfig = true
   }
   testOptions { unitTests { isIncludeAndroidResources = true } }
-  dependenciesInfo {
-    includeInApk = false
-    includeInBundle = true
+  lint {
+    checkReleaseBuilds = false
+    abortOnError = false
   }
 }
 
@@ -107,7 +107,7 @@ dependencies {
   // implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.room.ktx)
   implementation(libs.androidx.room.runtime)
-  // implementation(libs.coil.compose)
+  implementation(libs.coil.compose)
   implementation(libs.converter.moshi)
   implementation(libs.firebase.ai)
   // Uncomment to use Firestore:

@@ -201,6 +201,8 @@ class PlantsStorageRepository(private val context: Context) {
             put("organTargetZh", plant.organTargetZh)
             put("iconEmoji", plant.iconEmoji)
             put("imageResId", plant.imageResId ?: -1)
+            put("imageUrl", plant.imageUrl ?: "")
+            put("imageFit", plant.imageFit ?: "contain")
             put("isFeatured", plant.isFeatured)
         }
     }
@@ -245,6 +247,8 @@ class PlantsStorageRepository(private val context: Context) {
             organTargetZh = obj.optString("organTargetZh", ""),
             iconEmoji = obj.optString("iconEmoji", "🌿"),
             imageResId = if (imageRes > 0) imageRes else null,
+            imageUrl = obj.optString("imageUrl", "").ifEmpty { null },
+            imageFit = obj.optString("imageFit", "contain"),
             isFeatured = obj.optBoolean("isFeatured", false)
         )
     }

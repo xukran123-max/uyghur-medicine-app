@@ -101,14 +101,12 @@ fun AppUpdateDialog(
                                     Language.UYGHUR -> "⚠️ بۇ قېتىملىق يېڭىلاش مەجبۇرىي. ئەپنى يېڭىلىغاندىن كېيىن داۋاملىق ئىشلەتكىلى بولىدۇ."
                                     Language.TURKISH -> "⚠️ Bu güncelleme zorunludur. Devam etmek için lütfen güncelleyin."
                                     Language.ENGLISH -> "⚠️ This update is required to continue using the application."
-                                    Language.CHINESE -> "⚠️ 本次更新为必要更新，更新后方可继续正常使用。"
                                 }
                             } else {
                                 when (currentLanguage) {
                                     Language.UYGHUR -> "⏳ يېڭىلاش مۆھلىتى: يەنە ${updateInfo.daysLeft} كۈن قالدى (مۆھلەت توشقاندا مەجبۇرىي يېڭىلىنىدۇ)."
                                     Language.TURKISH -> "⏳ Güncelleme süresi: ${updateInfo.daysLeft} gün kaldı."
                                     Language.ENGLISH -> "⏳ Grace period: ${updateInfo.daysLeft} days remaining."
-                                    Language.CHINESE -> "⏳ 宽限期：还剩 ${updateInfo.daysLeft} 天。"
                                 }
                             },
                             style = MaterialTheme.typography.labelMedium,
@@ -144,7 +142,6 @@ fun AppUpdateDialog(
                         Language.UYGHUR -> "ھازىرلا يېڭىلاش (APK چۈشۈرۈش)"
                         Language.TURKISH -> "Şimdi Güncelle (APK İndir)"
                         Language.ENGLISH -> "Update Now (Download APK)"
-                        Language.CHINESE -> "立即更新 (下载APK)"
                     },
                     fontWeight = FontWeight.Bold
                 )
@@ -162,7 +159,6 @@ fun AppUpdateDialog(
                             Language.UYGHUR -> "كېيىنرەك يېڭىلايمەن"
                             Language.TURKISH -> "Daha Sonra"
                             Language.ENGLISH -> "Later"
-                            Language.CHINESE -> "稍后更新"
                         }
                     )
                 }

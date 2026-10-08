@@ -41,7 +41,6 @@ fun BottomNavBar(
                 titleUy = "باش بەت",
                 titleEn = "Home",
                 titleTr = "Anasayfa",
-                titleZh = "首页",
                 icon = Icons.Default.Home
             ),
             TabItem(
@@ -49,7 +48,6 @@ fun BottomNavBar(
                 titleUy = "كۆرسەتكۈچ",
                 titleEn = "Catalog",
                 titleTr = "Katalog",
-                titleZh = "草本",
                 icon = Icons.Default.LocalPharmacy
             ),
             TabItem(
@@ -57,7 +55,6 @@ fun BottomNavBar(
                 titleUy = "ھەكىم",
                 titleEn = "Hakim",
                 titleTr = "Hekim",
-                titleZh = "医师",
                 icon = Icons.Default.AutoAwesome
             ),
             TabItem(
@@ -65,7 +62,6 @@ fun BottomNavBar(
                 titleUy = "مىزاج",
                 titleEn = "Mizaj Test",
                 titleTr = "Mizaç",
-                titleZh = "体质",
                 icon = Icons.Default.Psychology
             ),
             TabItem(
@@ -73,7 +69,6 @@ fun BottomNavBar(
                 titleUy = "تەڭشەك",
                 titleEn = "Settings",
                 titleTr = "Ayarlar",
-                titleZh = "设置",
                 icon = Icons.Default.Settings
             )
         )
@@ -121,13 +116,11 @@ private data class TabItem(
     val titleUy: String,
     val titleEn: String,
     val titleTr: String,
-    val titleZh: String,
-    val icon: androidx.compose.ui.graphics.vector.ImageVector
+        val icon: androidx.compose.ui.graphics.vector.ImageVector
 ) {
     fun getTitle(language: Language): String = when (language) {
         Language.UYGHUR -> titleUy
         Language.ENGLISH -> titleEn
         Language.TURKISH -> titleTr
-        Language.CHINESE -> titleZh
     }
 }

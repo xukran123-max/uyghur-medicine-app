@@ -89,56 +89,48 @@ fun SettingsScreen(
         Language.UYGHUR -> "ئىقتىدار ۋە تىل تەڭشىكى"
         Language.ENGLISH -> "App & Language Settings"
         Language.TURKISH -> "Uygulama ve Dil Ayarları"
-        Language.CHINESE -> "应用与语言系统设置"
     }
 
     val headerSub = when (currentLanguage) {
         Language.UYGHUR -> "3 خىل تىل تەڭشىكى، كېچە كۈندۈز ئەندىزىسى ۋە خەت چوڭلۇقى"
         Language.ENGLISH -> "3 languages, Light/Dark mode & Font scaling"
         Language.TURKISH -> "3 dil seçeneği, Gece/Gündüz modu ve Yazı boyutu"
-        Language.CHINESE -> "3种语言支持、日夜模式及字体调控"
     }
 
     val langSectionTitle = when (currentLanguage) {
         Language.UYGHUR -> "تىل تەڭشىكى (3 خىل تىل)"
         Language.ENGLISH -> "Language (3 Languages)"
         Language.TURKISH -> "Dil Seçimi (3 Dil)"
-        Language.CHINESE -> "语言选择 (3种语言)"
     }
 
     val themeSectionTitle = when (currentLanguage) {
         Language.UYGHUR -> "كېچە-كۈندۈزلۈك تەڭشەك (قارا ئەندىزە)"
         Language.ENGLISH -> "Day / Night Mode (Dark Theme)"
         Language.TURKISH -> "Gece / Gündüz Modu (Karanlık Tema)"
-        Language.CHINESE -> "日夜模式切换 (暗黑模式)"
     }
 
     val fontSectionTitle = when (currentLanguage) {
         Language.UYGHUR -> "ئۇيغۇرچە خەت چوڭلۇقى تەڭشىكى"
         Language.ENGLISH -> "Font Size Scaling"
         Language.TURKISH -> "Yazı Boyutu Ölçeği"
-        Language.CHINESE -> "字体大小与排版比例"
     }
 
     val fontScaleText = when (currentLanguage) {
         Language.UYGHUR -> "نۇسخا چوڭلۇقى: "
         Language.ENGLISH -> "Current Font Scale: "
         Language.TURKISH -> "Yazı Ölçeği: "
-        Language.CHINESE -> "当前字体比例: "
     }
 
     val aboutSectionTitle = when (currentLanguage) {
         Language.UYGHUR -> "ئۇيغۇر تىبابىتى ھەققىدە"
         Language.ENGLISH -> "About Uyghur Traditional Medicine"
         Language.TURKISH -> "Uygur Geleneksel Tıbbı Hakkında"
-        Language.CHINESE -> "关于维吾尔传统医药文化"
     }
 
     val aboutBody = when (currentLanguage) {
         Language.UYGHUR -> "ئۇيغۇر تىبابىتى 2500 يىلدىن ئارتۇق تارىخقا ئىگە، يىپەك يولى تېببىي مەدەنىيىتىنىڭ جەۋھىرى. ئۇ كىشىلىك تەبىئەتنىڭ ئىسسىق، سوغۇق، ھۆل، قۇرۇقتىن ئىبارەت تۆت مىزاجى ۋە تەبىئىي ئۆسۈملۈك بىلەن داۋالاش سىستېمىسىغا ئاساسلىنىدۇ."
         Language.ENGLISH -> "Uyghur Traditional Medicine (Tibabiti) spans over 2,500 years of Silk Road healing heritage. It harmonizes body balance through the 4 Humors (Mizaj) system and natural herbal medicine."
         Language.TURKISH -> "Uygur Tıbbı, İpek Yolu kültürünün 2500 yıllık şifa mirasıdır. Dört mizaç (Sıcak, Soğuk, Nemli, Kuru) ve doğal bitkisel reçetelerle vücudu dengeler."
-        Language.CHINESE -> "维吾尔医药学拥有2500多年的古丝绸之路传承，遵循‘四体液与四体质（热、寒、湿、燥）’天然调理理论。"
     }
 
     Column(
@@ -394,7 +386,6 @@ fun SettingsScreen(
             Language.UYGHUR -> "ئورگان ئۇلانمىلار"
             Language.ENGLISH -> "Official Links"
             Language.TURKISH -> "Resmi Bağlantılar"
-            Language.CHINESE -> "官方链接"
         }
 
         Card(

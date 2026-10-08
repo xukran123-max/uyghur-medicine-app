@@ -38,12 +38,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import com.example.R
+import com.example.data.model.Language
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.example.data.model.Language
 
 /**
  * A container component that supports pinch-to-zoom and pan gestures with two fingers.
@@ -105,7 +106,8 @@ fun ZoomableContainer(
  */
 @Composable
 fun ZoomableImageViewerDialog(
-    imageResId: Int,
+    imageResId: Int? = null,
+    imageUrl: String? = null,
     title: String,
     currentLanguage: Language,
     onDismiss: () -> Unit
@@ -160,14 +162,25 @@ fun ZoomableImageViewerDialog(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = imageResId),
-                    contentDescription = title,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                )
+                if (!imageUrl.isNullOrBlank()) {
+                    coil.compose.AsyncImage(
+                        model = imageUrl,
+                        contentDescription = title,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = imageResId ?: R.drawable.herbal_plant_anise_1786475403200),
+                        contentDescription = title,
+                        contentScale = ContentScale.Fit,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    )
+                }
             }
 
             // Top Bar Overlay
@@ -284,7 +297,6 @@ fun ZoomableImageViewerDialog(
                             Language.UYGHUR -> "ئىككى بارماقتا كېڭەيتىڭ"
                             Language.ENGLISH -> "Pinch with 2 fingers"
                             Language.TURKISH -> "Çift parmakla büyütün"
-                            Language.CHINESE -> "双指缩放"
                         },
                         style = MaterialTheme.typography.bodySmall.copy(
                             color = Color.White.copy(alpha = 0.8f),

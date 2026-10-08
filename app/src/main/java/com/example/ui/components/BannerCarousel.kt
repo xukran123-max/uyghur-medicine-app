@@ -60,99 +60,78 @@ fun BannerCarousel(
             titleUy = "ئۇيغۇر تىبابىتى دورىلىق ئۆسۈملۈكلەر",
             titleEn = "Classic Uyghur Medicinal Herbs & Remedies",
             titleTr = "Geleneksel Uygur Tıbbı Şifalı Bitkisi",
-            titleZh = "维吾尔医药传统草本药典",
             subtitleUy = "مىزاج ۋە ئىشلىتىش ئۇسۇلى تولۇق كىرگۈزۈلدى",
             subtitleEn = "Comprehensive guide on Mizaj, benefits & recipes",
             subtitleTr = "Mizaç, fayda ve reçetelerle dolu rehber",
-            subtitleZh = "包含体质、功效与实用药方全集",
             badgeUy = "ئۆسۈملۈكلەر جەدۋىلى",
             badgeEn = "Botanical Guide",
             badgeTr = "Bitki Rehberi",
-            badgeZh = "草本典籍"
         ),
         BannerItem(
             titleUy = "مىزاجىڭىزنى ئېنىقلاپ بېقىڭ",
             titleEn = "Discover Your Personal Mizaj (Temperament)",
             titleTr = "Kendi Mizacınızı Keşfedin",
-            titleZh = "测试并测算您的维药体质",
             subtitleUy = "ئىسسىق، سوغۇق، ھۆل، قۇرۇق مىزاجلارغا ئاساسەن يېمەكلىك تەڭشەڭ",
             subtitleEn = "Balance Hot, Cold, Moist & Dry temperaments with diet",
             subtitleTr = "Sıcak, Soğuk, Nemli ve Kuru mizaç dengesi",
-            subtitleZh = "测算燥热湿寒，科学进行饮食调理",
             badgeUy = "مىزاج ئېنىقلاش",
             badgeEn = "Mizaj Quiz",
             badgeTr = "Mizaç Testi",
-            badgeZh = "体质测算"
         ),
         BannerItem(
             titleUy = "ئۇيغۇر تىبابىتى كالىندارى ۋە پەسىللىك كۈتۈنۈش",
             titleEn = "Traditional Tibbi Health Calendar",
             titleTr = "Geleneksel Tıbbi Sağlık Takvimi",
-            titleZh = "维药四季养生日历与每日宜忌",
             subtitleUy = "تۆت پەسىل بويىچە سالامەتلىك ئاسراش تەۋسىيەلىرى",
             subtitleEn = "Seasonal wellness advice according to traditional rules",
             subtitleTr = "Dört mevsim şifa ve bakım tavsiyeleri",
-            subtitleZh = "遵从传统顺应四季的调理要领",
             badgeUy = "تەبىئىي كالىندار",
             badgeEn = "Health Calendar",
             badgeTr = "Sağlık Takvimi",
-            badgeZh = "养生日历"
         ),
         BannerItem(
             titleUy = "تۆت خىلىت ۋە مىزاج تەڭپۇڭلۇقى",
             titleEn = "Four Humors & Temperamental Harmony",
             titleTr = "Dört Ahlat ve Mizaç Dengesi",
-            titleZh = "四体液与体质平衡论",
             subtitleUy = "قان، سەپرا، سودا، بەلغەم تەڭپۇڭلۇقى بىلەن تەننى ساغلاملاشتۇرۇش",
             subtitleEn = "Maintain vital health by balancing body humors",
             subtitleTr = "Kan, Safra, Sevda ve Balgam dengesiyle sağlık",
-            subtitleZh = "通过四体液平衡，调理身体内部环境",
             badgeUy = "مىزاج تەڭپۇڭلىقى",
             badgeEn = "Mizaj Balance",
             badgeTr = "Mizaç Dengesi",
-            badgeZh = "体液平衡"
         ),
         BannerItem(
             titleUy = "شىپالىق شەربەتلەر ۋە چايلار",
             titleEn = "Healing Elixirs, Syrups & Teas",
             titleTr = "Şifalı Şerbetler ve Çaylar",
-            titleZh = "天然药用草本茶与养生糖浆",
             subtitleUy = "ئانار، شىركەنچىبىن، نىلۇپەر ۋە گۈلقەنت ئىچىملىكلىرى",
             subtitleEn = "Pomegranate, Oxymel, Water Lily & Rose preserve teas",
             subtitleTr = "Nar, Sirkencubin, Nilüfer ve Gül reçeteleri",
-            subtitleZh = "石榴茶、糖醋饮、睡莲与玫瑰浆煎服法",
             badgeUy = "شىپالىق چايلار",
             badgeEn = "Herbal Teas",
             badgeTr = "Bitki Çayları",
-            badgeZh = "养生茶饮"
         ),
         BannerItem(
             titleUy = "كۈندىلىك سالامەتلىك ئاسراش تەۋسىيەلىرى",
             titleEn = "Daily Healthy Living & Diet Guidelines",
             titleTr = "Günlük Yaşam ve Beslenme Rehberi",
-            titleZh = "每日膳食饮食与生活方式建议",
             subtitleUy = "ئورگاننى قۇۋۋەتلەش، ئاشقازان ۋە جىگەرنى ئاسراش ئۇسۇللىرى",
             subtitleEn = "Strengthen vital organs, liver, stomach & immunity",
             subtitleTr = "Hayati organlar, mide ve karaciğer koruma",
-            subtitleZh = "调理脾胃、保肝补气与增强免役力",
             badgeUy = "كۈندىلىك ئاسراش",
             badgeEn = "Daily Care",
             badgeTr = "Günlük Bakım",
-            badgeZh = "日常保健"
         ),
         BannerItem(
             titleUy = "تەبىئىي دورا ۋە رېتسىپلار",
             titleEn = "Natural Herbal Compounds & Preparations",
             titleTr = "Doğal Bitkisel Terkipler ve Hazırlıklar",
-            titleZh = "维药传统复方与天然饮片",
             subtitleUy = "تەبىئىي دورىلارنىڭ تەركىبى، تەسىرى ۋە ئىشلىتىش قېيدىلىرى",
             subtitleEn = "Authentic natural compounds, active usage & dosage",
             subtitleTr = "Geleneksel doğal terkipler ve kullanım dozajı",
-            subtitleZh = "传统草本复方的君臣佐使与配伍原则",
             badgeUy = "تەبىئىي تەبىئەت",
             badgeEn = "Natural Medicine",
             badgeTr = "Doğal İlaçlar",
-            badgeZh = "天然草药"
         )
     )
 
@@ -297,7 +276,6 @@ fun BannerCarousel(
                                 Language.UYGHUR -> "كۆرۈپ باقاي"
                                 Language.ENGLISH -> "Explore"
                                 Language.TURKISH -> "Keşfet"
-                                Language.CHINESE -> "查看"
                             },
                             style = MaterialTheme.typography.labelMedium.copy(
                                 color = Color.White,
@@ -344,34 +322,28 @@ private data class BannerItem(
     val titleUy: String,
     val titleEn: String,
     val titleTr: String,
-    val titleZh: String,
-    val subtitleUy: String,
+        val subtitleUy: String,
     val subtitleEn: String,
     val subtitleTr: String,
-    val subtitleZh: String,
-    val badgeUy: String,
+        val badgeUy: String,
     val badgeEn: String,
     val badgeTr: String,
-    val badgeZh: String
-) {
+    ) {
     fun getTitle(language: Language): String = when (language) {
         Language.UYGHUR -> titleUy
         Language.ENGLISH -> titleEn
         Language.TURKISH -> titleTr
-        Language.CHINESE -> titleZh
     }
 
     fun getSubtitle(language: Language): String = when (language) {
         Language.UYGHUR -> subtitleUy
         Language.ENGLISH -> subtitleEn
         Language.TURKISH -> subtitleTr
-        Language.CHINESE -> subtitleZh
     }
 
     fun getBadge(language: Language): String = when (language) {
         Language.UYGHUR -> badgeUy
         Language.ENGLISH -> badgeEn
         Language.TURKISH -> badgeTr
-        Language.CHINESE -> badgeZh
     }
 }

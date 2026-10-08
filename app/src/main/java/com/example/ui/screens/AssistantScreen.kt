@@ -104,7 +104,6 @@ fun AssistantScreen(
                             Language.UYGHUR -> "بۈگۈنلۈك سوئال چېكى توشتى"
                             Language.TURKISH -> "Günlük Soru Sınırına Ulaşıldı"
                             Language.ENGLISH -> "Daily Question Limit Reached"
-                            Language.CHINESE -> "今日咨询次数已达上限"
                         },
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold)
                     )
@@ -117,7 +116,6 @@ fun AssistantScreen(
                             Language.UYGHUR -> "سىز بۈگۈن ئەڭ يۇقىرى چەك بولغان 10 قېتىملىق سوئال سوراش پۇرسىتىنى ئىشلىتىپ بولدىڭىز.\n\nھەكىم بىلەن داۋاملىق بىۋاسىتە پاراڭلىشىش ۋە تەپسىلىي مەسلىھەت سوراش ئۈچۈن، WhatsApp ياكى Instagram ئارقىلىق بىز بىلەن ئالاقىلاشسىڭىز بولىدۇ:"
                             Language.TURKISH -> "Bugün için belirlenen 10 soru hakkınızı doldurdunuz.\n\nHekimle doğrudan görüşmek veya danışmak için WhatsApp veya Instagram üzerinden bize ulaşabilirsiniz:"
                             Language.ENGLISH -> "You have reached your daily limit of 10 questions.\n\nTo continue consulting directly with the Hakim, you can message us via WhatsApp or Instagram:"
-                            Language.CHINESE -> "您今日的10次咨询次数已达上限。\n\n如需继续深入沟通或联系医师，欢迎通过WhatsApp或Instagram直接与我们联系："
                         },
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -193,7 +191,6 @@ fun AssistantScreen(
                             Language.UYGHUR -> "ياپ"
                             Language.TURKISH -> "Kapat"
                             Language.ENGLISH -> "Close"
-                            Language.CHINESE -> "关闭"
                         }
                     )
                 }
@@ -205,28 +202,24 @@ fun AssistantScreen(
         Language.UYGHUR -> "ھەكىم بىلەن پاراڭلىشىڭ"
         Language.TURKISH -> "Hekim ile Görüşün"
         Language.ENGLISH -> "Consult the Hakim"
-        Language.CHINESE -> "与维医医师交流"
     }
 
     val headerSubtitle = when (currentLanguage) {
         Language.UYGHUR -> "ئۇيغۇر تېبابىتى قەدىمىي تەجرىبىلىرى ئاساسىدا"
         Language.TURKISH -> "Geleneksel Uygur Tıbbı Rehberi"
         Language.ENGLISH -> "Traditional Uyghur Medicine Wisdom"
-        Language.CHINESE -> "基于传统维吾尔医学知识库"
     }
 
     val placeholderText = when (currentLanguage) {
         Language.UYGHUR -> "كېسەللىك، مىزاج ياكى دورا توغرۇلۇق سورىسىڭىز بولىدۇ..."
         Language.TURKISH -> "Hastalık, mizaç veya şifalı bitkiler hakkında sorun..."
         Language.ENGLISH -> "Ask about symptoms, mizaj or herbal remedies..."
-        Language.CHINESE -> "咨询体质、症状或传统草药方剂..."
     }
 
     val disclaimerText = when (currentLanguage) {
         Language.UYGHUR -> "⚠️ جاۋابلار پەقەت پايدىلىنىش ئۈچۈن بولۇپ، ئىشلىتىشتىن بۇرۇن چوقۇم مەسلېھەت سوراڭ."
         Language.TURKISH -> "⚠️ Yanıtlar yalnızca bilgilendirme amaçlıdır; doktor tavsiyesi yerine geçmez."
         Language.ENGLISH -> "⚠️ For informational purposes only. Consult a physician for medical advice."
-        Language.CHINESE -> "⚠️ 本回答仅供参考，不作为临床诊疗依据，重症请及时就医。"
     }
 
     val suggestions = viewModel.getSuggestions(currentLanguage)
@@ -362,7 +355,6 @@ fun AssistantScreen(
                                             Language.UYGHUR -> "ھۆرمەتلىك مېھمان، خۇش كەپسىز!"
                                             Language.TURKISH -> "Hoş Geldiniz!"
                                             Language.ENGLISH -> "Welcome!"
-                                            Language.CHINESE -> "欢迎咨询！"
                                         },
                                         fontWeight = FontWeight.Bold,
                                         color = MaterialTheme.colorScheme.primary,
@@ -375,7 +367,6 @@ fun AssistantScreen(
                                         Language.UYGHUR -> "مەن ئۇيغۇر تېبابىتى ھەكىمى تىۋىپ  ياردەمچىڭىز  ئابدۇشۈكۈر . سالامەتلىك، مىزاج، دورىلىق ئۆسۈملۈكلەر توغرىسىدا سوئاللىرىڭىز بولسا مەرھەمەت (كۈنىگە 10 سوئال)."
                                         Language.TURKISH -> "Geleneksel Uygur Tıbbı ilkelerine göre sağlık, mizaç ve şifalı bitkiler hakkında sorularınızı yanıtlayabilirim (Günde 10 soru)."
                                         Language.ENGLISH -> "I can answer questions regarding health, body temperament (mizaj), and herbal remedies based on traditional Uyghur medicine (10 questions daily)."
-                                        Language.CHINESE -> "您可以就身体状况、体质类型、草药功效等提出问题，我将根据维医知识为您解答（每日限10次）。"
                                     },
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurface
@@ -390,7 +381,6 @@ fun AssistantScreen(
                                 Language.UYGHUR -> "💡 كۆپ سورىلىدىغان سوئاللار:"
                                 Language.TURKISH -> "💡 Örnek Sorular:"
                                 Language.ENGLISH -> "💡 Suggested Questions:"
-                                Language.CHINESE -> "💡 常见问题推荐："
                             },
                             fontWeight = FontWeight.SemiBold,
                             fontSize = 14.sp,
@@ -618,7 +608,6 @@ private fun MessageBubble(
                                     Language.UYGHUR -> "جىددىي قۇتقۇزۇش ئەسكەرتمىسى!"
                                     Language.TURKISH -> "Acil Durum Uyarısı!"
                                     Language.ENGLISH -> "Emergency Alert!"
-                                    Language.CHINESE -> "紧急医疗预警！"
                                 },
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.error,
@@ -633,7 +622,6 @@ private fun MessageBubble(
                                 Language.UYGHUR -> "ھەكىم ئويلىنىۋاتىدۇ..."
                                 Language.TURKISH -> "Düşünülüyor..."
                                 Language.ENGLISH -> "Thinking..."
-                                Language.CHINESE -> "正在整理药方与解答..."
                             },
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
@@ -659,7 +647,6 @@ private fun MessageBubble(
                                 Language.UYGHUR -> "📖 مۇناسىۋەتلىك ماقالىلەر:"
                                 Language.TURKISH -> "📖 İlgili Makaleler:"
                                 Language.ENGLISH -> "📖 Related Articles:"
-                                Language.CHINESE -> "📖 相关参考文章："
                             },
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,

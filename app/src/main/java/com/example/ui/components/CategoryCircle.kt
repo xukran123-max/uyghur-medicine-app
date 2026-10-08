@@ -54,7 +54,6 @@ fun CategoryCircleRow(
             titleUy = "ھەممىسى",
             titleEn = "All Herbs",
             titleTr = "Tümü",
-            titleZh = "全部",
             icon = Icons.Default.Category,
             bgColor = Color(0xFFE8F5E9),
             iconColor = Color(0xFF2E7D32)
@@ -64,7 +63,6 @@ fun CategoryCircleRow(
             titleUy = PlantCategory.HERB.nameUy,
             titleEn = PlantCategory.HERB.nameEn,
             titleTr = PlantCategory.HERB.nameTr,
-            titleZh = PlantCategory.HERB.nameZh,
             icon = Icons.Default.Eco,
             bgColor = Color(0xFFE0F2F1),
             iconColor = Color(0xFF00695C)
@@ -74,7 +72,6 @@ fun CategoryCircleRow(
             titleUy = PlantCategory.FRUIT.nameUy,
             titleEn = PlantCategory.FRUIT.nameEn,
             titleTr = PlantCategory.FRUIT.nameTr,
-            titleZh = PlantCategory.FRUIT.nameZh,
             icon = Icons.Default.Restaurant,
             bgColor = Color(0xFFFFEBEE),
             iconColor = Color(0xFFC62828)
@@ -84,7 +81,6 @@ fun CategoryCircleRow(
             titleUy = PlantCategory.SPICE.nameUy,
             titleEn = PlantCategory.SPICE.nameEn,
             titleTr = PlantCategory.SPICE.nameTr,
-            titleZh = PlantCategory.SPICE.nameZh,
             icon = Icons.Default.LocalPharmacy,
             bgColor = Color(0xFFFFF8E1),
             iconColor = Color(0xFFF57F17)
@@ -94,7 +90,6 @@ fun CategoryCircleRow(
             titleUy = PlantCategory.FLOWER.nameUy,
             titleEn = PlantCategory.FLOWER.nameEn,
             titleTr = PlantCategory.FLOWER.nameTr,
-            titleZh = PlantCategory.FLOWER.nameZh,
             icon = Icons.Default.LocalFlorist,
             bgColor = Color(0xFFF3E5F5),
             iconColor = Color(0xFF6A1B9A)
@@ -104,7 +99,6 @@ fun CategoryCircleRow(
             titleUy = PlantCategory.SEED.nameUy,
             titleEn = PlantCategory.SEED.nameEn,
             titleTr = PlantCategory.SEED.nameTr,
-            titleZh = PlantCategory.SEED.nameZh,
             icon = Icons.Default.Medication,
             bgColor = Color(0xFFE8EAF6),
             iconColor = Color(0xFF283593)
@@ -172,8 +166,7 @@ private data class CategoryCircleData(
     val titleUy: String,
     val titleEn: String,
     val titleTr: String,
-    val titleZh: String,
-    val icon: ImageVector,
+        val icon: ImageVector,
     val bgColor: Color,
     val iconColor: Color
 ) {
@@ -181,6 +174,5 @@ private data class CategoryCircleData(
         Language.UYGHUR -> titleUy
         Language.ENGLISH -> titleEn
         Language.TURKISH -> titleTr
-        Language.CHINESE -> titleZh
     }
 }
