@@ -7,7 +7,10 @@ import com.example.data.model.PlantCategory
 import com.example.data.model.PlantRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import android.net.Uri
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -166,6 +169,74 @@ class PlantsStorageRepository(private val context: Context) {
             storageFile.writeText(jsonArray.toString(2), Charsets.UTF_8)
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    /**
+     * Uploads plant image from local URI to server / Cloudflare R2.
+     * Falls back to local app storage if offline.
+     */
+    suspend fun uploadPlantImage(uri: Uri): Result<String> = withContext(Dispatchers.IO) {
+        try {
+            val contentResolver = context.contentResolver
+            val inputStream = contentResolver.openInputStream(uri)
+                ?: return@withContext Result.failure(Exception("رەسىم ھۆججىتىنى ئوقۇغىلى بولمىدى"))
+            val bytes = inputStream.use { it.readBytes() }
+
+            if (bytes.size > 20 * 1024 * 1024) {
+                return@withContext Result.failure(Exception("رەسىم ھەجىمى 20MB دىن ئاشماسلىقى كېرەك"))
+            }
+
+            val mimeType = contentResolver.getType(uri) ?: "image/jpeg"
+            val ext = when {
+                mimeType.contains("png") -> ".png"
+                mimeType.contains("webp") -> ".webp"
+                else -> ".jpg"
+            }
+            val fileName = "app_upload_${System.currentTimeMillis()}$ext"
+
+            // 1. Save local copy for instant offline availability
+            val localDir = File(context.filesDir, "plant_images").apply { if (!exists()) mkdirs() }
+            val localFile = File(localDir, fileName)
+            localFile.writeBytes(bytes)
+
+            // 2. Try online upload to server / R2
+            try {
+                val requestBody = MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart(
+                        "file",
+                        fileName,
+                        bytes.toRequestBody(mimeType.toMediaTypeOrNull())
+                    )
+                    .build()
+
+                val request = Request.Builder()
+                    .url("https://uyghurmedicine.com/api/upload-image")
+                    .header("Accept", "application/json")
+                    .post(requestBody)
+                    .build()
+
+                val response = httpClient.newCall(request).execute()
+                val responseBody = response.body?.string() ?: ""
+                if (response.isSuccessful) {
+                    val json = JSONObject(responseBody)
+                    if (json.optBoolean("ok", false)) {
+                        val serverUrl = json.optString("url")
+                        if (serverUrl.isNotEmpty()) {
+                            return@withContext Result.success(serverUrl)
+                        }
+                    }
+                }
+            } catch (netErr: Exception) {
+                netErr.printStackTrace()
+            }
+
+            // Fallback to local file URI if offline or network failure
+            Result.success(localFile.absolutePath)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
     }
 

@@ -1,7 +1,11 @@
 package com.example.ui.components
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -11,6 +15,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -24,6 +29,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddPhotoAlternate
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
@@ -45,18 +51,25 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import com.example.data.repository.PlantsStorageRepository
+import kotlinx.coroutines.launch
+import java.io.File
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -309,6 +322,31 @@ fun EditPlantDialog(
     var isFeatured by remember { mutableStateOf(initialPlant?.isFeatured ?: false) }
 
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var isUploadingImage by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        if (uri != null) {
+            isUploadingImage = true
+            errorMessage = null
+            coroutineScope.launch {
+                val repo = PlantsStorageRepository(context)
+                val result = repo.uploadPlantImage(uri)
+                isUploadingImage = false
+                result.onSuccess { uploadedUrl ->
+                    imageUrl = uploadedUrl
+                    Toast.makeText(context, "رەسىم مۇۋەپپەقىيەتلىك يۈكلەندى!", Toast.LENGTH_SHORT).show()
+                }.onFailure { err ->
+                    errorMessage = err.message ?: "رەسىم يۈكلەش مەغلۇپ بولدى"
+                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -489,15 +527,139 @@ fun EditPlantDialog(
                     Text(text = "كۆرۈنۈشى: $iconEmoji", fontSize = 24.sp)
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedTextField(
-                    value = imageUrl,
-                    onValueChange = { imageUrl = it },
-                    label = { Text("📷 رەسىم ئۇلانمىسى (Image URL)") },
-                    placeholder = { Text("https://... ياكى /images/plants/...") },
-                    singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Section 5: Plant Photo & Image Upload
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    )
+                ) {
+                    Column(modifier = Modifier.padding(14.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "📷 دورا رەسىمى (Plant Image):",
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                            if (imageUrl.isNotBlank()) {
+                                Text(
+                                    text = "🗑️ رەسىمنى ئۆچۈرۈش",
+                                    color = MaterialTheme.colorScheme.error,
+                                    style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                                    modifier = Modifier
+                                        .clip(RoundedCornerShape(6.dp))
+                                        .clickable { imageUrl = "" }
+                                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        // Upload Button
+                        Button(
+                            onClick = { photoPickerLauncher.launch("image/*") },
+                            enabled = !isUploadingImage,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            if (isUploadingImage) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(18.dp),
+                                    strokeWidth = 2.dp,
+                                    color = MaterialTheme.colorScheme.onPrimary
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("رەسىم يوللىنىۋاتىدۇ...")
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.AddPhotoAlternate,
+                                    contentDescription = "Upload",
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(if (imageUrl.isBlank()) "📁 تېلېفوندىن رەسىم تاللاپ يۈكلەش" else "🔄 يېڭى رەسىمگە ئالماشتۇرۇش")
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // URL Input
+                        OutlinedTextField(
+                            value = imageUrl,
+                            onValueChange = { imageUrl = it },
+                            label = { Text("🔗 ياكى تور ئۇلانمىسىنى كىرگۈزۈڭ (Image URL)") },
+                            placeholder = { Text("https://... ياكى /images/plants/...") },
+                            singleLine = true,
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(12.dp)
+                        )
+
+                        // Aspect ratio selector and live preview
+                        if (imageUrl.isNotBlank()) {
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                FilterChip(
+                                    selected = imageFit == "contain",
+                                    onClick = { imageFit = "contain" },
+                                    label = { Text("🔍 كېسىلمەيدۇ (پۈتۈن)") },
+                                    modifier = Modifier.weight(1f)
+                                )
+                                FilterChip(
+                                    selected = imageFit == "cover",
+                                    onClick = { imageFit = "cover" },
+                                    label = { Text("📐 تولدۇرۇش (تەكشى)") },
+                                    modifier = Modifier.weight(1f)
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Text(
+                                text = "ئۆلچەملىك كۆرۈنۈشى (نەق مەيدان):",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(modifier = Modifier.height(6.dp))
+
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(180.dp)
+                                    .clip(RoundedCornerShape(14.dp))
+                                    .background(MaterialTheme.colorScheme.surface)
+                                    .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(14.dp)),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                val currentContext = LocalContext.current
+                                val imageModel = remember(imageUrl) {
+                                    when {
+                                        imageUrl.startsWith("http://") || imageUrl.startsWith("https://") -> imageUrl
+                                        imageUrl.startsWith("/") && File(imageUrl).exists() -> File(imageUrl)
+                                        imageUrl.startsWith("/images/plants/") -> "https://uyghurmedicine.com$imageUrl"
+                                        else -> File(currentContext.filesDir, "plant_images/${imageUrl.substringAfterLast("/")}")
+                                    }
+                                }
+                                AsyncImage(
+                                    model = imageModel,
+                                    contentDescription = "Plant Preview",
+                                    contentScale = if (imageFit == "cover") ContentScale.Crop else ContentScale.Fit,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        }
+                    }
+                }
 
                 if (errorMessage != null) {
                     Spacer(modifier = Modifier.height(10.dp))
