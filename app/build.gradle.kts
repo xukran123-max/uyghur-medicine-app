@@ -17,19 +17,27 @@ android {
     applicationId = "com.aistudio.uyghurtibabiti.app"
     minSdk = 24
     targetSdk = 35
-    versionCode = 7
-    versionName = "1.2.3"
+    versionCode = 8
+    versionName = "1.2.4"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   signingConfigs {
     create("release") {
-      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
-      storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD")
-      keyAlias = "upload"
-      keyPassword = System.getenv("KEY_PASSWORD")
+      val keystorePath = System.getenv("KEYSTORE_PATH")
+      val keyFile = if (keystorePath != null) file(keystorePath) else null
+      if (keyFile != null && keyFile.exists()) {
+        storeFile = keyFile
+        storePassword = System.getenv("STORE_PASSWORD") ?: "android"
+        keyAlias = System.getenv("KEY_ALIAS") ?: "upload"
+        keyPassword = System.getenv("KEY_PASSWORD") ?: "android"
+      } else {
+        storeFile = file("${System.getProperty("user.home")}/.android/debug.keystore")
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+      }
     }
     create("debugConfig") {
       storeFile = file("${rootDir}/debug.keystore")

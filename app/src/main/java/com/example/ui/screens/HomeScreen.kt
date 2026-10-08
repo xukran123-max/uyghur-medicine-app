@@ -80,7 +80,7 @@ fun HomeScreen(
     val sectionTitle = when (currentLanguage) {
         Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەر"
         Language.ENGLISH -> "Medicinal Herbs & Plants"
-        Language.TURKISH -> "Şifalı Bitkiler ve Otlar"
+        Language.TURKISH -> "Şifalı Bitkiler"
         Language.CHINESE -> "药用草本植物"
     }
 

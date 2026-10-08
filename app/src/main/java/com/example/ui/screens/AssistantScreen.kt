@@ -373,7 +373,7 @@ fun AssistantScreen(
                                 Text(
                                     text = when (currentLanguage) {
                                         Language.UYGHUR -> "مەن ئۇيغۇر تېبابىتى ھەكىمى تىۋىپ  ياردەمچىڭىز  ئابدۇشۈكۈر . سالامەتلىك، مىزاج، دورىلىق ئۆسۈملۈكلەر توغرىسىدا سوئاللىرىڭىز بولسا مەرھەمەت (كۈنىگە 10 سوئال)."
-                                        Language.TURKISH -> "Geleneksel Uygur Tıbbı ilkelerine göre sağlık, mizaç ve şifalı otlar hakkında sorularınızı yanıtlayabilirim (Günde 10 soru)."
+                                        Language.TURKISH -> "Geleneksel Uygur Tıbbı ilkelerine göre sağlık, mizaç ve şifalı bitkiler hakkında sorularınızı yanıtlayabilirim (Günde 10 soru)."
                                         Language.ENGLISH -> "I can answer questions regarding health, body temperament (mizaj), and herbal remedies based on traditional Uyghur medicine (10 questions daily)."
                                         Language.CHINESE -> "您可以就身体状况、体质类型、草药功效等提出问题，我将根据维医知识为您解答（每日限10次）。"
                                     },

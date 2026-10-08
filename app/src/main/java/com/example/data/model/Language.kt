@@ -35,10 +35,10 @@ enum class PlantCategory(
     val nameZh: String,
     val iconName: String
 ) {
-    HERB("ئۆسۈملۈكلەر", "Herbs & Plants", "Otlar & Bitkiler", "草本植物", "eco"),
+    HERB("ئۆسۈملۈكلەر", "Herbs & Plants", "Bitkiler", "草本植物", "eco"),
     FRUIT("مېۋە-چىۋىلەر", "Fruits & Nuts", "Meyve & Yemişler", "水果坚果", "nutrition"),
     SPICE("دورا-دەرمەكلەر", "Spices & Remedies", "Baharat & Tıbbi İlaçlar", "香料生药", "local_pharmacy"),
-    FLOWER("گىياھلار", "Botanical Herbs", "Şifalı Otlar", "药用草本", "local_florist"),
+    FLOWER("گىياھلار", "Botanical Herbs", "Şifalı Bitkiler", "药用草本", "local_florist"),
     SEED("پىششىق دورىلار", "Compound Remedies", "Mürekkeep İlaçlar", "成药复方", "medication");
 
     fun getDisplayName(language: Language): String = when (language) {
