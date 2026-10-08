@@ -67,25 +67,6 @@ fun FavoritesScreen(
                         color = MaterialTheme.colorScheme.primary
                     )
                 )
-
-                Surface(
-                    shape = RoundedCornerShape(12.dp),
-                    color = MaterialTheme.colorScheme.primaryContainer
-                ) {
-                    Text(
-                        text = "${favoritePlants.size} ${when(currentLanguage) {
-                            Language.UYGHUR -> "تۈر"
-                            Language.ENGLISH -> "items"
-                            Language.TURKISH -> "bitki"
-                            Language.CHINESE -> "项"
-                        }}",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        ),
-                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                    )
-                }
             }
         }
 
