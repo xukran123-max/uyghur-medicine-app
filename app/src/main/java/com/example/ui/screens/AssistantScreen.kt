@@ -454,20 +454,6 @@ fun AssistantScreen(
             }
         }
 
-        // Disclaimer Bar
-        Surface(
-            modifier = Modifier.fillMaxWidth(),
-            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
-        ) {
-            Text(
-                text = disclaimerText,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
-                fontSize = 10.sp
-            )
-        }
-
         // Input Bar
         Surface(
             modifier = Modifier.fillMaxWidth(),
