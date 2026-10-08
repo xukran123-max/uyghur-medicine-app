@@ -173,50 +173,6 @@ fun HomeScreen(
                 )
             }
 
-            // Traditional Property Filter Chips Group (Hot, Cold, Dry, Moist)
-            item(span = { GridItemSpan(2) }) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp)
-                        .horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    FilterChip(
-                        selected = selectedProperty == null,
-                        onClick = { onPropertySelect(null) },
-                        label = {
-                            Text(
-                                when (currentLanguage) {
-                                    Language.UYGHUR -> "ھەممىسى"
-                                    Language.ENGLISH -> "All"
-                                    Language.TURKISH -> "Tümü"
-                                    Language.CHINESE -> "全部"
-                                }
-                            )
-                        },
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.primary,
-                            selectedLabelColor = Color.White
-                        )
-                    )
-
-                    TraditionalProperty.entries.forEach { prop ->
-                        val isSelected = selectedProperty == prop
-                        FilterChip(
-                            selected = isSelected,
-                            onClick = { onPropertySelect(prop) },
-                            label = { Text("${prop.emoji} ${prop.getDisplayName(currentLanguage)}") },
-                            colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = Color(prop.colorHex),
-                                selectedLabelColor = Color.White
-                            )
-                        )
-                    }
-                }
-            }
-
             // Section Header
             item(span = { GridItemSpan(2) }) {
                 Row(
