@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
@@ -76,7 +78,11 @@ class MainActivity : ComponentActivity() {
 
             CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
                 UyghurTibabitiTheme(darkTheme = isDarkMode) {
-                    if (showMenuSheet) {
+                    Surface(
+                        modifier = Modifier.fillMaxSize(),
+                        color = MaterialTheme.colorScheme.background
+                    ) {
+                        if (showMenuSheet) {
                         MenuDrawerSheet(
                             currentLanguage = currentLanguage,
                             onDismiss = { showMenuSheet = false },
@@ -135,6 +141,7 @@ class MainActivity : ComponentActivity() {
                         )
                     } else {
                         Scaffold(
+                            containerColor = MaterialTheme.colorScheme.background,
                             topBar = {
                                 TopBar(
                                     currentLanguage = currentLanguage,
@@ -243,6 +250,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                         }
+                    }
                     }
                 }
             }

@@ -82,6 +82,7 @@ fun PlantDetailScreen(
     var showZoomDialog by remember { mutableStateOf(false) }
 
     Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             Surface(
                 shadowElevation = 2.dp,
