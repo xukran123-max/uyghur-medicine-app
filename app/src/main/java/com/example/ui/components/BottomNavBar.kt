@@ -2,13 +2,13 @@ package com.example.ui.components
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalPharmacy
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Psychology
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -55,14 +55,14 @@ fun BottomNavBar(
                 titleUy = "ھەكىم",
                 titleEn = "Hakim",
                 titleTr = "Hekim",
-                icon = Icons.Default.AutoAwesome
+                icon = Icons.Default.MedicalServices
             ),
             TabItem(
                 tab = ScreenTab.MIZAJ_QUIZ,
                 titleUy = "مىزاج",
                 titleEn = "Mizaj Test",
                 titleTr = "Mizaç",
-                icon = Icons.Default.Psychology
+                icon = Icons.Default.Spa
             ),
             TabItem(
                 tab = ScreenTab.SETTINGS,

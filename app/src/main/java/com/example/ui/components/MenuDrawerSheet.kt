@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CameraAlt
@@ -28,11 +27,12 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LocalPharmacy
+import androidx.compose.material.icons.filled.MedicalServices
 import androidx.compose.material.icons.filled.OpenInNew
-import androidx.compose.material.icons.filled.Psychology
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingBag
+import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -487,9 +487,9 @@ fun MenuDrawerSheet(
             val navItems = listOf(
                 ScreenNavItem(ScreenTab.HOME, "باش بەت", "Home", "Anasayfa", Icons.Default.Home),
                 ScreenNavItem(ScreenTab.CATALOG, "ئۆسۈملۈك كۆرسەتكۈچى", "Herb Catalog", "Bitki Kataloğu", Icons.Default.LocalPharmacy),
-                ScreenNavItem(ScreenTab.ASSISTANT, "ھەكىم بىلەن پاراڭلىشىڭ", "Consult the Hakim", "Hekim ile Görüşün", Icons.Default.AutoAwesome),
+                ScreenNavItem(ScreenTab.ASSISTANT, "ھەكىم بىلەن پاراڭلىشىڭ", "Consult the Hakim", "Hekim ile Görüşün", Icons.Default.MedicalServices),
                 ScreenNavItem(ScreenTab.CALENDAR, "كالىندار", "Calendar", "Takvim", Icons.Default.CalendarMonth),
-                ScreenNavItem(ScreenTab.MIZAJ_QUIZ, "9 تۈر بويىچە ئانالىز", "9-Category Analysis", "9 Maddelik Analiz", Icons.Default.Psychology),
+                ScreenNavItem(ScreenTab.MIZAJ_QUIZ, "9 تۈر بويىچە ئانالىز", "9-Category Analysis", "9 Maddelik Analiz", Icons.Default.Spa),
                 ScreenNavItem(ScreenTab.SETTINGS, "تەڭشەك ۋە تىل", "Settings & Language", "Ayarlar ve Dil", Icons.Default.Settings)
             )
 
