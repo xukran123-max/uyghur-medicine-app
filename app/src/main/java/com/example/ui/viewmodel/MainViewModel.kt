@@ -91,6 +91,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     init {
         checkForUpdates()
         syncPlantsFromServer()
+        checkNotifications()
+    }
+
+    fun checkNotifications() {
+        viewModelScope.launch {
+            com.example.data.notification.NotificationSyncManager.checkAndNotify(getApplication())
+        }
     }
 
     fun syncPlantsFromServer() {

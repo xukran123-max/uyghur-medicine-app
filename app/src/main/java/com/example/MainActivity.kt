@@ -45,9 +45,26 @@ class MainActivity : ComponentActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private val requestNotificationPermissionLauncher =
+        registerForActivityResult(androidx.activity.result.contract.ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                viewModel.checkNotifications()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (androidx.core.content.ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != android.content.pm.PackageManager.PERMISSION_GRANTED
+            ) {
+                requestNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
 
         setContent {
             val currentLanguage by viewModel.currentLanguage.collectAsState()
