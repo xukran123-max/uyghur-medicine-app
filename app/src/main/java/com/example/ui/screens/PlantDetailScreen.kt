@@ -341,34 +341,6 @@ fun PlantDetailScreen(
                             )
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    // 4-Language Plant Names Card
-                    Surface(
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-                    ) {
-                        Column(modifier = Modifier.padding(10.dp)) {
-                            Text(
-                                text = when (currentLanguage) {
-                                    Language.UYGHUR -> "🌐 دورا نامى (4 خىل تىلدا):"
-                                    Language.TURKISH -> "🌐 Bitki Adı (4 Dilde):"
-                                    Language.ENGLISH -> "🌐 Plant Name (4 Languages):"
-                                },
-                                fontSize = 11.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = "• ئۇيغۇرچە: ${plant.nameUy}\n• Türkçe: ${plant.nameTr}\n• English: ${plant.nameEn}\n• 中文: ${plant.nameZh}\n• Latin: ${plant.latinName}",
-                                style = MaterialTheme.typography.bodySmall.copy(lineHeight = 18.sp),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        }
-                    }
                 }
             }
 
