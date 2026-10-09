@@ -201,6 +201,9 @@ fun PlantDetailScreen(
                                 coil.compose.AsyncImage(
                                     model = plant.imageUrl,
                                     contentDescription = plant.getName(currentLanguage),
+                                    placeholder = painterResource(id = detailImageRes),
+                                    error = painterResource(id = detailImageRes),
+                                    fallback = painterResource(id = detailImageRes),
                                     contentScale = contentScale,
                                     modifier = Modifier.fillMaxSize()
                                 )

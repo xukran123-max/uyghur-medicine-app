@@ -119,8 +119,12 @@ class PlantsStorageRepository(private val context: Context) {
                     serverPlants.add(jsonToPlant(obj))
                 }
                 if (serverPlants.isNotEmpty()) {
-                    saveToFile(serverPlants)
-                    return@withContext serverPlants
+                    val mergedMap = LinkedHashMap<Int, MedicinalPlant>()
+                    PlantRepository.plantsList.forEach { p -> mergedMap[p.id] = p }
+                    serverPlants.forEach { p -> mergedMap[p.id] = p }
+                    val finalMergedList = mergedMap.values.sortedBy { it.id }
+                    saveToFile(finalMergedList)
+                    return@withContext finalMergedList
                 }
             }
         } catch (e: Exception) {

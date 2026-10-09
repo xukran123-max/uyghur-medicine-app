@@ -90,6 +90,9 @@ fun PlantCard(
                         coil.compose.AsyncImage(
                             model = plant.imageUrl,
                             contentDescription = plant.getName(currentLanguage),
+                            placeholder = painterResource(id = imageRes),
+                            error = painterResource(id = imageRes),
+                            fallback = painterResource(id = imageRes),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier.fillMaxSize()
                         )
