@@ -346,12 +346,12 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Section 1: Health Benefits (خۇسۇسىيىتى ۋە پايدىسى)
+            // Section 1: Health Benefits (خۇسۇسىيىتى)
             DetailSectionCard(
                 title = when (currentLanguage) {
-                    Language.UYGHUR -> "خۇسۇسىيىتى ۋە پايدىسى"
-                    Language.ENGLISH -> "Health Benefits & Efficacy"
-                    Language.TURKISH -> "Faydaları ve Şifası"
+                    Language.UYGHUR -> "خۇسۇسىيىتى"
+                    Language.ENGLISH -> "Health Benefits"
+                    Language.TURKISH -> "Faydaları"
                 },
                 icon = Icons.Default.Info,
                 iconTint = MaterialTheme.colorScheme.primary,
@@ -363,9 +363,9 @@ fun PlantDetailScreen(
             // Section 2: Usage & Dosage (ئىشلىتىش ئۇسۇلى)
             DetailSectionCard(
                 title = when (currentLanguage) {
-                    Language.UYGHUR -> "ئىشلىتىش ئۇسۇلى ۋە رېتسېپى"
+                    Language.UYGHUR -> "ئىشلىتىش ئۇسۇلى"
                     Language.ENGLISH -> "Usage & Preparations"
-                    Language.TURKISH -> "Kullanım Şekli ve Tarif"
+                    Language.TURKISH -> "Kullanım Şekli"
                 },
                 icon = Icons.Default.LocalPharmacy,
                 iconTint = MaterialTheme.colorScheme.secondary,
@@ -374,12 +374,12 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Section 3: Cautions (ئېھتىيات قىلىدىغان ئىشلار)
+            // Section 3: Cautions (ئەسكەرتىش)
             DetailSectionCard(
                 title = when (currentLanguage) {
-                    Language.UYGHUR -> "ئېھتىيات قىلىدىغان ئىشلار"
-                    Language.ENGLISH -> "Cautions & Contraindications"
-                    Language.TURKISH -> "Dikkat Edilecek Hususlar"
+                    Language.UYGHUR -> "ئەسكەرتىش"
+                    Language.ENGLISH -> "Cautions & Notes"
+                    Language.TURKISH -> "Önemli Notlar"
                 },
                 icon = Icons.Default.Warning,
                 iconTint = MaterialTheme.colorScheme.tertiary,
@@ -388,7 +388,7 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Quick Links Card (تىز ئۇلانمىلار)
+            // Quick Links Card (تېز ئۇلانمىلار)
             val uriHandler = LocalUriHandler.current
 
             Card(
@@ -401,25 +401,44 @@ fun PlantDetailScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Row(
+                        modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        horizontalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Link,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(20.dp)
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(1.dp)
+                                .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
                         )
-                        Text(
-                            text = when (currentLanguage) {
-                                Language.UYGHUR -> "تىز ئۇلانمىلار"
-                                Language.ENGLISH -> "Quick Links"
-                                Language.TURKISH -> "Hızlı Bağlantılar"
-                            },
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Link,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(18.dp)
                             )
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "تېز ئۇلانمىلار"
+                                    Language.ENGLISH -> "Quick Links"
+                                    Language.TURKISH -> "Hızlı Bağlantılar"
+                                },
+                                style = MaterialTheme.typography.titleSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            )
+                        }
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(1.dp)
+                                .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
                         )
                     }
 
