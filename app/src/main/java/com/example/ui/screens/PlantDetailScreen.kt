@@ -197,9 +197,24 @@ fun PlantDetailScreen(
                         ZoomableContainer(
                             modifier = Modifier.fillMaxSize()
                         ) { _, _ ->
-                            if (!plant.imageUrl.isNullOrBlank()) {
+                            val context = androidx.compose.ui.platform.LocalContext.current
+                            val resolvedModel = androidx.compose.runtime.remember(plant.imageUrl) {
+                                val raw = plant.imageUrl?.trim()
+                                when {
+                                    raw.isNullOrBlank() -> null
+                                    raw.startsWith("http://") || raw.startsWith("https://") -> raw
+                                    raw.startsWith("/images/plants/") -> "https://uyghurmedicine.com$raw"
+                                    raw.startsWith("/") && java.io.File(raw).exists() -> java.io.File(raw)
+                                    else -> {
+                                        val localFile = java.io.File(context.filesDir, "plant_images/${raw.substringAfterLast("/")}")
+                                        if (localFile.exists()) localFile else "https://uyghurmedicine.com/images/plants/${raw.substringAfterLast("/")}"
+                                    }
+                                }
+                            }
+
+                            if (resolvedModel != null) {
                                 coil.compose.AsyncImage(
-                                    model = plant.imageUrl,
+                                    model = resolvedModel,
                                     contentDescription = plant.getName(currentLanguage),
                                     placeholder = painterResource(id = detailImageRes),
                                     error = painterResource(id = detailImageRes),
