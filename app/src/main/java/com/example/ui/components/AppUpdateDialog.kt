@@ -2,6 +2,7 @@ package com.example.ui.components
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -123,6 +124,13 @@ fun AppUpdateDialog(
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateInfo.downloadUrl))
                         context.startActivity(intent)
+                        val toastMsg = when (currentLanguage) {
+                            Language.UYGHUR -> "APK چۈشۈرۈلۈۋاتىدۇ. چۈشۈپ بولغاندىن كېيىن ئۇقتۇرۇشتىن چېكىپ قاچىلاشنى تاماملاڭ!"
+                            Language.TURKISH -> "APK indiriliyor. İndirme tamamlandığında dosyaya dokunup kurulumu tamamlayın!"
+                            Language.ENGLISH -> "Downloading APK. Once finished, tap the file to install the update!"
+                        }
+                        Toast.makeText(context, toastMsg, Toast.LENGTH_LONG).show()
+                        onDismiss()
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

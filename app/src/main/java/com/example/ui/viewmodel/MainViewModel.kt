@@ -113,6 +113,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             val info = AppUpdateChecker.checkUpdate(currentLanguage.value)
             if (info != null && info.shouldUpdate) {
+                if (!info.mustUpdate && userPrefsRepo.isUpdateDismissedRecently(info.latestVersionCode)) {
+                    return@launch
+                }
                 _appUpdateInfo.value = info
                 _showUpdateDialog.value = true
             }
@@ -120,6 +123,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun dismissUpdateDialog() {
+        _appUpdateInfo.value?.let { info ->
+            userPrefsRepo.setUpdateDismissed(info.latestVersionCode)
+        }
         _showUpdateDialog.value = false
     }
 

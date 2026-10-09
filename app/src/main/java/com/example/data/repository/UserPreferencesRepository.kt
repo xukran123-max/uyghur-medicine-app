@@ -95,4 +95,18 @@ class UserPreferencesRepository(context: Context) {
         }
         return false
     }
+
+    fun setUpdateDismissed(versionCode: Int) {
+        prefs.edit()
+            .putInt("KEY_UPDATE_DISMISSED_CODE", versionCode)
+            .putLong("KEY_UPDATE_DISMISSED_TIME", System.currentTimeMillis())
+            .apply()
+    }
+
+    fun isUpdateDismissedRecently(versionCode: Int): Boolean {
+        val dismissedCode = prefs.getInt("KEY_UPDATE_DISMISSED_CODE", -1)
+        val dismissedTime = prefs.getLong("KEY_UPDATE_DISMISSED_TIME", 0L)
+        val oneDayMillis = 24 * 60 * 60 * 1000L
+        return dismissedCode == versionCode && (System.currentTimeMillis() - dismissedTime) < oneDayMillis
+    }
 }
