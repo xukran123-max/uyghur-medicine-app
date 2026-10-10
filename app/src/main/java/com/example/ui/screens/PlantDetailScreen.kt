@@ -57,6 +57,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.R
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontStyle
@@ -78,7 +80,43 @@ fun PlantDetailScreen(
     onFavoriteToggle: () -> Unit,
     onBackClick: () -> Unit
 ) {
+    val context = LocalContext.current
     var showZoomDialog by remember { mutableStateOf(false) }
+
+    val onShare = {
+        val plantName = plant.getName(currentLanguage)
+        val plantBenefits = plant.getBenefits(currentLanguage).take(120)
+        val shareText = when (currentLanguage) {
+            Language.UYGHUR -> """
+                🌿 $plantName
+                $plantBenefits...
+
+                📖 تەپسىلاتى ۋە مەنبەسى: https://uyghurmedicine.com
+                📌 ئۇيغۇر تېبابىتى (ئىلىم ۋە سالامەتلىك سۇپىسى)
+            """.trimIndent()
+            Language.TURKISH -> """
+                🌿 $plantName
+                $plantBenefits...
+
+                📖 Detaylar ve kaynak: https://uyghurmedicine.com/tr
+                📌 Uygur Tıbbı (Geleneksel Şifa Platformu)
+            """.trimIndent()
+            Language.ENGLISH -> """
+                🌿 $plantName
+                $plantBenefits...
+
+                📖 Details and source: https://uyghurmedicine.com/us
+                📌 Uyghur Medicine Platform
+            """.trimIndent()
+        }
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, shareText)
+            type = "text/plain"
+        }
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        context.startActivity(shareIntent)
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -137,6 +175,13 @@ fun PlantDetailScreen(
                                 imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = "Favorite",
                                 tint = if (isFavorite) Color(0xFFE74C3C) else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        IconButton(onClick = onShare) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = "Share",
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -583,6 +628,41 @@ fun PlantDetailScreen(
                     Text("• English: ${plant.nameEn}", style = MaterialTheme.typography.bodyMedium)
                     Text("• Türkçe: ${plant.nameTr}", style = MaterialTheme.typography.bodyMedium)
                     Text("• 中文: ${plant.nameZh}", style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = onShare,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Share,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = when (currentLanguage) {
+                            Language.UYGHUR -> "بۇ دورىنى ھەمبەھىرلەش"
+                            Language.TURKISH -> "Bu İlacı Paylaş"
+                            Language.ENGLISH -> "Share This Remedy"
+                        },
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 15.sp
+                    )
                 }
             }
 
