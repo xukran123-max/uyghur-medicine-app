@@ -185,9 +185,9 @@ class AssistantViewModel(application: Application) : AndroidViewModel(applicatio
                                 val currentAssistant = currentList[lastIndex]
                                 if (currentAssistant.content.isEmpty()) {
                                     val errText = when (language) {
-                                        Language.UYGHUR -> "ھازىر ياردەمچىگە ئۇلانغىلى بولمىدى. قايتا سىناڭ."
-                                        Language.TURKISH -> "Şu anda asistana bağlanılamadı. Lütfen tekrar deneyiniz."
-                                        Language.ENGLISH -> "Could not connect to the assistant. Please try again."
+                                        Language.UYGHUR -> "ھەكىم ياردەمچىمىز ھازىر ئالدىراش ھالەتتە قالدى. سالامەتلىكىڭىزگە داۋاملىق كۆڭۈل بۆلۈڭ، بىر ئازدىن كېيىن قايتا سوراپ بېقىڭ."
+                                        Language.TURKISH -> "Hekim asistanımız şu anda yoğun. Sağlığınıza dikkat edin, lütfen biraz sonra tekrar deneyiniz."
+                                        Language.ENGLISH -> "Our Hakim assistant is currently busy. Please take care of your health and try again shortly."
                                     }
                                     currentList[lastIndex] = currentAssistant.copy(
                                         content = errText,
