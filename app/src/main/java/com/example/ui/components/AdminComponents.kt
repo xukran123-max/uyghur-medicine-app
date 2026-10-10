@@ -643,12 +643,7 @@ fun EditPlantDialog(
                             ) {
                                 val currentContext = LocalContext.current
                                 val imageModel = remember(imageUrl) {
-                                    when {
-                                        imageUrl.startsWith("http://") || imageUrl.startsWith("https://") -> imageUrl
-                                        imageUrl.startsWith("/") && File(imageUrl).exists() -> File(imageUrl)
-                                        imageUrl.startsWith("/images/plants/") -> "https://uyghurmedicine.com$imageUrl"
-                                        else -> File(currentContext.filesDir, "plant_images/${imageUrl.substringAfterLast("/")}")
-                                    }
+                                    com.example.ui.util.ImageUtils.resolvePlantImageModel(imageUrl, currentContext)
                                 }
                                 AsyncImage(
                                     model = imageModel,

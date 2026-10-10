@@ -162,9 +162,14 @@ fun ZoomableImageViewerDialog(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                if (!imageUrl.isNullOrBlank()) {
+                val context = androidx.compose.ui.platform.LocalContext.current
+                val resolvedModel = androidx.compose.runtime.remember(imageUrl) {
+                    com.example.ui.util.ImageUtils.resolvePlantImageModel(imageUrl, context)
+                }
+
+                if (resolvedModel != null) {
                     coil.compose.AsyncImage(
-                        model = imageUrl,
+                        model = resolvedModel,
                         contentDescription = title,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
