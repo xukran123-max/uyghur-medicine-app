@@ -83,6 +83,7 @@ class MainActivity : ComponentActivity() {
             val appUpdateInfo by viewModel.appUpdateInfo.collectAsState()
             val showUpdateDialog by viewModel.showUpdateDialog.collectAsState()
             val isAdminLoggedIn by viewModel.isAdminLoggedIn.collectAsState()
+            val isCheckingUpdate by viewModel.isCheckingUpdate.collectAsState()
 
             var showMenuSheet by remember { mutableStateOf(false) }
             var editingPlant by remember { mutableStateOf<MedicinalPlant?>(null) }
@@ -262,7 +263,9 @@ class MainActivity : ComponentActivity() {
                                             editingPlant = null
                                             showEditPlantDialog = true
                                         },
-                                        onResetToDefault = { viewModel.resetPlantsToDefault() }
+                                        onResetToDefault = { viewModel.resetPlantsToDefault() },
+                                        isCheckingUpdate = isCheckingUpdate,
+                                        onCheckForUpdates = { viewModel.checkForUpdatesManual() }
                                     )
                                 }
                             }

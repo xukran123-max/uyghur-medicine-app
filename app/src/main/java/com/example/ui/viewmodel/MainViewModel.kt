@@ -109,6 +109,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    private val _isCheckingUpdate = MutableStateFlow(false)
+    val isCheckingUpdate: StateFlow<Boolean> = _isCheckingUpdate.asStateFlow()
+
     fun checkForUpdates() {
         viewModelScope.launch {
             val info = AppUpdateChecker.checkUpdate(currentLanguage.value)
@@ -118,6 +121,33 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
                 _appUpdateInfo.value = info
                 _showUpdateDialog.value = true
+            }
+        }
+    }
+
+    fun checkForUpdatesManual() {
+        if (_isCheckingUpdate.value) return
+        viewModelScope.launch {
+            _isCheckingUpdate.value = true
+            val info = AppUpdateChecker.checkUpdate(currentLanguage.value)
+            _isCheckingUpdate.value = false
+            if (info != null && info.shouldUpdate) {
+                _appUpdateInfo.value = info
+                _showUpdateDialog.value = true
+            } else if (info != null) {
+                val msg = when (currentLanguage.value) {
+                    Language.UYGHUR -> "سىز ئەڭ يېڭى نەشرىنى ئىشلىتىۋاتىسىز (v${com.example.BuildConfig.VERSION_NAME})"
+                    Language.TURKISH -> "En güncel sürümü kullanıyorsunuz (v${com.example.BuildConfig.VERSION_NAME})"
+                    Language.ENGLISH -> "You are using the latest version (v${com.example.BuildConfig.VERSION_NAME})"
+                }
+                android.widget.Toast.makeText(getApplication(), msg, android.widget.Toast.LENGTH_SHORT).show()
+            } else {
+                val msg = when (currentLanguage.value) {
+                    Language.UYGHUR -> "نەشىرنى تەكشۈرۈش مەغلۇپ بولدى، تور ئۇلىنىشىڭىزنى تەكشۈرۈپ بېقىڭ"
+                    Language.TURKISH -> "Güncelleme kontrolü başarısız oldu, lütfen internet bağlantınızı kontrol edin"
+                    Language.ENGLISH -> "Update check failed, please check your network connection"
+                }
+                android.widget.Toast.makeText(getApplication(), msg, android.widget.Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -30,11 +30,13 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.SystemUpdate
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -77,7 +79,9 @@ fun SettingsScreen(
     onLogoutAdmin: () -> Unit = {},
     onChangeAdminPassword: (String, String) -> Boolean = { _, _ -> false },
     onAddNewPlant: () -> Unit = {},
-    onResetToDefault: () -> Unit = {}
+    onResetToDefault: () -> Unit = {},
+    isCheckingUpdate: Boolean = false,
+    onCheckForUpdates: () -> Unit = {}
 ) {
     var showLoginDialog by remember { mutableStateOf(false) }
     var showChangePassDialog by remember { mutableStateOf(false) }
@@ -131,6 +135,24 @@ fun SettingsScreen(
         Language.UYGHUR -> "ئۇيغۇر تىبابىتى 2500 يىلدىن ئارتۇق تارىخقا ئىگە، يىپەك يولى تېببىي مەدەنىيىتىنىڭ جەۋھىرى. ئۇ كىشىلىك تەبىئەتنىڭ ئىسسىق، سوغۇق، ھۆل، قۇرۇقتىن ئىبارەت تۆت مىزاجى ۋە تەبىئىي ئۆسۈملۈك بىلەن داۋالاش سىستېمىسىغا ئاساسلىنىدۇ."
         Language.ENGLISH -> "Uyghur Traditional Medicine (Tibabiti) spans over 2,500 years of Silk Road healing heritage. It harmonizes body balance through the 4 Humors (Mizaj) system and natural herbal medicine."
         Language.TURKISH -> "Uygur Tıbbı, İpek Yolu kültürünün 2500 yıllık şifa mirasıdır. Dört mizaç (Sıcak, Soğuk, Nemli, Kuru) ve doğal bitkisel reçetelerle vücudu dengeler."
+    }
+
+    val updateSectionTitle = when (currentLanguage) {
+        Language.UYGHUR -> "ئەپ نەشرى ۋە يېڭىلاش"
+        Language.ENGLISH -> "App Version & Update"
+        Language.TURKISH -> "Uygulama Sürümü ve Güncelleme"
+    }
+
+    val checkUpdateBtnText = when (currentLanguage) {
+        Language.UYGHUR -> if (isCheckingUpdate) "تەكشۈرۈۋاتىدۇ..." else "نەشىر يېڭىلاشنى تەكشۈرۈش"
+        Language.ENGLISH -> if (isCheckingUpdate) "Checking..." else "Check for Updates"
+        Language.TURKISH -> if (isCheckingUpdate) "Denetleniyor..." else "Güncellemeleri Denetle"
+    }
+
+    val updateDesc = when (currentLanguage) {
+        Language.UYGHUR -> "ئەڭ يېڭى تىببىي مەزمۇنلار، رېتسىپلار ۋە سىستېما ياخشىلىنىشلىرىدىن ۋاقتىدا بەھرىمەن بولۇش ئۈچۈن قەرەللىك تەكشۈرۈپ تۇرۇڭ."
+        Language.ENGLISH -> "Check regularly to ensure you have the latest herbal data, remedies, and features."
+        Language.TURKISH -> "En güncel bitki bilgileri, şifalı reçeteler ve özellikler için düzenli olarak denetleyin."
     }
 
     Column(
@@ -562,7 +584,103 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 6. Admin Content Management Section (Shown ONLY when admin is logged in)
+        // 6. App Version & Update Card
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.SystemUpdate,
+                            contentDescription = "Update",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+
+                        Text(
+                            text = updateSectionTitle,
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        )
+                    }
+
+                    // Current Version Chip
+                    Surface(
+                        shape = RoundedCornerShape(12.dp),
+                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
+                    ) {
+                        Text(
+                            text = "v${com.example.BuildConfig.VERSION_NAME}",
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            ),
+                            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = updateDesc,
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        lineHeight = 18.sp
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                Button(
+                    onClick = onCheckForUpdates,
+                    enabled = !isCheckingUpdate,
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    if (isCheckingUpdate) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(18.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            strokeWidth = 2.dp
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    } else {
+                        Icon(
+                            imageVector = Icons.Default.Refresh,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                    }
+                    Text(
+                        text = checkUpdateBtnText,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // 7. Admin Content Management Section (Shown ONLY when admin is logged in)
         if (isAdminLoggedIn) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
