@@ -69,7 +69,7 @@ fun MizajQuizScreen(
     val questions = listOf(
         QuizQuestion(
             id = 1,
-            titleUy = "1. تەبىئەت ئىسسىقلىقى ۋە ھاۋا ئىنكاسى (Body Temperature Sensation)",
+            titleUy = "1. تەبىئەت ئىسسىقلىقى ۋە ھاۋا ئىنكاسى",
             titleEn = "1. Reaction to heat & cold weather (Body Temperature Sensation)",
             titleTr = "1. Vücut Isı Algısı ve Hava Koşullarına Tepki",
             options = listOf(
@@ -80,7 +80,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 2,
-            titleUy = "2. تېرىنىڭ رەڭگى ۋە نەم-قۇرۇقلۇقى (Skin Texture & Complexion)",
+            titleUy = "2. تېرىنىڭ رەڭگى ۋە نەم-قۇرۇقلۇقى",
             titleEn = "2. Skin texture, dryness & complexion (Skin Characteristics)",
             titleTr = "2. Cilt Dokusu, Nem ve Ten Rengi Özellikleri",
             options = listOf(
@@ -91,7 +91,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 3,
-            titleUy = "3. تومۇر ۋە يۈرەك سوقۇشى (Tebip Pulse Diagnostic)",
+            titleUy = "3. تومۇر ۋە يۈرەك سوقۇشى",
             titleEn = "3. Pulse strength & heart rate (Pulse Diagnostic)",
             titleTr = "3. Nabız Hızı ve Kalp Atış Yapısı (Nabız Teşhisi)",
             options = listOf(
@@ -102,7 +102,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 4,
-            titleUy = "4. ئاشقازان ۋە ھەزىم قىلىش ئىقتىدارى (Digestion & Appetite)",
+            titleUy = "4. ئاشقازان ۋە ھەزىم قىلىش ئىقتىدارى",
             titleEn = "4. Digestion speed & stomach capacity (Digestion Analysis)",
             titleTr = "4. Mide Hacmi ve Sindirim Hızı",
             options = listOf(
@@ -113,7 +113,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 5,
-            titleUy = "5. ئۇيقۇ ۋە روھىي جىددىيلىك (Sleep Quality & Energy)",
+            titleUy = "5. ئۇيقۇ ۋە روھىي جىددىيلىك",
             titleEn = "5. Sleep pattern & nervous system state (Sleep & Mental State)",
             titleTr = "5. Uyku Kalitesi ve Zihinsel Enerji Durumu",
             options = listOf(
@@ -124,7 +124,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 6,
-            titleUy = "6. ئېغىز تەمى ۋە تەشنا بولۇش (Mouth Taste & Thirst Level)",
+            titleUy = "6. ئېغىز تەمى ۋە تەشنا بولۇش",
             titleEn = "6. Oral taste sensation & hydration thirst level",
             titleTr = "6. Ağız Tadı ve Susuzluk Hissi",
             options = listOf(
@@ -135,7 +135,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 7,
-            titleUy = "7. بەدەن تۇرقى ۋە سۆڭەك گۆش تۇزۇلۈشى (Body Physique & Muscle Frame)",
+            titleUy = "7. بەدەن تۇرقى ۋە سۆڭەك-گۆش تۈزۈلۈشى",
             titleEn = "7. Musculoskeletal frame & body physique",
             titleTr = "7. Vücut Yapısı ve Kas/Kemik Çatısı",
             options = listOf(
@@ -146,7 +146,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 8,
-            titleUy = "8. بۆرەك ئېنېرگىيەسى ۋە چىدامچانلىق (Kidney Energy & Endurance)",
+            titleUy = "8. بۆرەك ئېنېرگىيەسى ۋە چىدامچانلىق",
             titleEn = "8. Physical endurance & lower back energy (Kidney Strength)",
             titleTr = "8. Bel-Böbrek Enerjisi ve Dayanıklılık",
             options = listOf(
@@ -157,7 +157,7 @@ fun MizajQuizScreen(
         ),
         QuizQuestion(
             id = 9,
-            titleUy = "9. چىقىرىش ئىقتىدارى ۋە چىقىرىندى ئالاھىدىلىكى (Excretion Profile)",
+            titleUy = "9. چىقىرىش ئىقتىدارى ۋە چىقىرىندى ئالاھىدىلىكى",
             titleEn = "9. Perspiration, urination & metabolic excretion traits",
             titleTr = "9. Terleme ve Boşaltım Özellikleri",
             options = listOf(

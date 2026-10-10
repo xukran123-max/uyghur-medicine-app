@@ -252,7 +252,7 @@ fun SettingsScreen(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "${lang.nativeName} (${lang.displayName})",
+                                text = lang.nativeName,
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                                     color = MaterialTheme.colorScheme.onSurface
@@ -268,7 +268,11 @@ fun SettingsScreen(
                                     .padding(horizontal = 8.dp, vertical = 2.dp)
                             ) {
                                 Text(
-                                    text = "Active",
+                                    text = when (currentLanguage) {
+                                        Language.UYGHUR -> "ئاكتىپ"
+                                        Language.TURKISH -> "Aktif"
+                                        Language.ENGLISH -> "Active"
+                                    },
                                     style = MaterialTheme.typography.labelSmall.copy(
                                         color = Color.White,
                                         fontWeight = FontWeight.Bold
@@ -318,7 +322,19 @@ fun SettingsScreen(
                         )
 
                         Text(
-                            text = if (isDarkMode) "Night / Dark Mode" else "Day / Light Mode",
+                            text = if (isDarkMode) {
+                                when (currentLanguage) {
+                                    Language.UYGHUR -> "كېچە ھالىتى"
+                                    Language.TURKISH -> "Karanlık Tema"
+                                    Language.ENGLISH -> "Dark Mode"
+                                }
+                            } else {
+                                when (currentLanguage) {
+                                    Language.UYGHUR -> "كۈندۈز ھالىتى"
+                                    Language.TURKISH -> "Aydınlık Tema"
+                                    Language.ENGLISH -> "Light Mode"
+                                }
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -440,7 +456,11 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "🌐 تور بېكەت ئادرىسىمىز (Uyghur Tıbbi): www.uyghurmedicine.com",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "🌐 رەسمىي تور بېكەت (ئۇيغۇر تېبابىتى): www.uyghurmedicine.com"
+                                Language.ENGLISH -> "🌐 Official Website (Uyghur Medicine): www.uyghurmedicine.com"
+                                Language.TURKISH -> "🌐 Resmi Web Sitemiz (Uygur Tıbbı): www.uyghurmedicine.com"
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF1B5E20)
@@ -462,7 +482,11 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "📷 ئىنستىگرام (Instagram): https://www.instagram.com/uygur_tibbi",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "📷 ئىنستىگرام: https://www.instagram.com/uygur_tibbi"
+                                Language.ENGLISH -> "📷 Instagram: https://www.instagram.com/uygur_tibbi"
+                                Language.TURKISH -> "📷 Instagram: https://www.instagram.com/uygur_tibbi"
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF833AB4)
@@ -484,7 +508,11 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "🌐 فېيسبوك (Facebook): https://www.facebook.com/uygurtibbi",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "🌐 فېيسبۇك: https://www.facebook.com/uygurtibbi"
+                                Language.ENGLISH -> "🌐 Facebook: https://www.facebook.com/uygurtibbi"
+                                Language.TURKISH -> "🌐 Facebook: https://www.facebook.com/uygurtibbi"
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF1877F2)
@@ -506,7 +534,11 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "🛍️ مەھسۇلات بازىرى (Online Pazaryeri): www.teklimakan.com",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "🛍️ تەكلىماكان تور بازىرى: www.teklimakan.com"
+                                Language.ENGLISH -> "🛍️ Teklimakan Online Marketplace: www.teklimakan.com"
+                                Language.TURKISH -> "🛍️ Teklimakan Online Pazaryeri: www.teklimakan.com"
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFFD35400)
@@ -528,7 +560,11 @@ fun SettingsScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "💬 WhatsApp: https://wa.me/+905551609999",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "💬 ۋاتساپ ئالاقە لىنىيەسى: +90 555 160 99 99"
+                                Language.ENGLISH -> "💬 WhatsApp Contact: +90 555 160 99 99"
+                                Language.TURKISH -> "💬 WhatsApp İletişim Hattı: +90 555 160 99 99"
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF128C7E)
@@ -806,7 +842,11 @@ fun SettingsScreen(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "ئۇيغۇر تېبابىتى مىراسى · v${com.example.BuildConfig.VERSION_NAME}",
+                text = when (currentLanguage) {
+                    Language.UYGHUR -> "ئۇيغۇر تېبابىتى مىراسى · v${com.example.BuildConfig.VERSION_NAME}"
+                    Language.TURKISH -> "Uygur Tıbbı Mirası · v${com.example.BuildConfig.VERSION_NAME}"
+                    Language.ENGLISH -> "Uyghur Medicine Heritage · v${com.example.BuildConfig.VERSION_NAME}"
+                },
                 style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                     fontSize = 11.sp
@@ -836,8 +876,25 @@ fun SettingsScreen(
     if (showResetConfirmDialog) {
         AlertDialog(
             onDismissRequest = { showResetConfirmDialog = false },
-            title = { Text("بارلىق مەزمۇننى ئەسلىگە كەلتۈرەمسىز؟", fontWeight = FontWeight.Bold) },
-            text = { Text("بارلىق تەھرىرلەنگەن ياكى قوشۇلغان دورىلار ئەسلىدىكى پېتى ئەسلىگە كېلىدۇ.") },
+            title = {
+                Text(
+                    text = when (currentLanguage) {
+                        Language.UYGHUR -> "بارلىق مەزمۇننى ئەسلىگە كەلتۈرەمسىز؟"
+                        Language.TURKISH -> "Tüm içerikleri sıfırlamak istiyor musunuz?"
+                        Language.ENGLISH -> "Reset all contents to default?"
+                    },
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = when (currentLanguage) {
+                        Language.UYGHUR -> "بارلىق تەھرىرلەنگەن ياكى قوشۇلغان دورىلار ئەسلىدىكى پېتى ئەسلىگە كېلىدۇ."
+                        Language.TURKISH -> "Düzenlenen veya eklenen tüm bitkiler varsayılan haline geri dönecektir."
+                        Language.ENGLISH -> "All edited or added remedies will be reset to default."
+                    }
+                )
+            },
             confirmButton = {
                 Button(
                     onClick = {
@@ -846,12 +903,24 @@ fun SettingsScreen(
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text("ئەسلىگە كەلتۈرۈش")
+                    Text(
+                        text = when (currentLanguage) {
+                            Language.UYGHUR -> "ئەسلىگە كەلتۈرۈش"
+                            Language.TURKISH -> "Sıfırla"
+                            Language.ENGLISH -> "Reset"
+                        }
+                    )
                 }
             },
             dismissButton = {
                 OutlinedButton(onClick = { showResetConfirmDialog = false }) {
-                    Text("بىكار قىلىش")
+                    Text(
+                        text = when (currentLanguage) {
+                            Language.UYGHUR -> "بىكار قىلىش"
+                            Language.TURKISH -> "İptal"
+                            Language.ENGLISH -> "Cancel"
+                        }
+                    )
                 }
             }
         )

@@ -194,9 +194,9 @@ fun MenuDrawerSheet(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = when (currentLanguage) {
-                                Language.UYGHUR -> "تور بېكەت ئادرىسىمىز (Uyghur Tıbbi)"
-                                Language.ENGLISH -> "Official Website (Uyghur Tıbbi)"
-                                Language.TURKISH -> "Resmi Web Sitesi (Uyghur Tıbbi)"
+                                Language.UYGHUR -> "رەسمىي تور بېكەت (ئۇيغۇر تېبابىتى)"
+                                Language.ENGLISH -> "Official Website (Uyghur Medicine)"
+                                Language.TURKISH -> "Resmi Web Sitesi (Uygur Tıbbı)"
                             },
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
@@ -264,7 +264,11 @@ fun MenuDrawerSheet(
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "ئىنستىگرام (Instagram)",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "ئىنستىگرام"
+                                Language.ENGLISH -> "Instagram"
+                                Language.TURKISH -> "Instagram"
+                            },
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF833AB4)
@@ -323,7 +327,11 @@ fun MenuDrawerSheet(
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "فېيسبوك (Facebook)",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "فېيسبۇك"
+                                Language.ENGLISH -> "Facebook"
+                                Language.TURKISH -> "Facebook"
+                            },
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF1877F2)
@@ -382,7 +390,11 @@ fun MenuDrawerSheet(
 
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "مەھسۇلات بازىرى (Online Pazaryeri)",
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "تەكلىماكان تور بازىرى"
+                                Language.ENGLISH -> "Teklimakan Online Marketplace"
+                                Language.TURKISH -> "Teklimakan Online Pazaryeri"
+                            },
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFFD35400)
@@ -442,9 +454,9 @@ fun MenuDrawerSheet(
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
                             text = when (currentLanguage) {
-                                Language.UYGHUR -> "ۋاتساپ ئالاقە نومۇرى (WhatsApp)"
+                                Language.UYGHUR -> "ۋاتساپ ئالاقە لىنىيەسى"
                                 Language.ENGLISH -> "WhatsApp Contact"
-                                Language.TURKISH -> "WhatsApp İletişim Numarası"
+                                Language.TURKISH -> "WhatsApp İletişim Hattı"
                             },
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold,
