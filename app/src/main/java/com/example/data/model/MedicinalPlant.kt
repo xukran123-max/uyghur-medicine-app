@@ -33,7 +33,8 @@ data class MedicinalPlant(
     val imageResId: Int? = null,
     val imageUrl: String? = null,
     val imageFit: String? = "contain",
-    val isFeatured: Boolean = false
+    val isFeatured: Boolean = false,
+    val publishTarget: String? = "ALL"
 ) {
     fun getName(language: Language): String = when (language) {
         Language.UYGHUR -> nameUy

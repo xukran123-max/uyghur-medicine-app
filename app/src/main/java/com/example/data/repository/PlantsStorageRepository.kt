@@ -275,6 +275,7 @@ class PlantsStorageRepository(private val context: Context) {
             put("imageUrl", plant.imageUrl ?: "")
             put("imageFit", plant.imageFit ?: "contain")
             put("isFeatured", plant.isFeatured)
+            put("publishTarget", plant.publishTarget ?: "ALL")
         }
     }
 
@@ -320,7 +321,8 @@ class PlantsStorageRepository(private val context: Context) {
             imageResId = if (imageRes > 0) imageRes else null,
             imageUrl = obj.optString("imageUrl", "").ifEmpty { null },
             imageFit = obj.optString("imageFit", "contain"),
-            isFeatured = obj.optBoolean("isFeatured", false)
+            isFeatured = obj.optBoolean("isFeatured", false),
+            publishTarget = obj.optString("publishTarget", "ALL")
         )
     }
 }
