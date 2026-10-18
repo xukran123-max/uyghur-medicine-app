@@ -1,5 +1,6 @@
 package com.example.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -80,6 +81,8 @@ fun PlantDetailScreen(
     onFavoriteToggle: () -> Unit,
     onBackClick: () -> Unit
 ) {
+    BackHandler(onBack = onBackClick)
+
     val context = LocalContext.current
     var showZoomDialog by remember { mutableStateOf(false) }
 
