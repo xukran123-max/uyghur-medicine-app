@@ -646,9 +646,9 @@ fun PlantDetailScreen(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = when (currentLanguage) {
-                            Language.UYGHUR -> "بۇ دورىنى ھەمبەھىرلەش"
-                            Language.TURKISH -> "Bu İlacı Paylaş"
-                            Language.ENGLISH -> "Share This Remedy"
+                            Language.UYGHUR -> "بۇ شىپانى ھەمبەھىرلەش"
+                            Language.TURKISH -> "Şifayı Paylaş"
+                            Language.ENGLISH -> "Share The Healing"
                         },
                         fontWeight = FontWeight.Bold,
                         fontSize = 15.sp
