@@ -1,5 +1,6 @@
 package com.example.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -33,7 +34,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -61,18 +61,25 @@ fun PlantCard(
             .fillMaxWidth()
             .clickable { onClick() }
             .testTag("plant_card_${plant.id}"),
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(18.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.35f)
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 1.5.dp,
+            pressedElevation = 3.dp
+        )
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp)
+                .padding(13.dp)
         ) {
-            // Top Row: Image Thumbnail & Favorite Heart
+            // Top Row: High Quality Image Thumbnail & Favorite Heart
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -81,9 +88,9 @@ fun PlantCard(
                 // High Quality Plant Image Thumbnail
                 Box(
                     modifier = Modifier
-                        .size(56.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(MaterialTheme.colorScheme.primaryContainer),
+                        .size(58.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.4f)),
                     contentAlignment = Alignment.Center
                 ) {
                     val context = androidx.compose.ui.platform.LocalContext.current
@@ -111,76 +118,48 @@ fun PlantCard(
                     }
                 }
 
-                // Favorite Heart Button
-                IconButton(
-                    onClick = onFavoriteToggle,
+                // Favorite Heart Button with gentle circular backdrop
+                Box(
                     modifier = Modifier
-                        .size(32.dp)
-                        .testTag("plant_card_favorite_${plant.id}")
+                        .size(34.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                        .clickable { onFavoriteToggle() }
+                        .testTag("plant_card_favorite_${plant.id}"),
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Favorite",
-                        tint = if (isFavorite) Color(0xFFE74C3C) else MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = if (isFavorite) Color(0xFFE74C3C) else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.size(19.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Mizaj Badge
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color(plant.mizajType.colorHex).copy(alpha = 0.15f))
-                    .padding(horizontal = 8.dp, vertical = 3.dp)
-            ) {
-                Text(
-                    text = "${plant.mizajType.getDisplayName(currentLanguage)} • ${plant.getMizajDegree(currentLanguage)}",
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = Color(plant.mizajType.colorHex),
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 10.sp
-                    ),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Title
+            // Title: Plant Name (Clean, Bold, Primary Focus)
             Text(
                 text = plant.getName(currentLanguage),
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp,
+                    fontSize = 16.sp,
                     color = MaterialTheme.colorScheme.onSurface
                 ),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
 
-            // Latin Name
-            Text(
-                text = plant.latinName,
-                style = MaterialTheme.typography.bodySmall.copy(
-                    fontStyle = FontStyle.Italic,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 11.sp
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            Spacer(modifier = Modifier.height(5.dp))
 
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Benefits short summary
+            // Benefits Summary (Clean, readable, natural line height)
             Text(
                 text = plant.getBenefits(currentLanguage),
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    fontSize = 11.sp
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f),
+                    fontSize = 12.sp,
+                    lineHeight = 17.sp
                 ),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
