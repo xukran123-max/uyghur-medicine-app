@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LocalPharmacy
@@ -499,6 +500,7 @@ fun MenuDrawerSheet(
             val navItems = listOf(
                 ScreenNavItem(ScreenTab.HOME, "باش بەت", "Home", "Anasayfa", Icons.Default.Home),
                 ScreenNavItem(ScreenTab.CATALOG, "ئۆسۈملۈك كۆرسەتكۈچى", "Herb Catalog", "Bitki Kataloğu", Icons.Default.LocalPharmacy),
+                ScreenNavItem(ScreenTab.FAVORITES, "ياقتۇرغانلىرىم", "Favorites", "Favorilerim", Icons.Default.Favorite),
                 ScreenNavItem(ScreenTab.ASSISTANT, "ھەكىم بىلەن پاراڭلىشىڭ", "Consult the Hakim", "Hekim ile Görüşün", Icons.Default.MedicalServices),
                 ScreenNavItem(ScreenTab.CALENDAR, "كالىندار", "Calendar", "Takvim", Icons.Default.CalendarMonth),
                 ScreenNavItem(ScreenTab.MIZAJ_QUIZ, "9 تۈر بويىچە ئانالىز", "9-Category Analysis", "9 Maddelik Analiz", Icons.Default.Spa),

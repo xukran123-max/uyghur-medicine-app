@@ -246,17 +246,9 @@ class MainActivity : ComponentActivity() {
                                         onPlantClick = { viewModel.selectPlant(it) }
                                     )
 
-                                    ScreenTab.FAVORITES -> CatalogScreen(
+                                    ScreenTab.FAVORITES -> FavoritesScreen(
                                         currentLanguage = currentLanguage,
-                                        searchQuery = searchQuery,
-                                        onSearchQueryChange = { viewModel.setSearchQuery(it) },
-                                        selectedCategory = selectedCategory,
-                                        onCategorySelect = { viewModel.selectCategory(it) },
-                                        selectedMizaj = selectedMizaj,
-                                        onMizajSelect = { viewModel.selectMizaj(it) },
-                                        selectedProperty = selectedProperty,
-                                        onPropertySelect = { viewModel.selectProperty(it) },
-                                        plantsList = filteredPlants,
+                                        favoritePlants = favoritePlants,
                                         favoriteIds = favoriteIds,
                                         onFavoriteToggle = { viewModel.toggleFavorite(it) },
                                         onPlantClick = { viewModel.selectPlant(it) }

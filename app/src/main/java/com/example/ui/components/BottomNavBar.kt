@@ -58,11 +58,11 @@ fun BottomNavBar(
                 icon = Icons.Default.MedicalServices
             ),
             TabItem(
-                tab = ScreenTab.MIZAJ_QUIZ,
-                titleUy = "مىزاج",
-                titleEn = "Mizaj Test",
-                titleTr = "Mizaç",
-                icon = Icons.Default.Spa
+                tab = ScreenTab.FAVORITES,
+                titleUy = "ياقتۇرغانلىرىم",
+                titleEn = "Favorites",
+                titleTr = "Favorilerim",
+                icon = Icons.Default.Favorite
             ),
             TabItem(
                 tab = ScreenTab.SETTINGS,
