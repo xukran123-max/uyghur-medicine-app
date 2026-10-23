@@ -194,9 +194,9 @@ fun MenuDrawerSheet(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text(
                                 text = when (currentLanguage) {
-                                    Language.UYGHUR -> "رەقەملىك كىتابخانا"
-                                    Language.ENGLISH -> "Digital Library"
-                                    Language.TURKISH -> "Dijital Kütüphane"
+                                    Language.UYGHUR -> "كىتابلار"
+                                    Language.ENGLISH -> "Books"
+                                    Language.TURKISH -> "Kitaplar"
                                 },
                                 style = MaterialTheme.typography.bodyMedium.copy(
                                     fontWeight = FontWeight.Bold,

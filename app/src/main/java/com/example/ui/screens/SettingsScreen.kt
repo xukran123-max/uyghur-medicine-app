@@ -457,9 +457,9 @@ fun SettingsScreen(
                     ) {
                         Text(
                             text = when (currentLanguage) {
-                                Language.UYGHUR -> "📚 رەقەملىك كىتابخانا: ئۇيغۇر تىبابىتى كىتابلىرى ۋە قامۇس"
-                                Language.ENGLISH -> "📚 Digital Library: Uyghur Medicine Classical Books"
-                                Language.TURKISH -> "📚 Dijital Kütüphane: Uygur Tıbbı Kitapları ve Ansiklopedi"
+                                Language.UYGHUR -> "📚 كىتابلار: ئۇيغۇر تىبابىتى كىتابلىرى ۋە قامۇس"
+                                Language.ENGLISH -> "📚 Books: Uyghur Medicine Classical Books"
+                                Language.TURKISH -> "📚 Kitaplar: Uygur Tıbbı Kitapları ve Ansiklopedi"
                             },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Bold,

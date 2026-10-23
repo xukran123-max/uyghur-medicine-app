@@ -212,9 +212,9 @@ fun HomeScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
                                     text = when (currentLanguage) {
-                                        Language.UYGHUR -> "رەقەملىك كىتابخانا"
-                                        Language.ENGLISH -> "Digital Library"
-                                        Language.TURKISH -> "Dijital Kütüphane"
+                                        Language.UYGHUR -> "كىتابلار"
+                                        Language.ENGLISH -> "Books"
+                                        Language.TURKISH -> "Kitaplar"
                                     },
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
