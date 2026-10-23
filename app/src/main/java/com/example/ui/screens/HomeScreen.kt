@@ -1,5 +1,7 @@
 package com.example.ui.screens
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +27,8 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -70,6 +75,16 @@ fun HomeScreen(
     onStartQuizClick: () -> Unit,
     onAssistantClick: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+    fun openUrl(url: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     val searchPlaceholder = when (currentLanguage) {
         Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەردىن ئىزدەڭ..."
         Language.ENGLISH -> "Search Uyghur medicinal herbs..."
@@ -158,6 +173,93 @@ fun HomeScreen(
                     onStartQuizClick = onStartQuizClick,
                     onExploreClick = onSeeAllClick
                 )
+            }
+
+            // Digital Library Banner Card (رەقەملىك كىتابخانا)
+            item(span = { GridItemSpan(2) }) {
+                Card(
+                    onClick = {
+                        openUrl("https://www.uyghurmedicine.com/kitablar/?app=1")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFF2F8F4)
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(Color(0xFF0F5A47)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "📚",
+                                fontSize = 22.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(14.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = when (currentLanguage) {
+                                        Language.UYGHUR -> "رەقەملىك كىتابخانا"
+                                        Language.ENGLISH -> "Digital Library"
+                                        Language.TURKISH -> "Dijital Kütüphane"
+                                    },
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFF0F5A47)
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Surface(
+                                    color = Color(0xFFD6EDE0),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text(
+                                        text = when (currentLanguage) {
+                                            Language.UYGHUR -> "يېڭى"
+                                            Language.ENGLISH -> "NEW"
+                                            Language.TURKISH -> "YENİ"
+                                        },
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = Color(0xFF0F5A47),
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp
+                                        )
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "«ئۇيغۇر تىبابىتى قامۇسى» قاتارلىق ئەسەرلەرنى توردا ئوقۇڭ"
+                                    Language.ENGLISH -> "Read classical Uyghur medical books online"
+                                    Language.TURKISH -> "Uygur tıbbı klasik eserlerini çevrimiçi okuyun"
+                                },
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            )
+                        }
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Open Library",
+                            tint = Color(0xFF0F5A47)
+                        )
+                    }
+                }
             }
 
 

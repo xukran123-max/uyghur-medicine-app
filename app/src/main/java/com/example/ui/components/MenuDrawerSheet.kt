@@ -158,6 +158,88 @@ fun MenuDrawerSheet(
                 modifier = Modifier.padding(bottom = 10.dp)
             )
 
+            // Digital Library Link Card (رەقەملىك كىتابخانا)
+            Card(
+                onClick = { openUrl("https://www.uyghurmedicine.com/kitablar/?app=1") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFFF2F8F4)
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(14.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF0F5A47)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = "📚",
+                            fontSize = 20.sp
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(14.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "رەقەملىك كىتابخانا"
+                                    Language.ENGLISH -> "Digital Library"
+                                    Language.TURKISH -> "Dijital Kütüphane"
+                                },
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color(0xFF0F5A47)
+                                )
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Surface(
+                                color = Color(0xFFD6EDE0),
+                                shape = RoundedCornerShape(6.dp)
+                            ) {
+                                Text(
+                                    text = "NEW",
+                                    modifier = Modifier.padding(horizontal = 5.dp, vertical = 1.dp),
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        color = Color(0xFF0F5A47),
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 10.sp
+                                    )
+                                )
+                            }
+                        }
+                        Text(
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "«ئۇيغۇر تىبابىتى قامۇسى» ۋە ئەسەرلەر"
+                                Language.ENGLISH -> "Read classical medical books"
+                                Language.TURKISH -> "Klasik tıp kitaplarını oku"
+                            },
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = Color.Gray
+                            )
+                        )
+                    }
+
+                    Icon(
+                        imageVector = Icons.Default.OpenInNew,
+                        contentDescription = "Open",
+                        tint = Color(0xFF0F5A47),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+
             // Official Website Link Card (Uyghur Tibbi)
             Card(
                 onClick = { openUrl("https://www.uyghurmedicine.com") },

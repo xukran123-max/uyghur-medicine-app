@@ -444,6 +444,38 @@ fun SettingsScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                // Digital Library
+                Surface(
+                    onClick = { openUrl("https://www.uyghurmedicine.com/kitablar/?app=1") },
+                    shape = RoundedCornerShape(12.dp),
+                    color = Color(0xFFF2F8F4),
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "📚 رەقەملىك كىتابخانا: ئۇيغۇر تىبابىتى كىتابلىرى ۋە قامۇس"
+                                Language.ENGLISH -> "📚 Digital Library: Uyghur Medicine Classical Books"
+                                Language.TURKISH -> "📚 Dijital Kütüphane: Uygur Tıbbı Kitapları ve Ansiklopedi"
+                            },
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF0F5A47)
+                            ),
+                            modifier = Modifier.weight(1f)
+                        )
+                        Icon(
+                            imageVector = Icons.Default.ExitToApp,
+                            contentDescription = "Open",
+                            tint = Color(0xFF0F5A47),
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
+
                 // Official Website
                 Surface(
                     onClick = { openUrl("https://www.uyghurmedicine.com") },
