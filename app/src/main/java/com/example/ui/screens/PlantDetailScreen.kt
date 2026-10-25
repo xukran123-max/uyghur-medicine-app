@@ -736,6 +736,74 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // Public content attribution. Editorial source records remain private in admin.
+            val officialSourceUrl = when (currentLanguage) {
+                Language.UYGHUR -> "https://uyghurmedicine.com"
+                Language.TURKISH -> "https://uyghurmedicine.com/tr"
+                Language.ENGLISH -> "https://uyghurmedicine.com/us"
+            }
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { uriHandler.openUri(officialSourceUrl) },
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+                ),
+                border = BorderStroke(
+                    1.dp,
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.22f)
+                )
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 18.dp, vertical = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Language,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Column {
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "ماتېرىيال مەنبەسى"
+                                    Language.TURKISH -> "İçerik kaynağı"
+                                    Language.ENGLISH -> "Content source"
+                                },
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Text(
+                                text = "uyghurmedicine.com",
+                                style = MaterialTheme.typography.titleSmall.copy(
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            )
+                        }
+                    }
+                    Icon(
+                        imageVector = Icons.Default.Link,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
             Button(
                 onClick = onShare,
                 modifier = Modifier
