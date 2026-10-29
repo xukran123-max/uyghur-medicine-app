@@ -68,6 +68,17 @@ fun BannerCarousel(
             badgeTr = "Bitki Rehberi",
         ),
         BannerItem(
+            titleUy = "مىجەز تەلىم-تەربىيە كۇرسى (شەمشىنۇر)",
+            titleEn = "Mizaj Training Course & Uyghur Medicine",
+            titleTr = "Mizaç Eğitimi ve Sağlık Kursu",
+            subtitleUy = "تەبىئىتىڭىزنى تونۇڭ، ساغلام ياشاڭ — تېبابەت مۇنبىرىدە تىزىملىتىش باشلاندى",
+            subtitleEn = "Know your temperament, live healthy — enrollment now open",
+            subtitleTr = "Mizacınızı tanıyın, sağlıklı yaşayın — kayıtlar başladı",
+            badgeUy = "تېبابەت مۇنبىرى",
+            badgeEn = "Forum & Courses",
+            badgeTr = "Tıp Forumu",
+        ),
+        BannerItem(
             titleUy = "مىزاجىڭىزنى ئېنىقلاپ بېقىڭ",
             titleEn = "Discover Your Personal Mizaj (Temperament)",
             titleTr = "Kendi Mizacınızı Keşfedin",

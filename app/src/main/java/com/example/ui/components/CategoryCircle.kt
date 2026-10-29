@@ -52,56 +52,56 @@ fun CategoryCircleRow(
         CategoryCircleData(
             category = null,
             titleUy = "ھەممىسى",
-            titleEn = "All Herbs",
+            titleEn = "All",
             titleTr = "Tümü",
             icon = Icons.Default.Category,
             bgColor = Color(0xFFE8F5E9),
             iconColor = Color(0xFF2E7D32)
         ),
         CategoryCircleData(
-            category = PlantCategory.HERB,
-            titleUy = PlantCategory.HERB.nameUy,
-            titleEn = PlantCategory.HERB.nameEn,
-            titleTr = PlantCategory.HERB.nameTr,
+            category = PlantCategory.XAM_DORILAR,
+            titleUy = PlantCategory.XAM_DORILAR.nameUy,
+            titleEn = PlantCategory.XAM_DORILAR.nameEn,
+            titleTr = PlantCategory.XAM_DORILAR.nameTr,
             icon = Icons.Default.Eco,
             bgColor = Color(0xFFE0F2F1),
             iconColor = Color(0xFF00695C)
         ),
         CategoryCircleData(
-            category = PlantCategory.FRUIT,
-            titleUy = PlantCategory.FRUIT.nameUy,
-            titleEn = PlantCategory.FRUIT.nameEn,
-            titleTr = PlantCategory.FRUIT.nameTr,
-            icon = Icons.Default.Restaurant,
-            bgColor = Color(0xFFFFEBEE),
-            iconColor = Color(0xFFC62828)
+            category = PlantCategory.PISHSHIQ_DORILAR,
+            titleUy = PlantCategory.PISHSHIQ_DORILAR.nameUy,
+            titleEn = PlantCategory.PISHSHIQ_DORILAR.nameEn,
+            titleTr = PlantCategory.PISHSHIQ_DORILAR.nameTr,
+            icon = Icons.Default.Medication,
+            bgColor = Color(0xFFE8EAF6),
+            iconColor = Color(0xFF283593)
         ),
         CategoryCircleData(
-            category = PlantCategory.SPICE,
-            titleUy = PlantCategory.SPICE.nameUy,
-            titleEn = PlantCategory.SPICE.nameEn,
-            titleTr = PlantCategory.SPICE.nameTr,
-            icon = Icons.Default.LocalPharmacy,
+            category = PlantCategory.ADDIY_RETSIPLAR,
+            titleUy = PlantCategory.ADDIY_RETSIPLAR.nameUy,
+            titleEn = PlantCategory.ADDIY_RETSIPLAR.nameEn,
+            titleTr = PlantCategory.ADDIY_RETSIPLAR.nameTr,
+            icon = Icons.Default.Restaurant,
             bgColor = Color(0xFFFFF8E1),
             iconColor = Color(0xFFF57F17)
         ),
         CategoryCircleData(
-            category = PlantCategory.FLOWER,
-            titleUy = PlantCategory.FLOWER.nameUy,
-            titleEn = PlantCategory.FLOWER.nameEn,
-            titleTr = PlantCategory.FLOWER.nameTr,
+            category = PlantCategory.KESELLIKLER,
+            titleUy = PlantCategory.KESELLIKLER.nameUy,
+            titleEn = PlantCategory.KESELLIKLER.nameEn,
+            titleTr = PlantCategory.KESELLIKLER.nameTr,
+            icon = Icons.Default.LocalPharmacy,
+            bgColor = Color(0xFFFFEBEE),
+            iconColor = Color(0xFFC62828)
+        ),
+        CategoryCircleData(
+            category = PlantCategory.TEBABET_MUNBIRI,
+            titleUy = PlantCategory.TEBABET_MUNBIRI.nameUy,
+            titleEn = PlantCategory.TEBABET_MUNBIRI.nameEn,
+            titleTr = PlantCategory.TEBABET_MUNBIRI.nameTr,
             icon = Icons.Default.LocalFlorist,
             bgColor = Color(0xFFF3E5F5),
             iconColor = Color(0xFF6A1B9A)
-        ),
-        CategoryCircleData(
-            category = PlantCategory.SEED,
-            titleUy = PlantCategory.SEED.nameUy,
-            titleEn = PlantCategory.SEED.nameEn,
-            titleTr = PlantCategory.SEED.nameTr,
-            icon = Icons.Default.Medication,
-            bgColor = Color(0xFFE8EAF6),
-            iconColor = Color(0xFF283593)
         )
     )
 

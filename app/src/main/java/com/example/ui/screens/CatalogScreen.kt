@@ -175,7 +175,7 @@ fun CatalogScreen(
                         onClick = { onCategorySelect(null) }
                     )
 
-                    PlantCategory.entries.forEach { cat ->
+                    PlantCategory.mainCategories.forEach { cat ->
                         val isSelected = selectedCategory == cat
                         CustomFilterPill(
                             text = cat.getDisplayName(currentLanguage),

@@ -1606,6 +1606,72 @@ object PlantRepository {
             organTargetZh = "",
             iconEmoji = "🌱",
             isFeatured = false
+        ),
+        MedicinalPlant(
+            id = 51,
+            nameUy = "ياڭاق دەملىمىسى (بەل ۋە بۆرەك)",
+            nameEn = "Walnut Infusion (Kidney & Lower Back)",
+            nameTr = "Ceviz Çayı (Böbrek & Bel Şifası)",
+            nameZh = "核桃补肾茶",
+            latinName = "Juglans regia infusio",
+            category = PlantCategory.ADDIY_RETSIPLAR,
+            mizajType = MizajType.HOT_MOIST,
+            mizajDegreeUy = "2-دەرىجىدە ئىسسىق، 1-دەرىجىدە ھۆل",
+            mizajDegreeEn = "2nd Degree Hot, 1st Degree Moist",
+            mizajDegreeTr = "2. Derece Sıcak, 1. Derece Nemli",
+            mizajDegreeZh = "",
+            benefitsUy = "بەل ۋە بۆرەك سوۋۇپ كېتىش، بەل ئاغرىقى، ماغدۇرسىزلىقنى پەسەيتىپ، تەن قۇۋۋىتى ۋە مېڭىنى كۈچەيتىدۇ.",
+            benefitsEn = "Strengthens kidneys and lower back, warms cold fatigue, improves mental stamina and vital energy.",
+            benefitsTr = "Böbrek ve bel üşümesini giderir, bel ağrısını hafifletir, vücut direncini ve zihni güçlendirir.",
+            benefitsZh = "温补肾阳，强健腰膝，益智健脑，增强体质与元气。",
+            usageUy = "3-4 تال ياڭاق مېغىزىنى يەڭگىل ئەيلەپ، دارچىن ۋە قەلەمپۇر بىلەن بىللە قايناقسۇغا چىلاپ دەملەپ، ئىسسىق ئىچىلىدۇ.",
+            usageEn = "Crush 3-4 walnut kernels lightly, steep in boiled water with cinnamon and clove, drink warm.",
+            usageTr = "3-4 adet ceviz içi hafif ezilip tarçın ve karanfil ile sıcak suda demlenerek ılık içilir.",
+            usageZh = "取核桃仁3-4枚微碎，配肉桂或丁香开水冲泡代茶饮。",
+            cautionUy = "ئىسسىق مىزاجلىقلار ۋە قاندىكى ياغ مىقدارى يۇقىرى كىشىلەر مىقدارىنى تەڭشەپ، ئاز-ئازدىن ئىستېمال قىلىشى لازىم.",
+            cautionEn = "Individuals with hot constitutions or high blood lipids should consume in moderate quantities.",
+            cautionTr = "Sıcak mizaçlılar ve kan lipidleri yüksek olanlar ölçülü tüketmelidir.",
+            cautionZh = "热性体质及血脂偏高者宜适量饮用。",
+            organTargetUy = "بۆرەك، بەل، نېرۋا، مېڭە",
+            organTargetEn = "Kidneys, Lower Back, Nervous System, Brain",
+            organTargetTr = "Böbrek, Bel, Sinir Sistemi, Beyin",
+            organTargetZh = "肾、腰部、神经、脑",
+            iconEmoji = "🍵",
+            imageUrl = "https://www.uyghurmedicine.com/images/remedies/bel-borek-yaqang.jpg",
+            isFeatured = true
+        ),
+        MedicinalPlant(
+            id = 52,
+            nameUy = "مىجەز تەلىم-تەربىيە كۇرسى (شەمشىنۇر)",
+            nameEn = "Mizaj Training Course (Shemshinur)",
+            nameTr = "Mizaç Eğitimi ve Sağlık Kursu",
+            nameZh = "气质学与维吾尔医学培训课",
+            latinName = "Mizaj et Sanitas Disciplina",
+            category = PlantCategory.TEBABET_MUNBIRI,
+            mizajType = MizajType.HOT_MOIST,
+            mizajDegreeUy = "مۇئەييەنلەشكەن دەرسلىك",
+            mizajDegreeEn = "Certified Academic Course",
+            mizajDegreeTr = "Sertifikalı Eğitim Programı",
+            mizajDegreeZh = "系统专业课程",
+            benefitsUy = "ئۇيغۇر تېبابىتىنىڭ 4 خىلىت ۋە مىزاج نەزەرىيەسى، تەبىئىي كۈتۈنۈش، كېسەللىكلەرنىڭ ئالدىنى ئېلىش ۋە پائالىيەتلەر ھەققىدە سىستېمىلىق تەلىم بېرىدۇ.",
+            benefitsEn = "Systematic curriculum on 4 Humors and Mizaj theory, preventive herbal lifestyles, and seasonal well-being.",
+            benefitsTr = "4 Ahlat ve Mizaç teorisi, koruyucu hekimlik, şifalı bitkiler ve dengeli yaşam konusunda kapsamlı eğitim.",
+            benefitsZh = "系统讲解四大体液与气质理论，传授生活调理与传统防病保健知识。",
+            usageUy = "كۇرس تىزىملىتىش، ماتېرىياللار ۋە تور دەرسلىكىگە تېبابەت مۇنبىرى سەھىپىسىدىن بىۋاسىتە قاتنىشالايسىز.",
+            usageEn = "Access lecture modules and registration directly via the Uyghur Medicine Forum portal.",
+            usageTr = "Eğitim modüllerine ve kayıt sistemine Tıp Forumu üzerinden doğrudan ulaşabilirsiniz.",
+            usageZh = "通过医学论坛入口在线报名并学习系统课程。",
+            cautionUy = "مائارىپ ۋە ساغلاملىق بىلىملىرى ئۈچۈن بولۇپ، ئېغىر كېسەللىكلەردە كەسپىي دوختۇرغا كۆرۈنۈش كېرەك.",
+            cautionEn = "For educational and preventive knowledge; consult a medical specialist for acute conditions.",
+            cautionTr = "Eğitim ve koruyucu sağlık amaçlıdır; klinik tanının yerini almaz.",
+            cautionZh = "本课程为健康普及与文化传承，不作为临床诊疗处方。",
+            organTargetUy = "پۈتۈن بەدەن سالامەتلىكى، روھىي ھالەت",
+            organTargetEn = "Holistic Body Health, Mind & Vitality",
+            organTargetTr = "Tüm Vücut Dengesi, Ruh ve Beden",
+            organTargetZh = "全身平衡、身心调理",
+            iconEmoji = "🎓",
+            imageUrl = "https://www.uyghurmedicine.com/images/mizaj_kursi_yengi_banner.jpg",
+            isFeatured = true
         )
     )
 
@@ -1643,7 +1709,10 @@ object PlantRepository {
     ): List<MedicinalPlant> {
         return sourceList.filter { plant ->
             val matchesQuery = plant.matchesQuery(query)
-            val matchesCategory = categoryFilter == null || plant.category == categoryFilter
+            val matchesCategory = categoryFilter == null || plant.category == categoryFilter ||
+                (categoryFilter == PlantCategory.XAM_DORILAR && (plant.category == PlantCategory.HERB || plant.category == PlantCategory.FRUIT || plant.category == PlantCategory.FLOWER || plant.category == PlantCategory.XAM_DORILAR)) ||
+                (categoryFilter == PlantCategory.PISHSHIQ_DORILAR && (plant.category == PlantCategory.SEED || plant.category == PlantCategory.PISHSHIQ_DORILAR)) ||
+                (categoryFilter == PlantCategory.ADDIY_RETSIPLAR && (plant.category == PlantCategory.SPICE || plant.category == PlantCategory.ADDIY_RETSIPLAR))
             val matchesMizaj = mizajFilter == null || plant.mizajType == mizajFilter
             val matchesProperty = propertyFilter == null || when (propertyFilter) {
                 TraditionalProperty.HOT -> plant.mizajType == MizajType.HOT_DRY || plant.mizajType == MizajType.HOT_MOIST

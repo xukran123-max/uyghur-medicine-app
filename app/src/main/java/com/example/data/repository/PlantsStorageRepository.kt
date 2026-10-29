@@ -280,8 +280,17 @@ class PlantsStorageRepository(private val context: Context) {
     }
 
     private fun jsonToPlant(obj: JSONObject): MedicinalPlant {
-        val catName = obj.optString("category", PlantCategory.HERB.name)
-        val category = try { PlantCategory.valueOf(catName) } catch (_: Exception) { PlantCategory.HERB }
+        val catName = obj.optString("category", PlantCategory.XAM_DORILAR.name).trim()
+        val category = try {
+            when (catName) {
+                "xam-dorilar", "خام دورىلار", "RAW_HERBS", "HERB", "FRUIT", "FLOWER" -> PlantCategory.XAM_DORILAR
+                "pishshiq-dorilar", "پىششىق دورىلار", "COMPOUND", "SEED" -> PlantCategory.PISHSHIQ_DORILAR
+                "addiy-retsiplar", "ئاددى رېتسىپلار", "RECIPE", "SPICE" -> PlantCategory.ADDIY_RETSIPLAR
+                "kesellikler", "كېسەللىكلەر", "DISEASE" -> PlantCategory.KESELLIKLER
+                "tebabet-munbiri", "تېبابەت مۇنبىرى", "FORUM" -> PlantCategory.TEBABET_MUNBIRI
+                else -> PlantCategory.valueOf(catName)
+            }
+        } catch (_: Exception) { PlantCategory.XAM_DORILAR }
 
         val mizName = obj.optString("mizajType", MizajType.HOT_DRY.name)
         val mizaj = try { MizajType.valueOf(mizName) } catch (_: Exception) { MizajType.HOT_DRY }

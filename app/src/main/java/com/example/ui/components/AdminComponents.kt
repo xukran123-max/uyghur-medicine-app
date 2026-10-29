@@ -435,7 +435,7 @@ fun EditPlantDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
-                    PlantCategory.entries.forEach { cat ->
+                    PlantCategory.mainCategories.forEach { cat ->
                         FilterChip(
                             selected = selectedCategory == cat,
                             onClick = { selectedCategory = cat },

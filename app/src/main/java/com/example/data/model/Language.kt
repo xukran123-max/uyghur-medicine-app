@@ -31,15 +31,32 @@ enum class PlantCategory(
     val nameTr: String,
     val iconName: String
 ) {
-    HERB("ئۆسۈملۈكلەر", "Herbs & Plants", "Bitkiler", "eco"),
-    FRUIT("مېۋە-چىۋىلەر", "Fruits & Nuts", "Meyve & Yemişler", "nutrition"),
-    SPICE("دورا-دەرمەكلەر", "Spices & Remedies", "Baharat & Tıbbi İlaçlar", "local_pharmacy"),
-    FLOWER("گىياھلار", "Botanical Herbs", "Şifalı Bitkiler", "local_florist"),
+    XAM_DORILAR("خام دورىلار", "Raw Medicinal Herbs", "Ham Şifalı Bitkiler", "eco"),
+    PISHSHIQ_DORILAR("پىششىق دورىلار", "Compound Remedies", "Mürekkeep İlaçlar", "medication"),
+    ADDIY_RETSIPLAR("ئاددى رېتسىپلار", "Simple Home Recipes", "Şifalı Basit Reçeteler", "restaurant"),
+    KESELLIKLER("كېسەللىكلەر", "Diseases & Treatments", "Hastalıklar & Tedavi", "healing"),
+    TEBABET_MUNBIRI("تېبابەت مۇنبىرى", "Medicine Forum & Courses", "Tıp Forumu & Eğitimler", "school"),
+
+    // Legacy enum entries for backward compatibility
+    HERB("خام دورىلار", "Raw Medicinal Herbs", "Ham Şifalı Bitkiler", "eco"),
+    FRUIT("خام دورىلار", "Raw Medicinal Herbs", "Ham Şifalı Bitkiler", "eco"),
+    SPICE("ئاددى رېتسىپلار", "Simple Home Recipes", "Şifalı Basit Reçeteler", "restaurant"),
+    FLOWER("خام دورىلار", "Raw Medicinal Herbs", "Ham Şifalı Bitkiler", "eco"),
     SEED("پىششىق دورىلار", "Compound Remedies", "Mürekkeep İlaçlar", "medication");
 
     fun getDisplayName(language: Language): String = when (language) {
         Language.UYGHUR -> nameUy
         Language.TURKISH -> nameTr
         Language.ENGLISH -> nameEn
+    }
+
+    companion object {
+        val mainCategories = listOf(
+            XAM_DORILAR,
+            PISHSHIQ_DORILAR,
+            ADDIY_RETSIPLAR,
+            KESELLIKLER,
+            TEBABET_MUNBIRI
+        )
     }
 }

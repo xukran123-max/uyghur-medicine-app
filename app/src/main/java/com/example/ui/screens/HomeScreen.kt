@@ -262,6 +262,180 @@ fun HomeScreen(
                 }
             }
 
+            // Tebabet Munbiri & Mizaj Course Banner Card
+            item(span = { GridItemSpan(2) }) {
+                Card(
+                    onClick = {
+                        openUrl("https://www.uyghurmedicine.com/tebabet-munbiri/mizaj-kursi-semsinur?app=1")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFFAF5EB)
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(Color(0xFF8B5A2B)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "🎓",
+                                fontSize = 22.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(14.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = when (currentLanguage) {
+                                        Language.UYGHUR -> "تېبابەت مۇنبىرى: مىجەز كۇرسى"
+                                        Language.ENGLISH -> "Forum: Mizaj Course"
+                                        Language.TURKISH -> "Tıp Forumu: Mizaç Eğitimi"
+                                    },
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFF5C381E)
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Surface(
+                                    color = Color(0xFFF0E0C8),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text(
+                                        text = when (currentLanguage) {
+                                            Language.UYGHUR -> "يېڭى كۇرس"
+                                            Language.ENGLISH -> "NEW"
+                                            Language.TURKISH -> "YENİ"
+                                        },
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = Color(0xFF5C381E),
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp
+                                        )
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "شەمشىنۇر مىجەز تەلىم-تەربىيە كۇرسى — تەپسىلاتى ۋە تىزىملىتىش"
+                                    Language.ENGLISH -> "Mizaj training program & enrollment details"
+                                    Language.TURKISH -> "Mizaç eğitimi programı ve kayıt detayları"
+                                },
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            )
+                        }
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Open Forum",
+                            tint = Color(0xFF8B5A2B)
+                        )
+                    }
+                }
+            }
+
+            // Simple Home Remedies Banner Card (ياڭاق دەملىمىسى)
+            item(span = { GridItemSpan(2) }) {
+                Card(
+                    onClick = {
+                        openUrl("https://www.uyghurmedicine.com/addiy-retsiplar/bel-borek-yaqang-demlimisi?app=1")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFF0FDF4)
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(Color(0xFF15803D)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "🍵",
+                                fontSize = 22.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(14.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = when (currentLanguage) {
+                                        Language.UYGHUR -> "ئاددى رېتسىپلار: ياڭاق دەملىمىسى"
+                                        Language.ENGLISH -> "Recipes: Walnut Infusion"
+                                        Language.TURKISH -> "Reçeteler: Ceviz Çayı"
+                                    },
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFF166534)
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Surface(
+                                    color = Color(0xFFDCFCE7),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text(
+                                        text = when (currentLanguage) {
+                                            Language.UYGHUR -> "كۈندىلىك شىپا"
+                                            Language.ENGLISH -> "REMEDY"
+                                            Language.TURKISH -> "ŞİFA"
+                                        },
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = Color(0xFF166534),
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp
+                                        )
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "بەل ۋە بۆرەك قۇۋۋەتلەش ياڭاق دەملىمىسى — تەييارلاش ئۇسۇلى"
+                                    Language.ENGLISH -> "Walnut herbal tea for lower back and kidneys"
+                                    Language.TURKISH -> "Böbrek ve bel güçlendirici ceviz çayı tarifi"
+                                },
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            )
+                        }
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Open Recipe",
+                            tint = Color(0xFF15803D)
+                        )
+                    }
+                }
+            }
+
 
             // Category Circles
             item(span = { GridItemSpan(2) }) {
