@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import com.example.data.model.Language
 import com.example.data.model.MedicinalPlant
+import com.example.data.notification.AppSyncWorker
 import com.example.ui.components.AdminConfirmDeleteDialog
 import com.example.ui.components.AppUpdateDialog
 import com.example.ui.components.BottomNavBar
@@ -66,6 +67,9 @@ class MainActivity : ComponentActivity() {
                 requestNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+
+        // Schedule background worker for new versions and content sync
+        AppSyncWorker.schedule(applicationContext)
 
         setContent {
             val currentLanguage by viewModel.currentLanguage.collectAsState()
