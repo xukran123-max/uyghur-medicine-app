@@ -36,6 +36,8 @@ enum class PlantCategory(
     ADDIY_RETSIPLAR("ئاددى رېتسىپلار", "Simple Home Recipes", "Şifalı Basit Reçeteler", "restaurant"),
     KESELLIKLER("كېسەللىكلەر", "Diseases & Treatments", "Hastalıklar & Tedavi", "healing"),
     TEBABET_MUNBIRI("تېبابەت مۇنبىرى", "Medicine Forum & Courses", "Tıp Forumu & Eğitimler", "school"),
+    TEBIBIY_KITABLAR("تېببىي كىتابلار", "Medical Books & Library", "Tıbbi Kitaplar & Kütüphane", "menu_book"),
+    SEHIYE_XEWERLIRI("سەھىيە خەۋەرلىرى", "Health News & Alerts", "Sağlık Haberleri & Bülten", "newspaper"),
 
     // Legacy enum entries for backward compatibility
     HERB("خام دورىلار", "Raw Medicinal Herbs", "Ham Şifalı Bitkiler", "eco"),
@@ -56,7 +58,9 @@ enum class PlantCategory(
             PISHSHIQ_DORILAR,
             ADDIY_RETSIPLAR,
             KESELLIKLER,
-            TEBABET_MUNBIRI
+            TEBABET_MUNBIRI,
+            TEBIBIY_KITABLAR,
+            SEHIYE_XEWERLIRI
         )
     }
 }

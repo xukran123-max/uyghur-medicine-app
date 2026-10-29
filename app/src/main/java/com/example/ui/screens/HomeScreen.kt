@@ -437,6 +437,93 @@ fun HomeScreen(
             }
 
 
+            // Medical Books Digital Library Card
+            item(span = { GridItemSpan(2) }) {
+                Card(
+                    onClick = {
+                        openUrl("https://www.uyghurmedicine.com/kitablar/?app=1")
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    shape = RoundedCornerShape(20.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFF7F2EC)
+                    )
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(14.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(46.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(Color(0xFF6D4C41)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "📖",
+                                fontSize = 22.sp
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(14.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    text = when (currentLanguage) {
+                                        Language.UYGHUR -> "تېببىي كىتابلار خەزىنىسى"
+                                        Language.ENGLISH -> "Medical Books Library"
+                                        Language.TURKISH -> "Tıbbi Kitaplar Kitaplığı"
+                                    },
+                                    style = MaterialTheme.typography.titleMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFF4E342E)
+                                    )
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Surface(
+                                    color = Color(0xFFD7CCC8),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text(
+                                        text = when (currentLanguage) {
+                                            Language.UYGHUR -> "قامۇس"
+                                            Language.ENGLISH -> "LIBRARY"
+                                            Language.TURKISH -> "KÜTÜPHANE"
+                                        },
+                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        style = MaterialTheme.typography.labelSmall.copy(
+                                            color = Color(0xFF4E342E),
+                                            fontWeight = FontWeight.Bold,
+                                            fontSize = 11.sp
+                                        )
+                                    )
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(3.dp))
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "قەدىمىي قوليازمىلار، ئەل-قانۇن ۋە رېتسىپ كىتابلىرىنى ۋاراقلاپ ئوقۇڭ"
+                                    Language.ENGLISH -> "Browse ancient manuscripts, Canon of Medicine & classics"
+                                    Language.TURKISH -> "El-Kanun ve kadim tıp eserlerini çevirerek okuyun"
+                                },
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            )
+                        }
+                        Icon(
+                            imageVector = Icons.Default.ArrowForward,
+                            contentDescription = "Open Library",
+                            tint = Color(0xFF6D4C41)
+                        )
+                    }
+                }
+            }
+
             // Category Circles
             item(span = { GridItemSpan(2) }) {
                 CategoryCircleRow(

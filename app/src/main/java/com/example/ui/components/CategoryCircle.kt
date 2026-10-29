@@ -22,6 +22,8 @@ import androidx.compose.material.icons.filled.Eco
 import androidx.compose.material.icons.filled.LocalFlorist
 import androidx.compose.material.icons.filled.LocalPharmacy
 import androidx.compose.material.icons.filled.Medication
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Newspaper
 import androidx.compose.material.icons.filled.Restaurant
 import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.Icon
@@ -102,6 +104,24 @@ fun CategoryCircleRow(
             icon = Icons.Default.LocalFlorist,
             bgColor = Color(0xFFF3E5F5),
             iconColor = Color(0xFF6A1B9A)
+        ),
+        CategoryCircleData(
+            category = PlantCategory.TEBIBIY_KITABLAR,
+            titleUy = PlantCategory.TEBIBIY_KITABLAR.nameUy,
+            titleEn = PlantCategory.TEBIBIY_KITABLAR.nameEn,
+            titleTr = PlantCategory.TEBIBIY_KITABLAR.nameTr,
+            icon = Icons.Default.MenuBook,
+            bgColor = Color(0xFFEFEBE9),
+            iconColor = Color(0xFF5D4037)
+        ),
+        CategoryCircleData(
+            category = PlantCategory.SEHIYE_XEWERLIRI,
+            titleUy = PlantCategory.SEHIYE_XEWERLIRI.nameUy,
+            titleEn = PlantCategory.SEHIYE_XEWERLIRI.nameEn,
+            titleTr = PlantCategory.SEHIYE_XEWERLIRI.nameTr,
+            icon = Icons.Default.Newspaper,
+            bgColor = Color(0xFFE1F5FE),
+            iconColor = Color(0xFF0277BD)
         )
     )
 

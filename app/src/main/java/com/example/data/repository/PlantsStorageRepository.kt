@@ -288,6 +288,8 @@ class PlantsStorageRepository(private val context: Context) {
                 "addiy-retsiplar", "ئاددى رېتسىپلار", "RECIPE", "SPICE" -> PlantCategory.ADDIY_RETSIPLAR
                 "kesellikler", "كېسەللىكلەر", "DISEASE" -> PlantCategory.KESELLIKLER
                 "tebabet-munbiri", "تېبابەت مۇنبىرى", "FORUM" -> PlantCategory.TEBABET_MUNBIRI
+                "kitablar", "tebibiy-kitablar", "تېببىي كىتابلار", "BOOKS", "LIBRARY", "TEBIBIY_KITABLAR" -> PlantCategory.TEBIBIY_KITABLAR
+                "sehiye-xewerliri", "سەھىيە خەۋەرلىرى", "NEWS", "HEALTH_NEWS", "SEHIYE_XEWERLIRI" -> PlantCategory.SEHIYE_XEWERLIRI
                 else -> PlantCategory.valueOf(catName)
             }
         } catch (_: Exception) { PlantCategory.XAM_DORILAR }
