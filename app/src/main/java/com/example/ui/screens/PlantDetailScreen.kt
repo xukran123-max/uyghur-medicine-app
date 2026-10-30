@@ -804,6 +804,45 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            if (plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) {
+                Button(
+                    onClick = {
+                        val url = if (plant.id == 52) {
+                            "https://www.uyghurmedicine.com/tebabet-munbiri/mizaj-kursi-semsinur?app=1"
+                        } else {
+                            "https://www.uyghurmedicine.com/tebabet-munbiri/?app=1"
+                        }
+                        uriHandler.openUri(url)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFF8B5A2B),
+                        contentColor = Color.White
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(text = "🎓", fontSize = 18.sp)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "كۇرس ۋە مۇنبەرنى توردا كۆرۈش"
+                                Language.TURKISH -> "Eğitim ve Forumu Web'de Aç"
+                                Language.ENGLISH -> "Open Forum & Course Online"
+                            },
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
             Button(
                 onClick = onShare,
                 modifier = Modifier

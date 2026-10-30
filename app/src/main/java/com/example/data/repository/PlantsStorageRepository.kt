@@ -139,8 +139,22 @@ class PlantsStorageRepository(private val context: Context) {
                     serverPlants.add(jsonToPlant(obj))
                 }
                 if (serverPlants.isNotEmpty()) {
-                    saveToFile(serverPlants)
-                    return@withContext serverPlants
+                    // Merge server plants with default built-in plants so nothing is ever lost
+                    val defaultList = PlantRepository.plantsList
+                    val mergedList = mutableListOf<MedicinalPlant>()
+                    val processedIds = mutableSetOf<Int>()
+
+                    for (plant in serverPlants) {
+                        mergedList.add(plant)
+                        processedIds.add(plant.id)
+                    }
+                    for (defaultPlant in defaultList) {
+                        if (!processedIds.contains(defaultPlant.id)) {
+                            mergedList.add(defaultPlant)
+                        }
+                    }
+                    saveToFile(mergedList)
+                    return@withContext mergedList
                 }
             }
         } catch (e: Exception) {
@@ -303,11 +317,11 @@ class PlantsStorageRepository(private val context: Context) {
         val catName = obj.optString("category", PlantCategory.XAM_DORILAR.name).trim()
         val category = try {
             when (catName) {
-                "xam-dorilar", "خام دورىلار", "RAW_HERBS", "HERB", "FRUIT", "FLOWER" -> PlantCategory.XAM_DORILAR
-                "pishshiq-dorilar", "پىششىق دورىلار", "COMPOUND", "SEED" -> PlantCategory.PISHSHIQ_DORILAR
-                "addiy-retsiplar", "ئاددى رېتسىپلار", "RECIPE", "SPICE" -> PlantCategory.ADDIY_RETSIPLAR
-                "kesellikler", "كېسەللىكلەر", "DISEASE" -> PlantCategory.KESELLIKLER
-                "tebabet-munbiri", "تېبابەت مۇنبىرى", "FORUM" -> PlantCategory.TEBABET_MUNBIRI
+                "xam-dorilar", "خام دورىلار", "RAW_HERBS", "HERB", "FRUIT", "FLOWER", "XAM_DORILAR" -> PlantCategory.XAM_DORILAR
+                "pishshiq-dorilar", "پىششىق دورىلار", "COMPOUND", "SEED", "PISHSHIQ_DORILAR" -> PlantCategory.PISHSHIQ_DORILAR
+                "addiy-retsiplar", "ئاددى رېتسىپلار", "RECIPE", "SPICE", "ADDIY_RETSIPLAR" -> PlantCategory.ADDIY_RETSIPLAR
+                "kesellikler", "كېسەللىكلەر", "DISEASE", "KESELLIKLER" -> PlantCategory.KESELLIKLER
+                "tebabet-munbiri", "تېبابەت مۇنبىرى", "FORUM", "TEBABET_MUNBIRI" -> PlantCategory.TEBABET_MUNBIRI
                 "kitablar", "tebibiy-kitablar", "تېببىي كىتابلار", "BOOKS", "LIBRARY", "TEBIBIY_KITABLAR" -> PlantCategory.TEBIBIY_KITABLAR
                 "sehiye-xewerliri", "سەھىيە خەۋەرلىرى", "NEWS", "HEALTH_NEWS", "SEHIYE_XEWERLIRI" -> PlantCategory.SEHIYE_XEWERLIRI
                 else -> PlantCategory.valueOf(catName)
