@@ -71,6 +71,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.data.model.Language
 import com.example.data.model.MedicinalPlant
+import com.example.data.model.PlantCategory
 
 @Composable
 fun PlantDetailScreen(
