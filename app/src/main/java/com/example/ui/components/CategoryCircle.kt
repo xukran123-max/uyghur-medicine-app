@@ -107,7 +107,7 @@ fun CategoryCircleRow(
         ),
         CategoryCircleData(
             category = PlantCategory.TEBIBIY_KITABLAR,
-            titleUy = PlantCategory.TEBIBIY_KITABLAR.nameUy,
+            titleUy = "تېببىي كىتاب",
             titleEn = PlantCategory.TEBIBIY_KITABLAR.nameEn,
             titleTr = PlantCategory.TEBIBIY_KITABLAR.nameTr,
             icon = Icons.Default.MenuBook,
@@ -116,7 +116,7 @@ fun CategoryCircleRow(
         ),
         CategoryCircleData(
             category = PlantCategory.SEHIYE_XEWERLIRI,
-            titleUy = PlantCategory.SEHIYE_XEWERLIRI.nameUy,
+            titleUy = "سەھىيە",
             titleEn = PlantCategory.SEHIYE_XEWERLIRI.nameEn,
             titleTr = PlantCategory.SEHIYE_XEWERLIRI.nameTr,
             icon = Icons.Default.Newspaper,
@@ -139,7 +139,7 @@ fun CategoryCircleRow(
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .width(72.dp)
+                    .width(76.dp)
                     .clickable { onCategorySelect(catData.category) }
                     .testTag("category_circle_${catData.category?.name?.lowercase() ?: "all"}")
             ) {

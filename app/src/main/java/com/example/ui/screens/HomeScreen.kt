@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.horizontalScroll
@@ -166,7 +167,22 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            // Hero Banner Slider
+            // 1. Category Circles at the Top (Right under Search)
+            item(span = { GridItemSpan(2) }) {
+                CategoryCircleRow(
+                    currentLanguage = currentLanguage,
+                    selectedCategory = selectedCategory,
+                    onCategorySelect = { cat ->
+                        if (cat == PlantCategory.TEBIBIY_KITABLAR) {
+                            openUrl("https://www.uyghurmedicine.com/kitablar/?app=1")
+                        } else {
+                            onCategorySelect(cat)
+                        }
+                    }
+                )
+            }
+
+            // 2. Hero Banner Slider
             item(span = { GridItemSpan(2) }) {
                 BannerCarousel(
                     currentLanguage = currentLanguage,
@@ -175,94 +191,7 @@ fun HomeScreen(
                 )
             }
 
-            // Digital Library Banner Card (رەقەملىك كىتابخانا)
-            item(span = { GridItemSpan(2) }) {
-                Card(
-                    onClick = {
-                        openUrl("https://www.uyghurmedicine.com/kitablar/?app=1")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp),
-                    shape = RoundedCornerShape(20.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFFF2F8F4)
-                    )
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(14.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(46.dp)
-                                .clip(RoundedCornerShape(14.dp))
-                                .background(Color(0xFF0F5A47)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "📚",
-                                fontSize = 22.sp
-                            )
-                        }
-                        Spacer(modifier = Modifier.width(14.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    text = when (currentLanguage) {
-                                        Language.UYGHUR -> "كىتابلار"
-                                        Language.ENGLISH -> "Books"
-                                        Language.TURKISH -> "Kitaplar"
-                                    },
-                                    style = MaterialTheme.typography.titleMedium.copy(
-                                        fontWeight = FontWeight.Bold,
-                                        color = Color(0xFF0F5A47)
-                                    )
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Surface(
-                                    color = Color(0xFFD6EDE0),
-                                    shape = RoundedCornerShape(8.dp)
-                                ) {
-                                    Text(
-                                        text = when (currentLanguage) {
-                                            Language.UYGHUR -> "يېڭى"
-                                            Language.ENGLISH -> "NEW"
-                                            Language.TURKISH -> "YENİ"
-                                        },
-                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                                        style = MaterialTheme.typography.labelSmall.copy(
-                                            color = Color(0xFF0F5A47),
-                                            fontWeight = FontWeight.Bold,
-                                            fontSize = 11.sp
-                                        )
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(3.dp))
-                            Text(
-                                text = when (currentLanguage) {
-                                    Language.UYGHUR -> "«ئۇيغۇر تىبابىتى قامۇسى» قاتارلىق ئەسەرلەرنى توردا ئوقۇڭ"
-                                    Language.ENGLISH -> "Read classical Uyghur medical books online"
-                                    Language.TURKISH -> "Uygur tıbbı klasik eserlerini çevrimiçi okuyun"
-                                },
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            )
-                        }
-                        Icon(
-                            imageVector = Icons.Default.ArrowForward,
-                            contentDescription = "Open Library",
-                            tint = Color(0xFF0F5A47)
-                        )
-                    }
-                }
-            }
-
-            // Tebabet Munbiri & Mizaj Course Banner Card
+            // 3. Featured Card: Tebabet Munbiri & Mizaj Course
             item(span = { GridItemSpan(2) }) {
                 Card(
                     onClick = {
@@ -296,7 +225,10 @@ fun HomeScreen(
                         }
                         Spacer(modifier = Modifier.width(14.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 Text(
                                     text = when (currentLanguage) {
                                         Language.UYGHUR -> "تېبابەت مۇنبىرى: مىجەز كۇرسى"
@@ -306,7 +238,10 @@ fun HomeScreen(
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
                                         color = Color(0xFF5C381E)
-                                    )
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f, fill = false)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Surface(
@@ -319,12 +254,14 @@ fun HomeScreen(
                                             Language.ENGLISH -> "NEW"
                                             Language.TURKISH -> "YENİ"
                                         },
-                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                                         style = MaterialTheme.typography.labelSmall.copy(
                                             color = Color(0xFF5C381E),
                                             fontWeight = FontWeight.Bold,
                                             fontSize = 11.sp
-                                        )
+                                        ),
+                                        maxLines = 1,
+                                        softWrap = false
                                     )
                                 }
                             }
@@ -337,9 +274,12 @@ fun HomeScreen(
                                 },
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
+                        Spacer(modifier = Modifier.width(8.dp))
                         Icon(
                             imageVector = Icons.Default.ArrowForward,
                             contentDescription = "Open Forum",
@@ -349,7 +289,7 @@ fun HomeScreen(
                 }
             }
 
-            // Simple Home Remedies Banner Card (ياڭاق دەملىمىسى)
+            // 4. Featured Card: Simple Home Remedies (ياڭاق دەملىمىسى)
             item(span = { GridItemSpan(2) }) {
                 Card(
                     onClick = {
@@ -383,17 +323,23 @@ fun HomeScreen(
                         }
                         Spacer(modifier = Modifier.width(14.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 Text(
                                     text = when (currentLanguage) {
-                                        Language.UYGHUR -> "ئاددى رېتسىپلار: ياڭاق دەملىمىسى"
-                                        Language.ENGLISH -> "Recipes: Walnut Infusion"
-                                        Language.TURKISH -> "Reçeteler: Ceviz Çayı"
+                                        Language.UYGHUR -> "ئاددى رېتسىپ: ياڭاق دەملىمىسى"
+                                        Language.ENGLISH -> "Recipe: Walnut Infusion"
+                                        Language.TURKISH -> "Reçete: Ceviz Çayı"
                                     },
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
                                         color = Color(0xFF166534)
-                                    )
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f, fill = false)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Surface(
@@ -406,12 +352,14 @@ fun HomeScreen(
                                             Language.ENGLISH -> "REMEDY"
                                             Language.TURKISH -> "ŞİFA"
                                         },
-                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                                         style = MaterialTheme.typography.labelSmall.copy(
                                             color = Color(0xFF166534),
                                             fontWeight = FontWeight.Bold,
                                             fontSize = 11.sp
-                                        )
+                                        ),
+                                        maxLines = 1,
+                                        softWrap = false
                                     )
                                 }
                             }
@@ -424,9 +372,12 @@ fun HomeScreen(
                                 },
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
+                        Spacer(modifier = Modifier.width(8.dp))
                         Icon(
                             imageVector = Icons.Default.ArrowForward,
                             contentDescription = "Open Recipe",
@@ -436,8 +387,7 @@ fun HomeScreen(
                 }
             }
 
-
-            // Medical Books Digital Library Card
+            // 5. Featured Card: Medical Books Digital Library (Single, non-duplicated)
             item(span = { GridItemSpan(2) }) {
                 Card(
                     onClick = {
@@ -471,17 +421,23 @@ fun HomeScreen(
                         }
                         Spacer(modifier = Modifier.width(14.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
                                 Text(
                                     text = when (currentLanguage) {
-                                        Language.UYGHUR -> "تېببىي كىتابلار خەزىنىسى"
+                                        Language.UYGHUR -> "تېببىي كىتابلار قامۇسى"
                                         Language.ENGLISH -> "Medical Books Library"
                                         Language.TURKISH -> "Tıbbi Kitaplar Kitaplığı"
                                     },
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
                                         color = Color(0xFF4E342E)
-                                    )
+                                    ),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f, fill = false)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 Surface(
@@ -494,27 +450,32 @@ fun HomeScreen(
                                             Language.ENGLISH -> "LIBRARY"
                                             Language.TURKISH -> "KÜTÜPHANE"
                                         },
-                                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
                                         style = MaterialTheme.typography.labelSmall.copy(
                                             color = Color(0xFF4E342E),
                                             fontWeight = FontWeight.Bold,
                                             fontSize = 11.sp
-                                        )
+                                        ),
+                                        maxLines = 1,
+                                        softWrap = false
                                     )
                                 }
                             }
                             Spacer(modifier = Modifier.height(3.dp))
                             Text(
                                 text = when (currentLanguage) {
-                                    Language.UYGHUR -> "قەدىمىي قوليازمىلار، ئەل-قانۇن ۋە رېتسىپ كىتابلىرىنى ۋاراقلاپ ئوقۇڭ"
+                                    Language.UYGHUR -> "قەدىمىي قوليازمىلار، ئەل-قانۇن ۋە رېتسىپ كىتابلىرىنى ئوقۇڭ"
                                     Language.ENGLISH -> "Browse ancient manuscripts, Canon of Medicine & classics"
                                     Language.TURKISH -> "El-Kanun ve kadim tıp eserlerini çevirerek okuyun"
                                 },
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                                ),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
                         }
+                        Spacer(modifier = Modifier.width(8.dp))
                         Icon(
                             imageVector = Icons.Default.ArrowForward,
                             contentDescription = "Open Library",
@@ -522,15 +483,6 @@ fun HomeScreen(
                         )
                     }
                 }
-            }
-
-            // Category Circles
-            item(span = { GridItemSpan(2) }) {
-                CategoryCircleRow(
-                    currentLanguage = currentLanguage,
-                    selectedCategory = selectedCategory,
-                    onCategorySelect = onCategorySelect
-                )
             }
 
             // Section Header
