@@ -51,11 +51,31 @@ class PlantsStorageRepository(private val context: Context) {
                 val obj = jsonArray.getJSONObject(i)
                 list.add(jsonToPlant(obj))
             }
-            if (list.isEmpty()) {
-                PlantRepository.plantsList
-            } else {
-                list
+            // Refresh built-in default plants and merge newly added items (51, 52, 53, 54...)
+            val defaultList = PlantRepository.plantsList
+            val defaultMap = defaultList.associateBy { it.id }
+            val mergedList = mutableListOf<MedicinalPlant>()
+            val processedIds = mutableSetOf<Int>()
+
+            for (plant in list) {
+                val defaultPlant = defaultMap[plant.id]
+                if (defaultPlant != null) {
+                    // Update built-in plant with latest category and text
+                    mergedList.add(defaultPlant)
+                    processedIds.add(plant.id)
+                } else {
+                    // Custom plant created by user
+                    mergedList.add(plant)
+                    processedIds.add(plant.id)
+                }
             }
+            for (defaultPlant in defaultList) {
+                if (!processedIds.contains(defaultPlant.id)) {
+                    mergedList.add(defaultPlant)
+                }
+            }
+            saveToFile(mergedList)
+            mergedList
         } catch (e: Exception) {
             e.printStackTrace()
             PlantRepository.plantsList

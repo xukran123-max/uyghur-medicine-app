@@ -92,10 +92,18 @@ fun HomeScreen(
         Language.TURKISH -> "Şifalı bitkiler arasında arayın..."
     }
 
-    val sectionTitle = when (currentLanguage) {
-        Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەر"
-        Language.ENGLISH -> "Medicinal Herbs & Plants"
-        Language.TURKISH -> "Şifalı Bitkiler"
+    val sectionTitle = when {
+        selectedCategory != null -> selectedCategory.getDisplayName(currentLanguage)
+        searchQuery.isNotEmpty() -> when (currentLanguage) {
+            Language.UYGHUR -> "ئىزدەش نەتىجىسى"
+            Language.ENGLISH -> "Search Results"
+            Language.TURKISH -> "Arama Sonuçları"
+        }
+        else -> when (currentLanguage) {
+            Language.UYGHUR -> "دورىلىق ئۆسۈملۈكلەر"
+            Language.ENGLISH -> "Medicinal Herbs & Plants"
+            Language.TURKISH -> "Şifalı Bitkiler"
+        }
     }
 
     val seeAllText = when (currentLanguage) {
@@ -182,9 +190,10 @@ fun HomeScreen(
                 )
             }
 
-            // 2. Hero Banner Slider
-            item(span = { GridItemSpan(2) }) {
-                BannerCarousel(
+            // 2. Hero Banner Slider & Featured Cards (Only on Home All view)
+            if (selectedCategory == null && searchQuery.isEmpty()) {
+                item(span = { GridItemSpan(2) }) {
+                    BannerCarousel(
                     currentLanguage = currentLanguage,
                     onStartQuizClick = onStartQuizClick,
                     onExploreClick = onSeeAllClick
@@ -485,6 +494,8 @@ fun HomeScreen(
                 }
             }
 
+            }
+
             // Section Header
             item(span = { GridItemSpan(2) }) {
                 Row(
@@ -532,6 +543,35 @@ fun HomeScreen(
                             tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(16.dp)
                         )
+                    }
+                }
+            }
+
+            if (plantsList.isEmpty()) {
+                item(span = { GridItemSpan(2) }) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 40.dp, horizontal = 20.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(
+                                text = "🌱",
+                                fontSize = 40.sp
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+                            Text(
+                                text = when (currentLanguage) {
+                                    Language.UYGHUR -> "بۇ سەھىپىدە كۆرسىتىدىغان مەزمۇن تېپىلمىدى."
+                                    Language.ENGLISH -> "No items found in this category."
+                                    Language.TURKISH -> "Bu kategoride henüz içerik bulunamadı."
+                                },
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            )
+                        }
                     }
                 }
             }
