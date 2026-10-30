@@ -17,8 +17,8 @@ android {
     applicationId = "com.aistudio.uyghurtibabiti.app"
     minSdk = 24
     targetSdk = 35
-    versionCode = 32
-    versionName = "1.4.4"
+    versionCode = 33
+    versionName = "1.4.5"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
