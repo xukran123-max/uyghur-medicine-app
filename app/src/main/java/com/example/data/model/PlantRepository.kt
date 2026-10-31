@@ -1670,7 +1670,9 @@ object PlantRepository {
             organTargetTr = "Tüm Vücut Dengesi, Ruh ve Beden",
             organTargetZh = "全身平衡、身心调理",
             iconEmoji = "🎓",
+            imageResId = com.example.R.drawable.mizaj_kursi_yengi_banner,
             imageUrl = "https://www.uyghurmedicine.com/images/mizaj_kursi_yengi_banner.jpg",
+            imageFit = "cover",
             isFeatured = true
         ),
         MedicinalPlant(
@@ -1769,7 +1771,9 @@ object PlantRepository {
             organTargetTr = "Bütünsel Sağlık ve Tıbbi Bilinç",
             organTargetZh = "身心健康与医学认知",
             iconEmoji = "💬",
+            imageResId = com.example.R.drawable.forum_discuss,
             imageUrl = "https://www.uyghurmedicine.com/images/forum_discuss.jpg",
+            imageFit = "cover",
             isFeatured = true
         ),
         MedicinalPlant(
@@ -1802,7 +1806,9 @@ object PlantRepository {
             organTargetTr = "Mizaç Dengesi ve Bağışıklık Sistemi",
             organTargetZh = "体质平衡与机体免疫",
             iconEmoji = "🏛️",
-            imageUrl = "https://www.uyghurmedicine.com/images/four_humors_forum.jpg",
+            imageResId = com.example.R.drawable.forum_discuss,
+            imageUrl = "https://www.uyghurmedicine.com/images/forum_discuss.jpg",
+            imageFit = "cover",
             isFeatured = true
         )
     )

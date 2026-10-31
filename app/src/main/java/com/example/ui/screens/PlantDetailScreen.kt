@@ -212,16 +212,17 @@ fun PlantDetailScreen(
                 ),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
-                val detailImageRes = plant.imageResId ?: when (plant.id % 3) {
+                val detailImageRes = plant.getImageResId(currentLanguage) ?: plant.imageResId ?: when (plant.id % 3) {
                     1 -> R.drawable.herbal_plant_anise_1786475403200
                     2 -> R.drawable.herbal_plants_collection_1786475389012
                     else -> R.drawable.herbal_plant_saffron_1786475416225
                 }
+                val currentImageUrl = plant.getImageUrl(currentLanguage) ?: plant.imageUrl
 
                 if (showZoomDialog) {
                     ZoomableImageViewerDialog(
                         imageResId = detailImageRes,
-                        imageUrl = plant.imageUrl,
+                        imageUrl = currentImageUrl,
                         title = plant.getName(currentLanguage),
                         currentLanguage = currentLanguage,
                         onDismiss = { showZoomDialog = false }
@@ -243,13 +244,13 @@ fun PlantDetailScreen(
                             .clickable { showZoomDialog = true },
                         contentAlignment = Alignment.Center
                     ) {
-                        val contentScale = if (plant.imageFit == "cover") ContentScale.Crop else ContentScale.Fit
+                        val contentScale = if (plant.imageFit == "cover" || plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) ContentScale.Crop else ContentScale.Fit
                         ZoomableContainer(
                             modifier = Modifier.fillMaxSize()
                         ) { _, _ ->
                             val context = androidx.compose.ui.platform.LocalContext.current
-                            val resolvedModel = androidx.compose.runtime.remember(plant.imageUrl) {
-                                com.example.ui.util.ImageUtils.resolvePlantImageModel(plant.imageUrl, context)
+                            val resolvedModel = androidx.compose.runtime.remember(currentImageUrl, currentLanguage) {
+                                com.example.ui.util.ImageUtils.resolvePlantImageModel(currentImageUrl, context)
                             }
 
                             if (resolvedModel != null) {
@@ -349,19 +350,35 @@ fun PlantDetailScreen(
                             )
                         }
 
-                        // Mizaj Badge
-                        Surface(
-                            shape = RoundedCornerShape(12.dp),
-                            color = Color(plant.mizajType.colorHex).copy(alpha = 0.2f)
-                        ) {
-                            Text(
-                                text = "${plant.mizajType.getDisplayName(currentLanguage)} • ${plant.getMizajDegree(currentLanguage)}",
-                                style = MaterialTheme.typography.labelMedium.copy(
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color(plant.mizajType.colorHex)
-                                ),
-                                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                            )
+                        // Mizaj Badge or Course Badge
+                        if (plant.category != PlantCategory.TEBABET_MUNBIRI) {
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = Color(plant.mizajType.colorHex).copy(alpha = 0.2f)
+                            ) {
+                                Text(
+                                    text = "${plant.mizajType.getDisplayName(currentLanguage)} • ${plant.getMizajDegree(currentLanguage)}",
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(plant.mizajType.colorHex)
+                                    ),
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                                )
+                            }
+                        } else {
+                            Surface(
+                                shape = RoundedCornerShape(12.dp),
+                                color = Color(0xFFD4AF37).copy(alpha = 0.2f)
+                            ) {
+                                Text(
+                                    text = if (plant.id == 52) "🎓 30 سائەتلىك كۇرس" else "📜 ئىلمىي مۇنبەر",
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color(0xFF8B5A2B)
+                                    ),
+                                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                                )
+                            }
                         }
                     }
 
@@ -370,28 +387,76 @@ fun PlantDetailScreen(
                     // Target Organs Tag
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "${when(currentLanguage) {
-                                Language.UYGHUR -> "تەسىر قىلىدىغان ئەزا: "
-                                Language.ENGLISH -> "Target Organs: "
-                                Language.TURKISH -> "Etki Eden Organlar: "
-                            }}${plant.getOrganTarget(currentLanguage)}",
+                            text = if (plant.category == PlantCategory.TEBABET_MUNBIRI) {
+                                "قاراتمىلىقى: ${plant.getOrganTarget(currentLanguage)}"
+                            } else {
+                                "${when(currentLanguage) {
+                                    Language.UYGHUR -> "تەسىر قىلىدىغان ئەزا: "
+                                    Language.ENGLISH -> "Target Organs: "
+                                    Language.TURKISH -> "Etki Eden Organlar: "
+                                }}${plant.getOrganTarget(currentLanguage)}"
+                            },
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Medium,
                                 color = MaterialTheme.colorScheme.secondary
                             )
                         )
                     }
+
+                    if (plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) {
+                        Spacer(modifier = Modifier.height(14.dp))
+                        val uriHandler = LocalUriHandler.current
+                        Button(
+                            onClick = {
+                                val url = if (plant.id == 52) {
+                                    "https://www.uyghurmedicine.com/tebabet-munbiri/mizaj-kursi-semsinur?app=1"
+                                } else {
+                                    "https://www.uyghurmedicine.com/tebabet-munbiri/?app=1"
+                                }
+                                uriHandler.openUri(url)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp),
+                            shape = RoundedCornerShape(14.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF8B5A2B),
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(text = "🎓", fontSize = 18.sp)
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = when (currentLanguage) {
+                                        Language.UYGHUR -> "كۇرس تەپسىلاتى ۋە توردا تىزىملىتىش"
+                                        Language.TURKISH -> "Eğitim Detayı ve Kayıt Ol"
+                                        Language.ENGLISH -> "Course Details & Registration"
+                                    },
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 15.sp
+                                )
+                            }
+                        }
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Section 1: Health Benefits (خۇسۇسىيىتى)
+            // Section 1: Health Benefits
             DetailSectionCard(
-                title = when (currentLanguage) {
-                    Language.UYGHUR -> "خۇسۇسىيىتى"
-                    Language.ENGLISH -> "Health Benefits"
-                    Language.TURKISH -> "Faydaları"
+                title = when {
+                    plant.category == PlantCategory.TEBABET_MUNBIRI -> when (currentLanguage) {
+                        Language.UYGHUR -> "كۇرس مەزمۇنى ۋە ئۆگىتىلىدىغان بىلىملەر"
+                        Language.ENGLISH -> "Course Curriculum"
+                        Language.TURKISH -> "Eğitim İçeriği ve Konuları"
+                    }
+                    else -> when (currentLanguage) {
+                        Language.UYGHUR -> "خۇسۇسىيىتى"
+                        Language.ENGLISH -> "Health Benefits"
+                        Language.TURKISH -> "Faydaları"
+                    }
                 },
                 icon = Icons.Default.Info,
                 iconTint = MaterialTheme.colorScheme.primary,
@@ -400,12 +465,19 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Section 2: Usage & Dosage (ئىشلىتىش ئۇسۇلى)
+            // Section 2: Usage & Dosage
             DetailSectionCard(
-                title = when (currentLanguage) {
-                    Language.UYGHUR -> "ئىشلىتىش ئۇسۇلى"
-                    Language.ENGLISH -> "Usage & Preparations"
-                    Language.TURKISH -> "Kullanım Şekli"
+                title = when {
+                    plant.category == PlantCategory.TEBABET_MUNBIRI -> when (currentLanguage) {
+                        Language.UYGHUR -> "قاتنىشىش ۋە تىزىملىتىش يېتەكچىسى"
+                        Language.ENGLISH -> "Enrollment & Instructions"
+                        Language.TURKISH -> "Kayıt ve Katılım Rehberi"
+                    }
+                    else -> when (currentLanguage) {
+                        Language.UYGHUR -> "ئىشلىتىش ئۇسۇلى"
+                        Language.ENGLISH -> "Usage & Preparations"
+                        Language.TURKISH -> "Kullanım Şekli"
+                    }
                 },
                 icon = Icons.Default.LocalPharmacy,
                 iconTint = MaterialTheme.colorScheme.secondary,
@@ -414,12 +486,19 @@ fun PlantDetailScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Section 3: Cautions (ئەسكەرتىش)
+            // Section 3: Cautions
             DetailSectionCard(
-                title = when (currentLanguage) {
-                    Language.UYGHUR -> "ئەسكەرتىش"
-                    Language.ENGLISH -> "Cautions & Notes"
-                    Language.TURKISH -> "Önemli Notlar"
+                title = when {
+                    plant.category == PlantCategory.TEBABET_MUNBIRI -> when (currentLanguage) {
+                        Language.UYGHUR -> "مۇھىم ئەسكەرتىش"
+                        Language.ENGLISH -> "Important Notice"
+                        Language.TURKISH -> "Önemli Hatırlatma"
+                    }
+                    else -> when (currentLanguage) {
+                        Language.UYGHUR -> "ئەسكەرتىش"
+                        Language.ENGLISH -> "Cautions & Notes"
+                        Language.TURKISH -> "Önemli Notlar"
+                    }
                 },
                 icon = Icons.Default.Warning,
                 iconTint = MaterialTheme.colorScheme.tertiary,

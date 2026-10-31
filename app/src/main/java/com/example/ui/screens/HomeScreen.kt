@@ -58,6 +58,7 @@ import com.example.data.model.TraditionalProperty
 import com.example.ui.components.BannerCarousel
 import com.example.ui.components.CategoryCircleRow
 import com.example.ui.components.PlantCard
+import com.example.ui.components.ForumCourseCard
 
 @Composable
 fun HomeScreen(
@@ -284,16 +285,35 @@ fun HomeScreen(
             // Plant Items Grid
             items(
                 items = plantsList,
-                key = { it.id }
+                key = { it.id },
+                span = { plant ->
+                    if (plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) {
+                        GridItemSpan(2)
+                    } else {
+                        GridItemSpan(1)
+                    }
+                }
             ) { plant ->
-                Box(modifier = Modifier.padding(horizontal = 6.dp)) {
-                    PlantCard(
-                        plant = plant,
-                        currentLanguage = currentLanguage,
-                        isFavorite = favoriteIds.contains(plant.id),
-                        onFavoriteToggle = { onFavoriteToggle(plant.id) },
-                        onClick = { onPlantClick(plant) }
-                    )
+                if (plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) {
+                    Box(modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp)) {
+                        ForumCourseCard(
+                            plant = plant,
+                            currentLanguage = currentLanguage,
+                            isFavorite = favoriteIds.contains(plant.id),
+                            onFavoriteToggle = { onFavoriteToggle(plant.id) },
+                            onClick = { onPlantClick(plant) }
+                        )
+                    }
+                } else {
+                    Box(modifier = Modifier.padding(horizontal = 6.dp, vertical = 6.dp)) {
+                        PlantCard(
+                            plant = plant,
+                            currentLanguage = currentLanguage,
+                            isFavorite = favoriteIds.contains(plant.id),
+                            onFavoriteToggle = { onFavoriteToggle(plant.id) },
+                            onClick = { onPlantClick(plant) }
+                        )
+                    }
                 }
             }
         }

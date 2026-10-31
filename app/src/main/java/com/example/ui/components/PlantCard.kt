@@ -25,6 +25,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,11 +51,12 @@ fun PlantCard(
     onFavoriteToggle: () -> Unit,
     onClick: () -> Unit
 ) {
-    val imageRes = plant.imageResId ?: when (plant.id % 3) {
+    val imageRes = plant.getImageResId(currentLanguage) ?: plant.imageResId ?: when (plant.id % 3) {
         1 -> R.drawable.herbal_plant_anise_1786475403200
         2 -> R.drawable.herbal_plants_collection_1786475389012
         else -> R.drawable.herbal_plant_saffron_1786475416225
     }
+    val currentImageUrl = plant.getImageUrl(currentLanguage) ?: plant.imageUrl
 
     Card(
         modifier = Modifier
@@ -94,8 +96,8 @@ fun PlantCard(
                     contentAlignment = Alignment.Center
                 ) {
                     val context = androidx.compose.ui.platform.LocalContext.current
-                    val resolvedModel = androidx.compose.runtime.remember(plant.imageUrl) {
-                        com.example.ui.util.ImageUtils.resolvePlantImageModel(plant.imageUrl, context)
+                    val resolvedModel = androidx.compose.runtime.remember(currentImageUrl, currentLanguage) {
+                        com.example.ui.util.ImageUtils.resolvePlantImageModel(currentImageUrl, context)
                     }
 
                     if (resolvedModel != null) {
@@ -164,6 +166,176 @@ fun PlantCard(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
+        }
+    }
+}
+
+@Composable
+fun ForumCourseCard(
+    plant: MedicinalPlant,
+    currentLanguage: Language,
+    isFavorite: Boolean,
+    onFavoriteToggle: () -> Unit,
+    onClick: () -> Unit
+) {
+    val imageRes = plant.getImageResId(currentLanguage) ?: plant.imageResId ?: R.drawable.mizaj_kursi_yengi_banner
+    val currentImageUrl = plant.getImageUrl(currentLanguage) ?: plant.imageUrl
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+            .testTag("forum_card_${plant.id}"),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = Color(0xFFD4AF37).copy(alpha = 0.5f)
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 3.dp,
+            pressedElevation = 6.dp
+        )
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
+            // Widescreen Course / Forum Banner (Full Width)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .background(Color(0xFF0F2B1D)),
+                contentAlignment = Alignment.Center
+            ) {
+                val context = androidx.compose.ui.platform.LocalContext.current
+                val resolvedModel = androidx.compose.runtime.remember(currentImageUrl, currentLanguage) {
+                    com.example.ui.util.ImageUtils.resolvePlantImageModel(currentImageUrl, context)
+                }
+
+                if (resolvedModel != null) {
+                    coil.compose.AsyncImage(
+                        model = resolvedModel,
+                        contentDescription = plant.getName(currentLanguage),
+                        placeholder = painterResource(id = imageRes),
+                        error = painterResource(id = imageRes),
+                        fallback = painterResource(id = imageRes),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = imageRes),
+                        contentDescription = plant.getName(currentLanguage),
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                // Favorite Heart on Top Corner
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(10.dp)
+                        .size(34.dp)
+                        .clip(CircleShape)
+                        .background(Color.Black.copy(alpha = 0.55f))
+                        .clickable { onFavoriteToggle() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        tint = if (isFavorite) Color(0xFFE74C3C) else Color.White,
+                        modifier = Modifier.size(19.dp)
+                    )
+                }
+
+                // Top Badge on Top Start
+                Surface(
+                    shape = RoundedCornerShape(bottomEnd = 12.dp),
+                    color = Color(0xFF8B5A2B),
+                    modifier = Modifier.align(Alignment.TopStart)
+                ) {
+                    Text(
+                        text = "🎓 تېبابەت مۇنبىرى",
+                        style = MaterialTheme.typography.labelSmall.copy(
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 11.sp
+                        ),
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+                    )
+                }
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(14.dp)
+            ) {
+                Text(
+                    text = plant.getName(currentLanguage),
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp,
+                        color = MaterialTheme.colorScheme.onSurface
+                    ),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = plant.getBenefits(currentLanguage),
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        fontSize = 12.sp,
+                        lineHeight = 17.sp
+                    ),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Surface(
+                        shape = RoundedCornerShape(8.dp),
+                        color = Color(0xFFD4AF37).copy(alpha = 0.15f)
+                    ) {
+                        Text(
+                            text = if (plant.id == 52) "30 سائەتلىك كۇرس" else "ئىلمىي مەزمۇن",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                color = Color(0xFF8B5A2B),
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp)
+                        )
+                    }
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = when (currentLanguage) {
+                                Language.UYGHUR -> "تەپسىلاتىنى كۆرۈش"
+                                Language.ENGLISH -> "View Details"
+                                Language.TURKISH -> "Detayları Gör"
+                            },
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Bold
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(3.dp))
+                        Text(text = "→", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
+                    }
+                }
+            }
         }
     }
 }

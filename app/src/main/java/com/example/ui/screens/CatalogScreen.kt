@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
@@ -47,6 +48,7 @@ import com.example.data.model.MizajType
 import com.example.data.model.PlantCategory
 import com.example.data.model.TraditionalProperty
 import com.example.ui.components.PlantCard
+import com.example.ui.components.ForumCourseCard
 
 @Composable
 fun CatalogScreen(
@@ -218,15 +220,28 @@ fun CatalogScreen(
             ) {
                 items(
                     items = plantsList,
-                    key = { it.id }
+                    key = { it.id },
+                    span = { plant ->
+                        if (plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) GridItemSpan(2) else GridItemSpan(1)
+                    }
                 ) { plant ->
-                    PlantCard(
-                        plant = plant,
-                        currentLanguage = currentLanguage,
-                        isFavorite = favoriteIds.contains(plant.id),
-                        onFavoriteToggle = { onFavoriteToggle(plant.id) },
-                        onClick = { onPlantClick(plant) }
-                    )
+                    if (plant.category == PlantCategory.TEBABET_MUNBIRI || plant.id == 52) {
+                        ForumCourseCard(
+                            plant = plant,
+                            currentLanguage = currentLanguage,
+                            isFavorite = favoriteIds.contains(plant.id),
+                            onFavoriteToggle = { onFavoriteToggle(plant.id) },
+                            onClick = { onPlantClick(plant) }
+                        )
+                    } else {
+                        PlantCard(
+                            plant = plant,
+                            currentLanguage = currentLanguage,
+                            isFavorite = favoriteIds.contains(plant.id),
+                            onFavoriteToggle = { onFavoriteToggle(plant.id) },
+                            onClick = { onPlantClick(plant) }
+                        )
+                    }
                 }
             }
         }

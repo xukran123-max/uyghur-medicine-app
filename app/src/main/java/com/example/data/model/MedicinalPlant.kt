@@ -1,5 +1,7 @@
 package com.example.data.model
 
+import com.example.R
+
 data class MedicinalPlant(
     val id: Int,
     val nameUy: String,
@@ -70,6 +72,34 @@ data class MedicinalPlant(
         Language.UYGHUR -> organTargetUy
         Language.TURKISH -> organTargetTr
         Language.ENGLISH -> organTargetEn
+    }
+
+    fun getImageResId(language: Language): Int? {
+        if (id == 52) {
+            return when (language) {
+                Language.UYGHUR -> R.drawable.mizaj_kursi_yengi_banner
+                Language.TURKISH -> R.drawable.mizac_egitimi_banner_tr
+                Language.ENGLISH -> R.drawable.temperament_course_banner_en
+            }
+        }
+        if (id == 55 || id == 56) {
+            return R.drawable.forum_discuss
+        }
+        return imageResId
+    }
+
+    fun getImageUrl(language: Language): String? {
+        if (id == 52) {
+            return when (language) {
+                Language.UYGHUR -> "https://www.uyghurmedicine.com/images/mizaj_kursi_yengi_banner.jpg"
+                Language.TURKISH -> "https://www.uyghurmedicine.com/images/mizac_egitimi_banner_tr.jpg"
+                Language.ENGLISH -> "https://www.uyghurmedicine.com/images/temperament_course_banner_en.jpg"
+            }
+        }
+        if (id == 55 || id == 56) {
+            return "https://www.uyghurmedicine.com/images/forum_discuss.jpg"
+        }
+        return imageUrl
     }
 
     fun matchesQuery(query: String): Boolean {
